@@ -6,6 +6,8 @@ import PaginationComponent from "../../Components/PaginationComponent";
 import toast from "react-hot-toast";
 import medicineService from "../../Services/medicineService";
 import { Eye } from "lucide-react";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 const Sales = () => {
   const [searchData, setSearchData] = useState("");
@@ -41,11 +43,21 @@ const Sales = () => {
     setCurrentPage(1);
   }, [searchData, records]);
 
+//   useEffect(() => {
+//     const startIndex = (currentPage - 1) * itemsPerPage;
+//     const endIndex = startIndex + itemsPerPage;
+//     setPaginatedData(filteredData?.slice(startIndex, endIndex) || []);
+//   }, [currentPage, filteredData]);
+
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     setPaginatedData(filteredData?.slice(startIndex, endIndex) || []);
   }, [currentPage, filteredData]);
+
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div>
@@ -125,14 +137,27 @@ const Sales = () => {
             </tbody>
           </table>
         </div>
-
+{/* 
         <PaginationComponent
           filteredData={filteredData}
           setPaginatedData={setPaginatedData}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-        />
+        /> */}
+
+<div className="flex justify-center my-4">
+          <Stack spacing={2}>
+            <Pagination
+              count={Math.ceil(filteredData.length / itemsPerPage)}
+              page={currentPage}
+              onChange={handlePageChange}
+              variant="outlined"
+              shape="rounded"
+            />
+          </Stack>
+        </div>
+
       </div>
     </div>
   );
