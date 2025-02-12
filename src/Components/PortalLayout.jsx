@@ -7,7 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import logo from "../assets/logo.png";
+import logo from "../assets/plogo.png";
 
 import { Popover, Transition } from "@headlessui/react";
 
@@ -15,6 +15,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import MedicationIcon from "@mui/icons-material/Medication"
+import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import GroupsIcon from "@mui/icons-material/Groups";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -108,20 +114,6 @@ export default function PortalLayout({ children }) {
     setIsOpen(!isOpen);
   };
 
-  // useEffect(() => {
-  //   if (auth === "false") {
-  //     navigate("/");
-  //   }
-  // }, [auth, navigate]);
-
-  // const handleLogout = () => {
-  //   // Clear session storage
-  //   sessionStorage.removeItem(SESSION_IS_AUTHENTICATED);
-  //   sessionStorage.removeItem(SESSION_USERINFO);
-
-  //   // Navigate to the login page
-  //   navigate("/");
-  // };
 
   const handleLogout = () => {
     localStorage.removeItem('user')
@@ -148,8 +140,8 @@ export default function PortalLayout({ children }) {
           <div className=" !flex !items-center">
             <CssBaseline />
             <AppBar
-              className={`!bg-white    !rounded-3xl !shadow-none mt-[-7px] ${
-                open ? `!w-[84%]"` : `!w-[94%]`
+              className={`!bg-[#ffffff] !rounded-md !shadow-none mt-[-7px] ml-3 ${
+                open ? `!w-[84%]"` : `!w-[96%]`
               }`}
               sx={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)" }}
               open={open}
@@ -217,9 +209,9 @@ export default function PortalLayout({ children }) {
                 "& .MuiDrawer-paper": {
                   borderWidth: 0,
                   boxSizing: "border-box",
-                  borderTopRightRadius: 40,
-                  borderBottomRightRadius: 40,
-                  backgroundColor: "#F9F9F9",
+             
+                  borderBottomRightRadius: 15,
+                  backgroundColor: "#fff",
                   zIndex: "9999",
                   boxShadow: "4px 0px 10px rgba(0, 0, 0, 0.1)",
                 },
@@ -230,7 +222,7 @@ export default function PortalLayout({ children }) {
                 <img
                   src={logo}
                   alt=""
-                  className={`${open ? "w-[6rem]" : "w-[3rem]"} ml-auto mr-auto my-4`}
+                  className={`${open ? "w-[6rem]" : "w-[5rem]"} ml-auto mr-auto my-4`}
                 />
               </div>
               <div>
@@ -240,16 +232,16 @@ export default function PortalLayout({ children }) {
                       onClick={() => navigate("/dispenser")}
                       className={`flex items-center p-2 cursor-pointer text-gray-600 mt-3 h-[2.6rem] ${
                         location.pathname === "/dispenser"
-                          ? "bg-gray-800 text-white mr-2 rounded-md font-[600]"
+                          ? "bg-[#2D583A] text-white mr-2 rounded-md font-[600]"
                           : " mr-2 rounded-md"
                       } ${open ? "ml-6" : "ml-0"}`}
                     >
-                      <Inventory2Icon
+                      <MedicationIcon
                         className={`!text-5xl ${
                           open ? "mr-4" : "mr-auto ml-2 hover:!text-[3.5rem]"
                         } rounded-full p-[12px] ml-[-1.2rem] ${
                           location.pathname === "/dispenser"
-                            ? "bg-white text-gray-600"
+                            ? "bg-[#2D583A] text-white"
                             : ""
                         }`}
                         sx={{
@@ -264,7 +256,107 @@ export default function PortalLayout({ children }) {
                           !open ? "hidden" : "block"
                         }`}
                       >
-                        Medical Store
+                        Medicines
+                      </span>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      onClick={() => navigate("/sales")}
+                      className={`flex items-center p-2 cursor-pointer text-gray-600 mt-3 h-[2.6rem] ${
+                        location.pathname === "/sales"
+                          ? "bg-[#2D583A] text-white mr-2 rounded-md font-[600]"
+                          : " mr-2 rounded-md"
+                      } ${open ? "ml-6" : "ml-0"}`}
+                    >
+                      <PointOfSaleIcon
+                        className={`!text-5xl ${
+                          open ? "mr-4" : "mr-auto ml-2 hover:!text-[3.5rem]"
+                        } rounded-full p-[12px] ml-[-1.2rem] ${
+                          location.pathname === "/sales"
+                            ? "bg-[#2D583A] text-white"
+                            : ""
+                        }`}
+                        sx={{
+                          boxShadow:
+                            location.pathname === "/sales"
+                              ? "2px 5px 10px rgba(0, 0, 0, 0.2)"
+                              : "",
+                        }}
+                      />
+                      <span
+                        className={`flex-1 font-[600] text-left ml-[2px] text-[13px] ${
+                          !open ? "hidden" : "block"
+                        }`}
+                      >
+                        Sales
+                      </span>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      onClick={() => navigate("/purchases")}
+                      className={`flex items-center p-2 cursor-pointer text-gray-600 mt-3 h-[2.6rem] ${
+                        location.pathname === "/purchases"
+                          ? "bg-[#2D583A] text-white mr-2 rounded-md font-[600]"
+                          : " mr-2 rounded-md"
+                      } ${open ? "ml-6" : "ml-0"}`}
+                    >
+                      <ShoppingBagIcon
+                        className={`!text-5xl ${
+                          open ? "mr-4" : "mr-auto ml-2 hover:!text-[3.5rem]"
+                        } rounded-full p-[12px] ml-[-1.2rem] ${
+                          location.pathname === "/purchases"
+                            ? "bg-[#2D583A] text-white"
+                            : ""
+                        }`}
+                        sx={{
+                          boxShadow:
+                            location.pathname === "/purchases"
+                              ? "2px 5px 10px rgba(0, 0, 0, 0.2)"
+                              : "",
+                        }}
+                      />
+                      <span
+                        className={`flex-1 font-[600] text-left ml-[2px] text-[13px] ${
+                          !open ? "hidden" : "block"
+                        }`}
+                      >
+                        Purchases
+                      </span>
+                    </div>
+                  </li>
+                
+                  <li>
+                    <div
+                      onClick={() => navigate("/suppliers")}
+                      className={`flex items-center p-2 cursor-pointer text-gray-600 mt-3 h-[2.6rem] ${
+                        location.pathname === "/suppliers"
+                          ? "bg-[#2D583A] text-white mr-2 rounded-md font-[600]"
+                          : " mr-2 rounded-md"
+                      } ${open ? "ml-6" : "ml-0"}`}
+                    >
+                      <StorefrontIcon
+                        className={`!text-5xl ${
+                          open ? "mr-4" : "mr-auto ml-2 hover:!text-[3.5rem]"
+                        } rounded-full p-[12px] ml-[-1.2rem] ${
+                          location.pathname === "/suppliers"
+                            ? "bg-[#2D583A] text-white"
+                            : ""
+                        }`}
+                        sx={{
+                          boxShadow:
+                            location.pathname === "/suppliers"
+                              ? "2px 5px 10px rgba(0, 0, 0, 0.2)"
+                              : "",
+                        }}
+                      />
+                      <span
+                        className={`flex-1 font-[600] text-left ml-[2px] text-[13px] ${
+                          !open ? "hidden" : "block"
+                        }`}
+                      >
+                        Suppliers
                       </span>
                     </div>
                   </li>
@@ -277,7 +369,7 @@ export default function PortalLayout({ children }) {
                 className={`${
                   location.pathname === "/login" || location.pathname === "/"
                     ? "p-4"
-                    : "bg-gray-100 min-h-[80vh] p-6 rounded-xl m-4 shadow-md"
+                    : "bg-[#fff] min-h-[80vh]  p-4 m-1 shadow-lg rounded-md transition-all duration-300"
                 }`}
               >
                 {children}

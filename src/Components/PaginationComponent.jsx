@@ -13,7 +13,7 @@ const PaginationComponent = ({ filteredData, setPaginatedData, itemsPerPage, cur
   }, [currentPage, filteredData]);
 
   const theme = createTheme({
-    palette: { primary: { main: "#E5E7EB", contrastText: "#00000" } },
+    palette: { primary: { main: "#F3F4F6", contrastText: "#00000" } },
   });
 
   return (

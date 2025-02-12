@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from "react";
 import { Tooltip } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import PaginationComponent from "../../Components/PaginationComponent";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 import medicineService from "../../Services/medicineService";
 
 const MedicalStore = () => {
@@ -21,23 +20,22 @@ const MedicalStore = () => {
       try {
         setLoading(true);
         const response = await medicineService.fetchAll();
-        console.log(response); // Log the response to confirm the structure
-        setRecords(response.medicines); // Access the patients array within response
+        console.log(response); 
+        setRecords(response.medicines); 
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        toast.error('Error fetching Patients');
+        toast.error("Error fetching Patients");
       }
     };
     getMedicines();
   }, []);
-  
 
   useEffect(() => {
-    const filteredResult = records?.filter(
-      (item) =>
+    const filteredResult =
+      records?.filter((item) =>
         item?.medicine_name?.toLowerCase().includes(searchData.toLowerCase())
-    ) || [];
+      ) || [];
     setFilteredData(filteredResult);
     setCurrentPage(1);
   }, [searchData, records]);
@@ -51,69 +49,79 @@ const MedicalStore = () => {
   return (
     <div>
       <div className="p-4">
-        <h1 className="ml-[3%] text-[19px] text-gray-700 font-[700]">Medicine Records</h1>
-        <h1 className="ml-[3%] text-[13px] text-gray-700 mb-4">{filteredData?.length || 0} records found</h1>
-        
+        <h1 className="ml-[3%] text-[19px] text-gray-700 font-[700]">
+          Medicines
+        </h1>
+        <h1 className="ml-[3%] text-[13px] text-gray-700 mb-4">
+          {filteredData?.length || 0} records found
+        </h1>
+
         <div className="flex mt-8 flex-row-reverse justify-between px-[3%]">
-          {/* <Link to='AddEditMedical'>
-            <button className="bg-[#232233] h-[2rem] px-4 rounded-md text-white font-[600] text-[14px]">
-              + Add Medicine
-            </button>
-          </Link> */}
-          <Link to='SaleMedicine'>
-            <button className="bg-[#a6a6a6] text-white h-[2rem] px-4 rounded-md font-[600] text-[14px]">
+          {/* <Link to="SaleMedicine">
+            <button className="bg-[#2D583A] text-white h-[2rem] px-4 rounded-md font-[600] text-[14px]">
               + Sale Medicine
             </button>
           </Link>
 
-          <Link to='SaleServices'>
+          <Link to="SaleServices">
             <button className="bg-[#f8f8f8] h-[2rem] px-4 rounded-md text-black font-[600] text-[14px] border-2">
               + Sale Services
             </button>
-          </Link>
+          </Link> */}
           <div className="w-[40%]">
             <input
               type="search"
               placeholder="Search Here..."
               value={searchData}
               onChange={(e) => setSearchData(e.target.value)}
-              className="block w-[90%] pl-10 text-gray-900 p-2 rounded-md border-gray-800 bg-white focus:outline-none"
+              className="block w-[90%] pl-10 text-gray-900 p-2 rounded-md border-gray-800 bg-[#F3F4F6] focus:outline-none"
             />
             <SearchIcon className="mt-[-4rem] text-gray-700 ml-2" />
           </div>
         </div>
 
         <div className="mx-[3%]">
-          <table className="w-[100%]">
+          <table className="w-full border-collapse rounded-lg overflow-hidden">
             <thead>
-              <tr className="text-[#101418] capitalize leading-normal">
-                <th className="py-[1%] w-[10%] text-[.8rem] text-gray-700 text-left pl-4">Sr No.</th>
-                <th className="py-[1%] w-[20%] text-[.8rem] text-gray-700 text-left pl-4">Medicine Name</th>
-                <th className="py-[1%] w-[15%] text-[.8rem] text-gray-700 text-left">Qty</th>
-                <th className="py-[1%] w-[15%] text-[.8rem] text-gray-700 text-left">Price</th>
-                <th className="py-[1%] w-[15%] text-[.8rem] text-gray-700 text-left">Supplier Name</th>
+              <tr className="bg-[#2D583A] text-white capitalize leading-normal">
+                <th className="py-1 px-4 w-[10%] text-[.8rem] text-left">
+                  Sr No.
+                </th>
+                <th className="py-4 px-4 w-[20%] text-[.8rem] text-left">
+                  Medicine Name
+                </th>
+                <th className="py-4 px-4 w-[15%] text-[.8rem] text-left">
+                  Qty
+                </th>
+                <th className="py-4 px-4 w-[15%] text-[.8rem] text-left">
+                  Price
+                </th>
+                <th className="py-4 px-4 w-[15%] text-[.8rem] text-left">
+                  Supplier Name
+                </th>
               </tr>
             </thead>
             <tbody>
-              {paginatedData?.map((patient) => (
-                <tr key={patient?.patient_id} className="bg-white text-gray-600 text-sm font-light border-t-[1px] border-gray-200">
-                  <td className="py-[1%] w-[10%] text-left pl-4">
-                    <p className="font-[600] text-gray-600 text-[14px]">{patient?.id}</p>
+              {paginatedData?.map((patient, index) => (
+                <tr
+                  key={patient?.patient_id}
+                  className="bg-gray-100 text-gray-700 text-sm border-t border-gray-300"
+                >
+                  <td className="py-3 px-4 w-[10%] text-left font-semibold">
+                    {index + 1}
                   </td>
-                  <td className="w-[20%] text-left pl-4">
-                    <p className="font-[600] text-gray-600 text-[14px]">{patient?.medicine_name}</p>
+                  <td className="py-3 px-4 w-[20%] text-left font-semibold">
+                    {patient?.medicine_name}
                   </td>
-                  <td className="py-[2%] px-2 w-[15%] text-left">
-                    <span className="font-[400]">{patient?.quantity_in_stock}</span>
+                  <td className="py-3 px-4 w-[15%] text-left">
+                    {patient?.quantity_in_stock}
                   </td>
-                  <td className="py-[2%] w-[15%] text-left">
-                    <span className="font-[400]">{patient?.price}</span>
+                  <td className="py-3 px-4 w-[15%] text-left">
+                    {patient?.price}
                   </td>
-                
-                  <td className="py-[2%] px-2 w-[15%] text-left">
-                    <span className="font-[400]">{patient?.supplier_name}</span>
+                  <td className="py-3 px-4 w-[15%] text-left">
+                    {patient?.supplier_name}
                   </td>
-                  
                 </tr>
               ))}
             </tbody>
@@ -133,4 +141,3 @@ const MedicalStore = () => {
 };
 
 export default MedicalStore;
-

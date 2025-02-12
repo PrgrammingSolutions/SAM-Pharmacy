@@ -109,8 +109,11 @@ const SaleMedicine = () => {
       const selectedMedicine = medicineData.find(
         (med) => med.id === updatedRows[index].stock_id
       );
-  
-      if (selectedMedicine && parseInt(value) > selectedMedicine.quantity_in_stock) {
+
+      if (
+        selectedMedicine &&
+        parseInt(value) > selectedMedicine.quantity_in_stock
+      ) {
         toast.error("Quantity exceeds available stock.");
         updatedRows[index].quantity = selectedMedicine.quantity_in_stock;
       }
@@ -136,13 +139,6 @@ const SaleMedicine = () => {
       return;
     }
 
-    // const invoiceData = await saleService.createInvoices(invoiceId);
-    // // Set the generated invoice ID
-    // setInvoiceId(invoiceData.invoiceId);
-    // console.log("Invoice ID:", invoiceId);
-    // toast.success(
-    //   `Invoice created successfully. ID: ${invoiceData.invoice_id}`
-    // );
     setIsModalOpen(true);
   };
 
@@ -161,13 +157,12 @@ const SaleMedicine = () => {
   };
 
   const handleMedicineSelect = (medicine) => {
-    setSelectedMedicine(medicine); 
-    setSearchMedicineData(""); 
+    setSelectedMedicine(medicine);
+    setSearchMedicineData("");
     setMedicineData((prevData) => ({
       ...prevData,
       stock_id: medicine.id,
     }));
-
   };
 
   return (
@@ -190,6 +185,9 @@ const SaleMedicine = () => {
                   }}
                   variant="outlined"
                   fullWidth
+                  sx={{
+                    backgroundColor: "white",
+                  }}
                 />
                 {searchData && (
                   <div className="relative">
@@ -200,7 +198,9 @@ const SaleMedicine = () => {
                             <tr>
                               <th className="text-sm font-bold w-12">P No.</th>
                               <th className="text-sm font-bold w-14">Name</th>
-                              <th className="text-sm font-bold w-16">Phone No.</th>
+                              <th className="text-sm font-bold w-16">
+                                Phone No.
+                              </th>
                             </tr>
                           </thead>
                         </table>
@@ -255,6 +255,9 @@ const SaleMedicine = () => {
                   value={selectedDoctor}
                   onChange={(e) => setSelectedDoctor(e.target.value)}
                   required
+                  sx={{
+                    backgroundColor: "white",
+                  }}
                 >
                   {doctors.map((doctor) => (
                     <MenuItem key={doctor.id} value={doctor.id}>
@@ -274,6 +277,9 @@ const SaleMedicine = () => {
                 onChange={(e) => setSaleDate(e.target.value)}
                 InputLabelProps={{ shrink: true }}
                 required
+                sx={{
+                  backgroundColor: "white",
+                }}
               />
             </Grid>
           </Grid>
@@ -284,7 +290,6 @@ const SaleMedicine = () => {
 
           {salesRows.map((row, index) => (
             <Grid container spacing={3} key={index} className="my-[20px]">
-            
               <Grid item xs={4}>
                 <FormControl fullWidth>
                   <Autocomplete
@@ -305,6 +310,9 @@ const SaleMedicine = () => {
                       <TextField {...params} label="Medicine Name" />
                     )}
                     required
+                    sx={{
+                      backgroundColor: "white",
+                    }}
                     disableClearable
                   />
                 </FormControl>
@@ -320,6 +328,9 @@ const SaleMedicine = () => {
                     handleRowChange(index, "quantity", e.target.value)
                   }
                   required
+                  sx={{
+                    backgroundColor: "white",
+                  }}
                 />
               </Grid>
 
@@ -336,16 +347,19 @@ const SaleMedicine = () => {
                     readOnly: true,
                   }}
                   required
+                  sx={{
+                    backgroundColor: "white",
+                  }}
                 />
               </Grid>
 
               <Grid item xs={12}>
-                <IconButton color="primary" onClick={handleAddRow}>
+                <IconButton sx={{ color: "black" }} onClick={handleAddRow}>
                   <Add />
                 </IconButton>
                 {salesRows.length > 1 && (
                   <IconButton
-                    color="secondary"
+                    sx={{ color: "black" }}
                     onClick={() => handleRemoveRow(index)}
                   >
                     <Remove />
@@ -356,8 +370,15 @@ const SaleMedicine = () => {
           ))}
 
           <div className="text-center my-[30px]">
-            <Button type="submit" variant="contained" color="primary">
-              Save Sales
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                backgroundColor: "#1F2937",
+                "&:hover": { backgroundColor: "#111827" },
+              }}
+            >
+              Save Medicine Sales
             </Button>
           </div>
         </div>
@@ -371,7 +392,7 @@ const SaleMedicine = () => {
         }
         servicesName={salesRows.map((row) => {
           const medicine = medicineData.find((med) => med.id === row.stock_id);
-          return medicine ? medicine.medicine_name : "N/A"; 
+          return medicine ? medicine.medicine_name : "N/A";
         })}
         patientId={selectedPatientId}
         doctorId={selectedDoctor}

@@ -162,6 +162,9 @@ const SaleServices = () => {
                   }}
                   variant="outlined"
                   fullWidth
+                  sx={{
+                    backgroundColor: "white",
+                  }}
                 />
                 {searchData && (
                   <div className="relative">
@@ -228,6 +231,9 @@ const SaleServices = () => {
                   value={selectedDoctor}
                   onChange={(e) => setSelectedDoctor(e.target.value)}
                   required
+                  sx={{
+                    backgroundColor: "white",
+                  }}
                 >
                   {doctors.map((doctor) => (
                     <MenuItem key={doctor.id} value={doctor.id}>
@@ -247,6 +253,9 @@ const SaleServices = () => {
                 onChange={(e) => setSaleDate(e.target.value)}
                 InputLabelProps={{ shrink: true }}
                 required
+                sx={{
+                  backgroundColor: "white",
+                }}
               />
             </Grid>
           </Grid>
@@ -256,7 +265,6 @@ const SaleServices = () => {
           />
           {salesRows.map((row, index) => (
             <Grid container spacing={3} key={index} className="my-[20px]">
-
               <Grid item xs={4}>
                 <FormControl fullWidth>
                   <Autocomplete
@@ -277,6 +285,9 @@ const SaleServices = () => {
                       <TextField {...params} label="Medicine Name" />
                     )}
                     required
+                    sx={{
+                      backgroundColor: "white",
+                    }}
                     disableClearable
                   />
                 </FormControl>
@@ -292,6 +303,9 @@ const SaleServices = () => {
                     handleRowChange(index, "quantity", e.target.value)
                   }
                   required
+                  sx={{
+                    backgroundColor: "white",
+                  }}
                 />
               </Grid>
 
@@ -308,16 +322,19 @@ const SaleServices = () => {
                     readOnly: true,
                   }}
                   required
+                  sx={{
+                    backgroundColor: "white",
+                  }}
                 />
               </Grid>
 
               <Grid item xs={12}>
-                <IconButton color="primary" onClick={handleAddRow}>
+                <IconButton sx={{ color: "black" }} onClick={handleAddRow}>
                   <Add />
                 </IconButton>
                 {salesRows.length > 1 && (
                   <IconButton
-                    color="secondary"
+                  sx={{ color: "black" }}
                     onClick={() => handleRemoveRow(index)}
                   >
                     <Remove />
@@ -328,8 +345,15 @@ const SaleServices = () => {
           ))}
 
           <div className="text-center my-[30px]">
-            <Button type="submit" variant="contained" color="primary">
-              Save Sales
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                backgroundColor: "#1F2937",
+                "&:hover": { backgroundColor: "#111827" },
+              }}
+            >
+              Save Services Sales
             </Button>
           </div>
         </div>
