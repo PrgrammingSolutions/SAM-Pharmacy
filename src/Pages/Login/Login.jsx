@@ -7,7 +7,8 @@ import { Button, Grid, TextField, IconButton } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import logo from "../../assets/logo.png";
-import bgImage from "../../assets/pharmacybg.jpeg";
+import pharmacy from "../../assets/plogo.png";
+import { Text } from "recharts";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -65,18 +66,18 @@ const Login = () => {
     <div>
       <div
         className="min-h-screen bg-white py-6 flex flex-col justify-center sm:py-12"
-        style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className="relative py-3 sm:max-w-xl sm:mx-auto">
           <div className="relative px-4 py-10 bg-gray-100 shadow-lg sm:rounded-md sm:p-20 border-[1px] border-gray-950">
             <div className="max-w-md mx-auto">
+
               <div>
                 <div className="text-center mb-6">
-                  {/* <img
-                    src={logo}
+                  <img
+                    src={pharmacy}
                     alt="Hospital Logo"
                     className="mx-auto w-30 h-28"
-                  /> */}
+                  />
                 </div>
               </div>
               <div>
@@ -86,7 +87,7 @@ const Login = () => {
                   value={data.email}
                   onChange={(e) => handleChange(e.target.value, "email")}
                   onKeyDown={handleKeyDown}
-                  className="border-b-2 rounded-md border-gray-200 p-2 w-[90%] mt-10 focus:outline-none font-normal"
+                  className="border-b-2 rounded-md border-gray-200 p-2 w-[90%] mt-10 focus:outline-none font-normal focus:border-[#C38E3E]"
                 />
 
                 <input
@@ -95,7 +96,7 @@ const Login = () => {
                   value={data.password}
                   onChange={(e) => handleChange(e.target.value, "password")}
                   onKeyDown={handleKeyDown}
-                  className="border-b-2 rounded-md border-gray-200 p-2 w-[90%] mt-5 focus:outline-none focus:border-[#1EA56C]"
+                  className="border-b-2 rounded-md border-gray-200 p-2 w-[90%] mt-5 focus:outline-none focus:border-[#C38E3E]"
                 />
 
                 <IconButton
@@ -110,7 +111,7 @@ const Login = () => {
 
                 <div className="flex justify-center">
                   <button
-                    className={`bg-zinc-300 hover:border-none text-black hover:text-gray-800 p-2 px-10 rounded-md mt-10 font-semibold shadow-md hover:shadow-slate-700 duration-300 ${
+                    className={`bg-[#C38E3E] hover:border-none text-black hover:text-gray-800 p-2 px-10 rounded-md mt-10 font-semibold shadow-md hover:shadow-slate-700 duration-300 ${
                       loading ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                     onClick={handleSubmit}
