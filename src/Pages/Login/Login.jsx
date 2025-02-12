@@ -68,7 +68,7 @@ const Login = () => {
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-          <div className="relative px-4 py-10 bg-[#A3CDB3] shadow-lg sm:rounded-md sm:p-20 ">
+          <div className="relative px-4 py-10 bg-gray-100 shadow-lg sm:rounded-md sm:p-20 border-[1px] border-gray-950">
             <div className="max-w-md mx-auto">
               <div>
                 <div className="text-center mb-6">
@@ -110,7 +110,7 @@ const Login = () => {
 
                 <div className="flex justify-center">
                   <button
-                    className={`bg-zinc-200 hover:border-none text-black hover:text-gray-800 p-2 px-10 rounded-md mt-10 font-semibold shadow-md hover:shadow-slate-700 duration-300 ${
+                    className={`bg-zinc-300 hover:border-none text-black hover:text-gray-800 p-2 px-10 rounded-md mt-10 font-semibold shadow-md hover:shadow-slate-700 duration-300 ${
                       loading ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                     onClick={handleSubmit}
