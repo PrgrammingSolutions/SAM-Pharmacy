@@ -77,9 +77,9 @@ const Sales = () => {
               placeholder="Search Here..."
               value={searchData}
               onChange={(e) => setSearchData(e.target.value)}
-              className="block w-[90%] pl-10 text-gray-900 p-2 border-b-2 border-gray-400 focus:border-primary focus:outline-none"
+              className="block w-[90%] pl-10 text-gray-900 p-2 border-b-2 border-gray-200 focus:border-primary focus:outline-none"
             />
-            <SearchIcon className="mt-[-4rem] text-gray-700 ml-2" />
+            <SearchIcon className="mt-[-4rem] text-gray-400 ml-2" />
           </div>
         </div>
 
