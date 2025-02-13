@@ -232,7 +232,7 @@ export default function PortalLayout({ children }) {
                       onClick={() => navigate("/dispenser")}
                       className={`flex items-center p-2 cursor-pointer text-gray-600 mt-3 h-[2.6rem] ${
                         location.pathname === "/dispenser"
-                          ? "bg-[#2D583A] text-white mr-2 rounded-md font-[600]"
+                          ? "bg-primary text-white mr-2 rounded-md font-[600]"
                           : " mr-2 rounded-md"
                       } ${open ? "ml-6" : "ml-0"}`}
                     >
@@ -241,7 +241,7 @@ export default function PortalLayout({ children }) {
                           open ? "mr-4" : "mr-auto ml-2 hover:!text-[3.5rem]"
                         } rounded-full p-[12px] ml-[-1.2rem] ${
                           location.pathname === "/dispenser"
-                            ? "bg-[#2D583A] text-white"
+                            ? "bg-primary text-white"
                             : ""
                         }`}
                         sx={{
@@ -265,7 +265,7 @@ export default function PortalLayout({ children }) {
                       onClick={() => navigate("/sales")}
                       className={`flex items-center p-2 cursor-pointer text-gray-600 mt-3 h-[2.6rem] ${
                         location.pathname === "/sales"
-                          ? "bg-[#2D583A] text-white mr-2 rounded-md font-[600]"
+                          ? "bg-primary text-white mr-2 rounded-md font-[600]"
                           : " mr-2 rounded-md"
                       } ${open ? "ml-6" : "ml-0"}`}
                     >
@@ -274,7 +274,7 @@ export default function PortalLayout({ children }) {
                           open ? "mr-4" : "mr-auto ml-2 hover:!text-[3.5rem]"
                         } rounded-full p-[12px] ml-[-1.2rem] ${
                           location.pathname === "/sales"
-                            ? "bg-[#2D583A] text-white"
+                            ? "bg-primary text-white"
                             : ""
                         }`}
                         sx={{
@@ -298,7 +298,7 @@ export default function PortalLayout({ children }) {
                       onClick={() => navigate("/purchases")}
                       className={`flex items-center p-2 cursor-pointer text-gray-600 mt-3 h-[2.6rem] ${
                         location.pathname === "/purchases"
-                          ? "bg-[#2D583A] text-white mr-2 rounded-md font-[600]"
+                          ? "bg-primary text-white mr-2 rounded-md font-[600]"
                           : " mr-2 rounded-md"
                       } ${open ? "ml-6" : "ml-0"}`}
                     >
@@ -307,7 +307,7 @@ export default function PortalLayout({ children }) {
                           open ? "mr-4" : "mr-auto ml-2 hover:!text-[3.5rem]"
                         } rounded-full p-[12px] ml-[-1.2rem] ${
                           location.pathname === "/purchases"
-                            ? "bg-[#2D583A] text-white"
+                            ? "bg-primary text-white"
                             : ""
                         }`}
                         sx={{
@@ -332,7 +332,7 @@ export default function PortalLayout({ children }) {
                       onClick={() => navigate("/suppliers")}
                       className={`flex items-center p-2 cursor-pointer text-gray-600 mt-3 h-[2.6rem] ${
                         location.pathname === "/suppliers"
-                          ? "bg-[#2D583A] text-white mr-2 rounded-md font-[600]"
+                          ? "bg-primary text-white mr-2 rounded-md font-[600]"
                           : " mr-2 rounded-md"
                       } ${open ? "ml-6" : "ml-0"}`}
                     >
@@ -341,7 +341,7 @@ export default function PortalLayout({ children }) {
                           open ? "mr-4" : "mr-auto ml-2 hover:!text-[3.5rem]"
                         } rounded-full p-[12px] ml-[-1.2rem] ${
                           location.pathname === "/suppliers"
-                            ? "bg-[#2D583A] text-white"
+                            ? "bg-primary text-white"
                             : ""
                         }`}
                         sx={{

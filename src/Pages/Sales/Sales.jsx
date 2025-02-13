@@ -71,7 +71,7 @@ const Sales = () => {
 
         <div className="flex mt-8 flex-row-reverse justify-between px-[3%]">
           <Link to="RecordSales">
-            <button className="bg-[#2D583A] text-white h-[2rem] px-4 rounded-md font-[600] text-[14px]">
+            <button className="bg-white text-primary shadow-[2px_2px_6px_rgba(0,0,0,0.2)] px-8 py-3 rounded-lg font-[600] text-[14px]">
               + Sale Medicine
             </button>
           </Link>
@@ -82,29 +82,29 @@ const Sales = () => {
               placeholder="Search Here..."
               value={searchData}
               onChange={(e) => setSearchData(e.target.value)}
-              className="block w-[90%] pl-10 text-gray-900 p-2 rounded-md border-gray-800 bg-[#F3F4F6] focus:outline-none"
+              className="block w-[90%] pl-10 text-gray-900 p-2 border-b-2 border-gray-400 focus:border-primary focus:outline-none"
             />
             <SearchIcon className="mt-[-4rem] text-gray-700 ml-2" />
           </div>
         </div>
 
         <div className="mx-[3%]">
-          <table className="w-full border-collapse rounded-lg overflow-hidden">
+          <table className="w-full border-collapse rounded-lg overflow-hidden shadow-xl shadow-gray-300">
             <thead>
-              <tr className="bg-[#2D583A] text-white capitalize leading-normal">
-                <th className="py-1 px-4 w-[10%] text-[.8rem] text-left">
+              <tr className="bg-primary text-white capitalize leading-normal text-xs text-left">
+                <th className="p-4 w-[10%]">
                   Sale
                 </th>
-                <th className="py-4 px-4 w-[20%] text-[.8rem] text-left">
+                <th className="p-4 w-[25%]">
                   Customer Name
                 </th>
-                <th className="py-4 px-4 w-[15%] text-[.8rem] text-left">
+                <th className="p-4 w-[15%]">
                   Amount
                 </th>
-                <th className="py-4 px-4 w-[15%] text-[.8rem] text-left">
+                <th className="p-4 w-[15%]">
                   Sale Date
                 </th>
-                <th className="py-4 px-4 w-[15%] text-[.8rem] text-left">
+                <th className="p-4 w-[15%] text-center">
                   Action
                 </th>
               </tr>
@@ -113,23 +113,23 @@ const Sales = () => {
               {paginatedData?.map((patient, index) => (
                 <tr
                   key={patient?.patient_id}
-                  className="bg-gray-100 text-gray-700 text-sm border-t border-gray-300"
+                  className="text-xs border-t border-gray-200"
                 >
-                  <td className="py-3 px-4 w-[10%] text-left font-semibold">
-                    {index + 1}
+                  <td className="p-3 w-[10%] text-left font-bold text-primary">
+                    {index + 1}.
                   </td>
-                  <td className="py-3 px-4 w-[20%] text-left font-semibold">
+                  <td className="p-3 w-[25%] text-left font-bold">
                     {patient?.medicine_name}
                   </td>
-                  <td className="py-3 px-4 w-[15%] text-left">
+                  <td className="p-3 w-[15%] text-left">
                     {patient?.quantity_in_stock}
                   </td>
-                  <td className="py-3 px-4 w-[15%] text-left">
+                  <td className="p-3 w-[15%] text-left">
                     {patient?.price}
                   </td>
-                  <td className="py-3 px-4 w-[15%] text-left">
+                  <td className="p-3 w-[15%] text-center">
                     <button>
-                      <Eye className="w-5 h-5 text-gray-500 hover:text-gray-700 cursor-pointer" />
+                      <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
                     </button>
                   </td>
                 </tr>
