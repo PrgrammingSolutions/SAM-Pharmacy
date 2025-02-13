@@ -6,13 +6,19 @@ const InvoicePurchaseModal = ({ open, onClose, purchase }) => {
   if (!purchase) return null;
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
+    <div className="flex justify-center items-center content-center ml-10">
+      <Dialog open={open} onClose={onClose} fullWidth maxWidth="md" className="ml-40">
       <DialogContent>
         {/* Header */}
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-          <Typography variant="h5" fontWeight="bold" color="primary">Pharma Company Name</Typography>
-          <Typography variant="h6" fontWeight="bold">Purchase Invoice</Typography>
-          <IconButton onClick={onClose}>
+        <Box display="grid" gridTemplateColumns="1fr auto" alignItems="center" mb={2}>
+          <Typography variant="h5" fontWeight="bold" textAlign="center" gridColumn="1 / -1">
+            Purchase Invoice
+          </Typography>
+          
+          <IconButton 
+            onClick={onClose} 
+            sx={{ justifySelf: 'end', alignSelf: 'start', marginTop: '-35px' }} // Ensure button is centered vertically
+          >
             <CloseIcon />
           </IconButton>
         </Box>
@@ -20,6 +26,7 @@ const InvoicePurchaseModal = ({ open, onClose, purchase }) => {
         {/* Invoice Details */}
         <Box display="flex" justifyContent="space-between" mb={2}>
           <Box>
+            <Typography variant="h5" fontWeight="bold" color="primary">Pharma Company Name</Typography>
             <Typography variant="subtitle1"><strong>From:</strong> Saldo Apps</Typography>
             <Typography>John Doe</Typography>
             <Typography>wiz@saldoapps.com</Typography>
@@ -93,8 +100,10 @@ const InvoicePurchaseModal = ({ open, onClose, purchase }) => {
         </Box>
       </DialogContent>
     </Dialog>
+    </div>
   );
 };
 
 export default InvoicePurchaseModal;
+
 

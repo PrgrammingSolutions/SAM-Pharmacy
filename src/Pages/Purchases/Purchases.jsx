@@ -129,7 +129,7 @@ const Purchases = () => {
                   </td>
                   <td className="p-3 w-[15%] text-center">
                     <button onClick={ () => handleOpenModal(patient)}>
-                      <Eye className="w-5 h-5 text-gray-500 hover:text-gray-700 cursor-pointer" />
+                      <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
                     </button>
                   </td>
                 </tr>
@@ -159,7 +159,9 @@ const Purchases = () => {
         </div>
       </div>
 
+      <div className="flex justify-center items-center">
       <InvoicePurchaseModal open={modalOpen} onClose={() => setModalOpen(false)} purchase={selectedPurchase} />
+      </div>
             
     </div>
   );

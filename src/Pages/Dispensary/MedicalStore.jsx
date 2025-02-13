@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Tooltip } from "@mui/material";
+import { Pagination, Stack, Tooltip } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import PaginationComponent from "../../Components/PaginationComponent";
@@ -39,6 +39,10 @@ const MedicalStore = () => {
     setFilteredData(filteredResult);
     setCurrentPage(1);
   }, [searchData, records]);
+
+  const handlePageChange = (event, page) => {
+        setCurrentPage(page);
+  }
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -127,14 +131,17 @@ const MedicalStore = () => {
             </tbody>
           </table>
         </div>
-
-        <PaginationComponent
-          filteredData={filteredData}
-          setPaginatedData={setPaginatedData}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
+        <div className="flex justify-center my-4">
+          <Stack spacing={2}>
+            <Pagination
+              count={Math.ceil(filteredData.length / itemsPerPage)}
+              page={currentPage}
+              onChange={handlePageChange}
+              variant="outlined"
+              shape="rounded"
+            />
+          </Stack>
+        </div>
       </div>
     </div>
   );
