@@ -20,6 +20,8 @@ import { Toaster } from "react-hot-toast";
 import SaleServices from "./Pages/Dispensary/SaleServices";
 import Sales from "./Pages/Sales/Sales";
 import RecordSales from "./Pages/Sales/RecordSales";
+import Purchases from "./Pages/Purchases/Purchases";
+import RecordPurchases from "./Pages/Purchases/RecordPurchases";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -55,11 +57,10 @@ function App() {
           {/* Sales */}
           <Route path="/sales" element={isAuthenticated ?  <PortalLayout> <Sales /> </PortalLayout>  : <Navigate to="/login" />} /> 
           <Route path="/sales/RecordSales" element={isAuthenticated ?  <PortalLayout> <RecordSales /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/sales/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/sales/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
-          {/* Purchases */}
-          <Route path="/purchases" element={isAuthenticated ?  <PortalLayout> <MedicalStore /> </PortalLayout>  : <Navigate to="/login" />} /> 
-          <Route path="/purchases/AddEditMedical" element={isAuthenticated ?  <PortalLayout> <AddEditMedicalStore /> </PortalLayout> : <Navigate to="/login" />} />
+          
+            {/* Purchases */}
+          <Route path="/purchases" element={isAuthenticated ?  <PortalLayout> <Purchases /> </PortalLayout>  : <Navigate to="/login" />} /> 
+          <Route path="/purchases/RecordPurchases" element={isAuthenticated ?  <PortalLayout> <RecordPurchases /> </PortalLayout> : <Navigate to="/login" />} />
           <Route path="/purchases/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
           <Route path="/purchases/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
           {/* customers */}
