@@ -9,7 +9,7 @@ import { Eye } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-const Sales = () => {
+const Suppliers = () => {
   const [searchData, setSearchData] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [paginatedData, setPaginatedData] = useState([]);
@@ -58,7 +58,7 @@ const Sales = () => {
     <div>
       <div className="p-4">
         <h1 className="ml-[3%] text-[19px] text-gray-700 font-[700]">
-          Sales
+         Suppliers
         </h1>
         <h1 className="ml-[3%] text-[13px] text-gray-700 mb-4">
           {filteredData?.length || 0} records found
@@ -67,14 +67,14 @@ const Sales = () => {
         <div className="flex mt-8 flex-row-reverse justify-between px-[3%]">
           <Link to="RecordSales">
             <button className="bg-white text-primary shadow-[2px_2px_6px_rgba(0,0,0,0.2)] px-8 py-3 rounded-lg font-[600] text-[14px]">
-              + Sale Medicine
+              + Add Suppliers
             </button>
           </Link>
 
           <div className="w-[40%]">
             <input
               type="search"
-              placeholder="Search Sales Here..."
+              placeholder="Search Suppliers..."
               value={searchData}
               onChange={(e) => setSearchData(e.target.value)}
               className="block w-[90%] pl-10 text-gray-900 p-2 border-b-2 border-gray-200 focus:border-primary focus:outline-none"
@@ -91,13 +91,13 @@ const Sales = () => {
                   Sale
                 </th>
                 <th className="p-4 w-[25%]">
-                  Customer Name
+                  Supplier Name
                 </th>
                 <th className="p-4 w-[15%]">
-                  Amount
+                  Phone No.
                 </th>
                 <th className="p-4 w-[15%]">
-                  Sale Date
+                  Address
                 </th>
                 <th className="p-4 w-[15%] text-center">
                   Action
@@ -158,4 +158,4 @@ const Sales = () => {
   );
 };
 
-export default Sales;
+export default Suppliers;
