@@ -79,7 +79,7 @@ const Purchases = () => {
           <div className="w-[40%]">
             <input
               type="search"
-              placeholder="Search Here..."
+              placeholder="Search Purchases Here..."
               value={searchData}
               onChange={(e) => setSearchData(e.target.value)}
               className="block w-[90%] pl-10 text-gray-900 p-2 border-b-2 border-gray-200 focus:border-primary focus:outline-none"
