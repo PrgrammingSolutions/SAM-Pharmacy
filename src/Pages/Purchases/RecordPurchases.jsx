@@ -20,6 +20,8 @@ import doctorService from "../../Services/doctorService";
 import saleService from "../../Services/saleService";
 import MedicineInvoiceModal from "../../Components/MedicineInvoiceModal";
 import { Box, Typography } from "@mui/material";
+import { Eye } from "lucide-react";
+import AddPurchaseModal from "../../Components/AddPurchaseModal";
 
 const RecordPurchases = () => {
   const [salesRows, setSalesRows] = useState([
@@ -49,6 +51,7 @@ const RecordPurchases = () => {
   const [selectedMedicineId, setSelectedMedicineId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [invoiceId, setInvoiceId] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -206,90 +209,59 @@ const RecordPurchases = () => {
             </Grid>
           </Grid>
 
-          <Divider
-            sx={{ my: 3, borderBottomWidth: 1, backgroundColor: "black" }}
-          />
-
-          {salesRows.map((row, index) => (
-            <Grid container spacing={3} key={index} className="my-[20px]">
-              <Grid item xs={4}>
-                <FormControl fullWidth>
-                  <Autocomplete
-                    value={
-                      medicineData.find((med) => med.id === row.stock_id) ||
-                      null
-                    } // Ensure the selected medicine is correctly mapped to `stock_id`
-                    onChange={(e, newValue) => {
-                      handleRowChange(
-                        index,
-                        "stock_id",
-                        newValue ? newValue.id : ""
-                      ); // Update stock_id with the selected medicine's ID
-                    }}
-                    options={medicineData}
-                    getOptionLabel={(option) => option.medicine_name || ""}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Medicine Name" />
-                    )}
-                    required
-                    sx={{
-                      backgroundColor: "white",
-                    }}
-                    disableClearable
-                  />
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={2}>
-                <TextField
-                  label="Quantity"
-                  type="number"
-                  fullWidth
-                  value={row.quantity}
-                  onChange={(e) =>
-                    handleRowChange(index, "quantity", e.target.value)
-                  }
-                  required
-                  sx={{
-                    backgroundColor: "white",
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={2}>
-                <TextField
-                  label="Unit Price"
-                  type="number"
-                  fullWidth
-                  value={row.unit_price}
-                  onChange={(e) =>
-                    handleRowChange(index, "unit_price", e.target.value)
-                  }
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  required
-                  sx={{
-                    backgroundColor: "white",
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <IconButton sx={{ color: "black" }} onClick={handleAddRow}>
-                  <Add />
-                </IconButton>
-                {salesRows.length > 1 && (
-                  <IconButton
-                    sx={{ color: "black" }}
-                    onClick={() => handleRemoveRow(index)}
-                  >
-                    <Remove />
-                  </IconButton>
-                )}
-              </Grid>
-            </Grid>
-          ))}
+           <hr />
+            <div className="flex justify-end mt-6">
+            <button onClick={()=> setIsOpen(true)} className="bg-white text-primary shadow-[2px_2px_6px_rgba(0,0,0,0.2)] px-8 py-3 rounded-lg font-[600] text-[14px]">
+              + Sale Medicine
+            </button>
+            </div>
+           <div className="mt-4">
+          <table className="w-full border-collapse rounded-lg overflow-hidden shadow-xl shadow-gray-300">
+            <thead>
+              <tr className="bg-primary text-white capitalize leading-normal text-left text-xs">
+                <th className="p-4 w-[10%]">
+                  Purchases Id
+                </th>
+                <th className="p-4 w-[20%]">
+                  Supplier Name
+                </th>
+                <th className="p-4 w-[15%]">
+                  Amount
+                </th>
+                <th className="p-4 w-[15%]">
+                  Purchase Date
+                </th>
+                <th className="p-4 w-[15%] text-center">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr
+                  className="text-xs border-t border-gray-200"
+                >
+                  <td className="p-3 pl-4 w-[10%] font-bold text-primary">
+                    1
+                  </td>
+                  <td className="p-3 w-[20%] font-bold">
+                    Panadol
+                  </td>
+                  <td className="p-3 w-[15%]">
+                    10
+                  </td>
+                  <td className="p-3 w-[15%]">
+                    200
+                  </td>
+                  <td className="p-3 w-[15%] text-center">
+                    <button>
+                      <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
+                    </button>
+                  </td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
 
           <div className="text-center my-[30px]">
             <Button
@@ -321,6 +293,10 @@ const RecordPurchases = () => {
         saleDate={saleDate}
         salesRows={salesRows}
         invoiceId={invoiceId}
+      />
+      <AddPurchaseModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
       />
     </>
   );
