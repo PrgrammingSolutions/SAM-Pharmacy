@@ -23,6 +23,7 @@ import RecordSales from "./Pages/Sales/RecordSales";
 import Purchases from "./Pages/Purchases/Purchases";
 import RecordPurchases from "./Pages/Purchases/RecordPurchases";
 import Suppliers from "./Pages/Suppliers/Suppliers";
+import RecordSuppliers from "./Pages/Suppliers/RecordSuppliers";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -71,7 +72,7 @@ function App() {
           <Route path="/customers/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
           {/* suppliers */}
           <Route path="/suppliers" element={isAuthenticated ?  <PortalLayout> <Suppliers /> </PortalLayout>  : <Navigate to="/login" />} /> 
-          <Route path="/suppliers/AddEditMedical" element={isAuthenticated ?  <PortalLayout> <AddEditMedicalStore /> </PortalLayout> : <Navigate to="/login" />} />
+          <Route path="/suppliers/RecordSuppliers" element={isAuthenticated ?  <PortalLayout> <RecordSuppliers /> </PortalLayout> : <Navigate to="/login" />} />
           <Route path="/suppliers/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
           <Route path="/suppliers/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
 
