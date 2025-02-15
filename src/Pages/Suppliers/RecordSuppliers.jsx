@@ -173,87 +173,28 @@ const RecordSuppliers = () => {
           Record Suppliers
         </h1>
         <div className="mt-10">
-          <Grid container spacing={3} className="my-[20px] mb-">
-            <Grid item xs={6}>
-              <TextField
-                label="Dsitributor Name"
-                type="text"
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                required
-                sx={{
-                  backgroundColor: "white",
-                }}
-              />
-            </Grid>
-
-            <Grid item xs={6}>
-              <TextField
-                label="Company Name"
-                type="text"
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                required
-                sx={{
-                  backgroundColor: "white",
-                }}
-              />
-            </Grid>
-
-          </Grid>
-
-          <Grid container spacing={3} className="my-[20px] mb-">
-          
-          <Grid item xs={4}>
-              <TextField
-                label="Address"
-                type="text"
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                required
-                sx={{
-                  backgroundColor: "white",
-                }}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                label="Phone No."
-                type="text"
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                required
-                sx={{
-                  backgroundColor: "white",
-                }}
-              />
-            </Grid>
-
-            <Grid item xs={4}>
-              <TextField
-                label="Email"
-                type="text"
-                fullWidth
-                InputLabelProps={{ shrink: true }}
-                required
-                sx={{
-                  backgroundColor: "white",
-                }}
-              />
-            </Grid>
-
-          </Grid>
-
+         <div>
+         
+          <div className="grid grid-cols-2 gap-3"> 
+          <input type="text" className="bg-gray-50 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none w-full focus:border-primary mt-1" placeholder="Distributer Name"/>
+          <input type="text" className="bg-gray-50 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1" placeholder="Company Name" />
+          </div>
+          <div className="grid grid-cols-3 gap-3 mt-3"> 
+          <input type="text" className="bg-gray-50 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none w-full focus:border-primary mt-1" placeholder="Address" />
+          <input type="phone" className="bg-gray-50 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1" placeholder="Phone No."/>
+          <input type="email" className="bg-gray-50 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1" placeholder="Email"/>
+          </div>
+         </div>
           <div className="text-center my-[30px]">
             <Button
               type="submit"
               variant="contained"
               sx={{
-                backgroundColor: "#1F2937",
-                "&:hover": { backgroundColor: "#111827" },
+                backgroundColor: "#00A95B",
+                "&:hover": { backgroundColor: "#00A95B" },
               }}
             >
-              Save Medicine Sales
+              Add Supplier
             </Button>
           </div>
         </div>
