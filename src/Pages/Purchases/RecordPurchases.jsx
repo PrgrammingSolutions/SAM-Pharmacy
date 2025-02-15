@@ -194,7 +194,7 @@ const RecordPurchases = () => {
            <hr  className="mt-4"/>
             <div className="flex justify-end mt-6">
             <button onClick={()=> setIsOpen(true)} className="bg-white text-primary shadow-[2px_2px_6px_rgba(0,0,0,0.2)] px-8 py-3 rounded-lg font-[600] text-[14px]">
-              + Sale Medicine
+              + Add Medicines
             </button>
             </div>
            <div className="mt-4">
