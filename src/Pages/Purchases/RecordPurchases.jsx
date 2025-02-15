@@ -175,41 +175,23 @@ const RecordPurchases = () => {
         <h1 className="m-[30px] text-center font-[700] text-[20px]">
           Record Medicine Purchases
         </h1>
-        <div className="mt-10">
-          <Grid container spacing={3} className="my-[20px] mb-">
-  
-            <Grid item xs={6}>
-              <TextField
-                label="Customer Name"
-                type="text"
-                fullWidth
-                value={saleDate}
-                onChange={(e) => setSaleDate(e.target.value)}
-                InputLabelProps={{ shrink: true }}
-                required
-                sx={{
-                  backgroundColor: "white",
-                }}
-              />
-            </Grid>
+        <div className="mt-10 pb-4">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="flex flex-col">
+             <label className="font-semibold text-sm">Distributer Name</label>
+             <input type="text" className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1" />
+            </div>
+            <div className="flex flex-col">
+              <label className="font-semibold text-sm">Invoice Date</label>
+              <input type="text" className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1" />
+            </div>
+            <div className="flex flex-col">
+              <label className="font-semibold text-sm">Bill Type</label>
+              <input type="text" className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1" />
+            </div>
+          </div>
 
-            <Grid item xs={6}>
-              <TextField
-                label="Sale Date"
-                type="date"
-                fullWidth
-                value={saleDate}
-                onChange={(e) => setSaleDate(e.target.value)}
-                InputLabelProps={{ shrink: true }}
-                required
-                sx={{
-                  backgroundColor: "white",
-                }}
-              />
-            </Grid>
-          </Grid>
-
-           <hr />
+           <hr  className="mt-4"/>
             <div className="flex justify-end mt-6">
             <button onClick={()=> setIsOpen(true)} className="bg-white text-primary shadow-[2px_2px_6px_rgba(0,0,0,0.2)] px-8 py-3 rounded-lg font-[600] text-[14px]">
               + Sale Medicine
