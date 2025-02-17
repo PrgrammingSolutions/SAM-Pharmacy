@@ -128,7 +128,7 @@ const Purchases = () => {
                     {patient?.price}
                   </td>
                   <td className="p-3 w-[15%] text-center">
-                    <button onClick={ () => handleOpenModal(patient)}>
+                    <button onClick={ () => setModalOpen(true)}>
                       <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
                     </button>
                   </td>
@@ -158,10 +158,11 @@ const Purchases = () => {
           </Stack>
         </div>
       </div>
-
-      <div className="flex justify-center items-center">
-      <InvoicePurchaseModal open={modalOpen} onClose={() => setModalOpen(false)} purchase={selectedPurchase} />
-      </div>
+      <InvoicePurchaseModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        purchase={selectedPurchase}
+      />
             
     </div>
   );

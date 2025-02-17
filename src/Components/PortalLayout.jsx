@@ -140,7 +140,7 @@ export default function PortalLayout({ children }) {
           <div className=" !flex !items-center">
             <CssBaseline />
             <AppBar
-              className={`!bg-[#ffffff] !rounded-md !shadow-none mt-[-7px] ml-3 ${
+              className={`!bg-[#ffffff] !rounded-md !shadow-none mt-[-7px] ml-3 -z-50 ${
                 open ? `!w-[84%]"` : `!w-[96%]`
               }`}
               sx={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)" }}

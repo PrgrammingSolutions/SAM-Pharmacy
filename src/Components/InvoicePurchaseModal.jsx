@@ -1,178 +1,56 @@
 import React from "react";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-  Box,
-  Divider,
-  IconButton,
-  Grid,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 
-const InvoicePurchaseModal = ({ open, onClose, purchase }) => {
-  if (!purchase) return null;
-
+const InvoicePurchaseModal = ({ open, onClose }) => {
+   if(!open) return false
   return (
-    <div className="flex justify-center items-center content-center ml-10">
-      <Dialog
-        open={open}
-        onClose={onClose}
-        fullWidth
-        maxWidth="md"
-        className="ml-40"
-      >
-        <DialogContent>
-          {/* Header */}
-          <Box
-            display="grid"
-            gridTemplateColumns="1fr auto"
-            alignItems="center"
-            mb={2}
-          >
-            <Typography
-              variant="h5"
-              fontWeight="bold"
-              textAlign="center"
-              gridColumn="1 / -1"
-            >
-              Purchase Invoice
-            </Typography>
-
-            <IconButton
-              onClick={onClose}
-              sx={{
-                justifySelf: "end",
-                alignSelf: "start",
-                marginTop: "-35px",
-              }} // Ensure button is centered vertically
-            >
-              <CloseIcon />
-            </IconButton>
-          </Box>
-
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <Box>
-              <Typography variant="h5" fontWeight="bold" color="primary">
-                Pharma Company Name
-              </Typography>
-              <Typography variant="subtitle1">
-                <strong>From:</strong> Pharamceuticals
-              </Typography>
-              <Typography>John Doe</Typography>
-              <Typography>wiz@saldoapps.com</Typography>
-              <Typography>8026979597</Typography>
-              <Typography>First str, 28-32, Chicago, USA</Typography>
-            </Box>
-            <Box>
-              <Typography variant="subtitle1">
-                <strong>Bill to:</strong> {purchase.supplier_name}
-              </Typography>
-              <Typography>{purchase.supplier_email}</Typography>
-              <Typography>{purchase.supplier_contact}</Typography>
-              <Typography>{purchase.supplier_address}</Typography>
-            </Box>
-          </Box>
-
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <Typography>
-              <strong>Invoice No:</strong>1665-8
-            </Typography>
-            <Typography>
-              <strong>Invoice Date:</strong> 12/02/2025
-            </Typography>
-          </Box>
-          <Divider />
-
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <strong>Item Code</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Medicine</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Batch No.</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Qty</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Price</strong>
-                  </TableCell>
-                  <TableCell>
-                    <strong>Amount</strong>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableCell>65656464</TableCell>
-                <TableCell>Panadol Syrup</TableCell>
-                <TableCell>16656-14656</TableCell>
-                <TableCell>150</TableCell>
-                <TableCell>10</TableCell>
-                <TableCell>1500</TableCell>
-              </TableBody>
-              <TableBody>
-                <TableCell>6561416464</TableCell>
-                <TableCell>Caricef Tabs</TableCell>
-                <TableCell>516565-66665</TableCell>
-                <TableCell>300</TableCell>
-                <TableCell>10</TableCell>
-                <TableCell>3000</TableCell>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Divider />
-          <Box mt={2} mr={8} display="flex" justifyContent="flex-end">
-            <Box>
-              <Grid container spacing={1}>
-                <Grid item xs={12} textAlign="right">
-                  <Typography>
-                    <strong>Subtotal:</strong> 4500
-                  </Typography>
-                  <Typography>
-                    <strong>Total:</strong> 4500
-                  </Typography>
-                  <Typography>
-                    <strong>Amount Paid:</strong> 4500
-                  </Typography>
-                  <Typography>
-                    <strong>Balance Due:</strong> Nil
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Box>
-          </Box>
-
-          <Box mt={2} display="flex" justifyContent="flex-start">
-            <Box textAlign="left">
-              <Typography variant="subtitle1" fontWeight="bold">
-                Notes
-              </Typography>
-              <Typography>Supplier from out of City</Typography>
-              <Typography variant="subtitle1" fontWeight="bold">
-                Payment Instruction
-              </Typography>
-              <Typography>Paypal Email: wiz@saldoapps.com</Typography>
-              <Typography>Make Checks Payable to: John Doe</Typography>
-              <Typography>Bank Transfer Account: 061120084</Typography>
-            </Box>
-          </Box>
-        </DialogContent>
-      </Dialog>
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 ml-[240px]"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white px-8 py-6 rounded-2xl w-[50%] shadow-lg"
+      > 
+      <h1 className="text-center font-semibold text-gray-800 text-xl">Purchase Invoice</h1>
+      <h2 className="text-primary font-bold text-lg mt-4">Company Name</h2>
+      <div className="flex justify-between items-center mt-2">
+        <h1 className="font-bold text-gray-700 text-sm">From : <span className="font-normal">Pharmacueticals</span></h1>
+        <h1 className="font-bold text-gray-700 text-sm">Bill To : <span className="font-normal">Pharma Co.</span></h1>
+      </div>
+      <div className="flex flex-col mt-1 gap-1">
+        <h1 className="font-bold text-gray-700 text-sm">Invoice No : <span className="font-normal">143543-453-34</span></h1>
+        <h1 className="font-bold text-gray-700 text-sm">Invoice Date : <span className="font-normal">25/14/02</span></h1>
+      </div>
+      <div className="flex w-full mt-8">
+        <table className="w-full">
+          <thead>
+            <tr className="text-xs font-semibold text-center border-b">
+              <th className="py-2 w-[3%]">Medicine</th>
+              <th className="py-2 w-[1%]">Qty</th>
+              <th className="py-2 w-[3%]">Price</th>
+              <th className="py-2 w-[3%]">Disc Price</th>
+              <th className="py-2 w-[3%]">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="text-center">
+              <td className="border-b-2 py-2 text-gray-700 text-sm">234710</td>
+              <td className="border-b-2 py-2 text-gray-700 text-sm">Paracetamol</td>
+              <td className="border-b-2 py-2 text-gray-700 text-sm">4354322</td>
+              <td className="border-b-2 py-2 text-gray-700 text-sm">5</td>
+              <td className="border-b-2 py-2 text-gray-700 text-sm">$5000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="flex flex-col justify-end items-end mt-10 gap-1">
+        <div>
+          <h1 className="font-bold text-gray-700 text-sm">Sub Total : <span className="font-normal">5000</span></h1>
+          <h1 className="font-bold text-gray-700 text-sm">Discount : <span className="font-normal">225</span></h1>
+          <h1 className="font-bold text-gray-700 text-sm">Total Amount : <span className="font-normal">4775</span></h1>
+          <h1 className="font-bold text-gray-700 text-sm">Paid Amount : <span className="font-normal">4775</span></h1>
+          </div>
+      </div>
+      </div>
     </div>
   );
 };
