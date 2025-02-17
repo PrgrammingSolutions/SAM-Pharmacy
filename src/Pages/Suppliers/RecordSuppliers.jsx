@@ -1,25 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
-  Divider,
-  Grid,
-  TextField,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
-  IconButton,
-  Autocomplete,
 } from "@mui/material";
-import { Add, Remove } from "@mui/icons-material";
 import patientService from "../../Services/patientService";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import medicineService from "../../Services/medicineService";
 import doctorService from "../../Services/doctorService";
-import saleService from "../../Services/saleService";
 import MedicineInvoiceModal from "../../Components/MedicineInvoiceModal";
-import { Box, Typography } from "@mui/material";
 
 const RecordSuppliers = () => {
   const [salesRows, setSalesRows] = useState([

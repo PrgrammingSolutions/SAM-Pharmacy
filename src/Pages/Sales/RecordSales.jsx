@@ -20,8 +20,29 @@ import doctorService from "../../Services/doctorService";
 import saleService from "../../Services/saleService";
 import MedicineInvoiceModal from "../../Components/MedicineInvoiceModal";
 import { Box, Typography } from "@mui/material";
+import AddSaleModal from "../../Components/AddSaleModal";
 
 const SaleMedicine = () => {
+  const [purchases, setPurchases] = useState([
+    {
+      itemCode: "A001",
+      itemName: "Paracetamol",
+      packing: "Box of 10",
+      quantity: 2,
+      discount: "5%",
+      discAmount: "10",
+      netAmount: "190",
+    },
+    {
+      itemCode: "B002",
+      itemName: "Ibuprofen",
+      packing: "Bottle of 100",
+      quantity: 1,
+      discount: "10%",
+      discAmount: "15",
+      netAmount: "135",
+    },
+  ]);
   const [salesRows, setSalesRows] = useState([
     {
       stock_id: "",
@@ -49,6 +70,7 @@ const SaleMedicine = () => {
   const [selectedMedicineId, setSelectedMedicineId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [invoiceId, setInvoiceId] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -165,6 +187,9 @@ const SaleMedicine = () => {
       stock_id: medicine.id,
     }));
   };
+  const handleRemovePurchase = (index) => {
+    setPurchases(purchases.filter((_, i) => i !== index));
+  };
 
   return (
     <>
@@ -173,123 +198,81 @@ const SaleMedicine = () => {
           Record Medicine Sales
         </h1>
         <div className="mt-10">
-          <Grid container spacing={3} className="my-[20px] mb-">
-  
-            <Grid item xs={6}>
-              <TextField
-                label="Customer Name"
+          <div>
+            <div className="grid grid-cols-2 gap-3"> 
+            <div className="flex flex-col">
+              <label className="font-semibold text-sm">Customer Name</label>
+              <input
                 type="text"
-                fullWidth
-                value={saleDate}
-                onChange={(e) => setSaleDate(e.target.value)}
-                InputLabelProps={{ shrink: true }}
-                required
-                sx={{
-                  backgroundColor: "white",
-                }}
+                className="bg-gray-50 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
               />
-            </Grid>
-
-            <Grid item xs={6}>
-              <TextField
-                label="Sale Date"
+            </div>
+            <div className="flex flex-col">
+              <label className="font-semibold text-sm">Sale Date</label>
+              <input
                 type="date"
-                fullWidth
-                value={saleDate}
-                onChange={(e) => setSaleDate(e.target.value)}
-                InputLabelProps={{ shrink: true }}
-                required
-                sx={{
-                  backgroundColor: "white",
-                }}
+                className="bg-gray-50 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
               />
-            </Grid>
-          </Grid>
+            </div>
+            </div>
+          </div>
 
-          <Divider
-            sx={{ my: 3, borderBottomWidth: 1, backgroundColor: "black" }}
-          />
+          <hr className="mt-4" />
 
-          {salesRows.map((row, index) => (
-            <Grid container spacing={3} key={index} className="my-[20px]">
-              <Grid item xs={4}>
-                <FormControl fullWidth>
-                  <Autocomplete
-                    value={
-                      medicineData.find((med) => med.id === row.stock_id) ||
-                      null
-                    } // Ensure the selected medicine is correctly mapped to `stock_id`
-                    onChange={(e, newValue) => {
-                      handleRowChange(
-                        index,
-                        "stock_id",
-                        newValue ? newValue.id : ""
-                      ); // Update stock_id with the selected medicine's ID
-                    }}
-                    options={medicineData}
-                    getOptionLabel={(option) => option.medicine_name || ""}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Medicine Name" />
-                    )}
-                    required
-                    sx={{
-                      backgroundColor: "white",
-                    }}
-                    disableClearable
-                  />
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={2}>
-                <TextField
-                  label="Quantity"
-                  type="number"
-                  fullWidth
-                  value={row.quantity}
-                  onChange={(e) =>
-                    handleRowChange(index, "quantity", e.target.value)
-                  }
-                  required
-                  sx={{
-                    backgroundColor: "white",
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={2}>
-                <TextField
-                  label="Unit Price"
-                  type="number"
-                  fullWidth
-                  value={row.unit_price}
-                  onChange={(e) =>
-                    handleRowChange(index, "unit_price", e.target.value)
-                  }
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  required
-                  sx={{
-                    backgroundColor: "white",
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <IconButton sx={{ color: "black" }} onClick={handleAddRow}>
-                  <Add />
-                </IconButton>
-                {salesRows.length > 1 && (
-                  <IconButton
-                    sx={{ color: "black" }}
-                    onClick={() => handleRemoveRow(index)}
-                  >
-                    <Remove />
-                  </IconButton>
-                )}
-              </Grid>
-            </Grid>
-          ))}
+          <div className="flex justify-end mt-6">
+                      <button
+                        onClick={() => setIsOpen(true)}
+                        type="button"
+                        className="bg-white text-primary shadow-[2px_2px_6px_rgba(0,0,0,0.2)] px-8 py-3 rounded-lg font-[600] text-[14px]"
+                      >
+                        + Add Medicines
+                      </button>
+                    </div>
+          
+                    {/* Table to show added purchases */}
+                    <div className="mt-4">
+                      <table className="w-full border-collapse rounded-lg overflow-hidden shadow-xl shadow-gray-300">
+                        <thead>
+                          <tr className="bg-primary text-white capitalize leading-normal text-left text-xs">
+                          <th className="p-3 w-[5%] whitespace-nowrap">Sr No.</th>
+                          <th className="p-3 w-[10%] whitespace-nowrap">Item Code</th>
+                          <th className="p-3 w-[15%] whitespace-nowrap">Description</th>
+                          <th className="p-3 w-[13%] whitespace-nowrap">Paking</th>
+                          <th className="p-3 w-[8%] whitespace-nowrap">Quantity</th>
+                          <th className="p-3 w-[8%] whitespace-nowrap">Discount</th>
+                          <th className="p-3 w-[8%] whitespace-nowrap">Disc Amount</th>
+                          <th className="p-3 w-[10%] whitespace-nowrap">Net Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {purchases.length > 0 ? (
+                            purchases.map((purchase, index) => (
+                              <tr key={index} className="text-xs border-t border-gray-200">
+                                <td className="p-2 font-bold text-primary">{index + 1}</td>
+                                <td className="p-2">{purchase.itemCode}</td>
+                                <td className="p-2">{purchase.itemName}</td>
+                                <td className="p-2">{purchase.packing}</td>
+                                <td className="p-2">{purchase.quantity}</td>
+                                <td className="p-2">{purchase.discount}</td>
+                                <td className="p-2">{purchase.discAmount}</td>
+                                <td className="p-2">{purchase.netAmount}</td>
+                                <td className="p-2 text-center">
+                                  <IconButton onClick={() => handleRemovePurchase(index)} color="error">
+                                    <Remove />
+                                  </IconButton>
+                                </td>
+                              </tr>
+                            ))
+                          ) : (
+                            <tr>
+                              <td colSpan="9" className="text-center p-4 text-gray-500">
+                                No purchases added yet.
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
 
           <div className="text-center my-[30px]">
             <Button
@@ -322,6 +305,7 @@ const SaleMedicine = () => {
         salesRows={salesRows}
         invoiceId={invoiceId}
       />
+      <AddSaleModal isOpen={isOpen} onClose={() => setIsOpen(false)}/>
     </>
   );
 };
