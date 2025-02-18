@@ -1,6 +1,6 @@
 import React from "react";
 
-const InvoicePurchaseModal = ({ open, onClose }) => {
+const InvoiceSaleModal = ({ open, onClose }) => {
    if(!open) return false
   return (
     <div
@@ -11,12 +11,8 @@ const InvoicePurchaseModal = ({ open, onClose }) => {
       <div
         className="bg-white px-8 py-6 rounded-2xl w-[50%] shadow-lg"
       > 
-      <h1 className="text-center font-semibold text-gray-800 text-xl">Purchase Invoice</h1>
-      <h2 className="text-primary font-bold text-lg mt-4">Company Name</h2>
-      <div className="flex justify-between items-center mt-2">
-        <h1 className="font-bold text-gray-700 text-sm">From : <span className="font-normal">Pharmacueticals</span></h1>
-        <h1 className="font-bold text-gray-700 text-sm">Bill To : <span className="font-normal">Pharma Co.</span></h1>
-      </div>
+      <h1 className="text-center font-semibold text-gray-800 text-xl">Sale Invoice</h1>
+      <h2 className="text-primary font-bold text-lg mt-4">Customer Name</h2>
       <div className="flex flex-col mt-1 gap-1">
         <h1 className="font-bold text-gray-700 text-sm">Invoice No : <span className="font-normal">143543-453-34</span></h1>
         <h1 className="font-bold text-gray-700 text-sm">Invoice Date : <span className="font-normal">25/14/02</span></h1>
@@ -55,4 +51,4 @@ const InvoicePurchaseModal = ({ open, onClose }) => {
   );
 };
 
-export default InvoicePurchaseModal;
+export default InvoiceSaleModal;

@@ -8,6 +8,7 @@ import medicineService from "../../Services/medicineService";
 import { Eye } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import InvoiceSaleModal from "../../Components/InvoiceSaleModal";
 
 const Sales = () => {
   const [searchData, setSearchData] = useState("");
@@ -17,6 +18,7 @@ const Sales = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const getMedicines = async () => {
@@ -123,7 +125,7 @@ const Sales = () => {
                     {patient?.price}
                   </td>
                   <td className="p-3 w-[15%] text-center">
-                    <button>
+                    <button onClick={()=> setIsOpen(true)}>
                       <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
                     </button>
                   </td>
@@ -154,6 +156,10 @@ const Sales = () => {
         </div>
 
       </div>
+      <InvoiceSaleModal
+        open={isOpen}
+        onClose={()=> setIsOpen(false)}
+      />
     </div>
   );
 };
