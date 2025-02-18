@@ -75,16 +75,16 @@ const RecordPurchases = () => {
             <div className="flex flex-col">
               <label className="font-semibold text-sm">Invoice Date</label>
               <input
-                type="text"
+                type="date"
                 className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
               />
             </div>
             <div className="flex flex-col">
               <label className="font-semibold text-sm">Bill Type</label>
-              <input
-                type="text"
-                className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
-              />
+              <select className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1">
+                <option value="cash">Cash</option>
+                <option value="credit">Credit</option>
+              </select>
             </div>
           </div>
 
