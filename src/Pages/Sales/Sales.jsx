@@ -45,7 +45,6 @@ const Sales = () => {
     setCurrentPage(1);
   }, [searchData, records]);
 
-  
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -59,9 +58,7 @@ const Sales = () => {
   return (
     <div>
       <div className="p-4">
-        <h1 className="ml-[3%] text-[19px] text-gray-700 font-[700]">
-          Sales
-        </h1>
+        <h1 className="ml-[3%] text-[19px] text-gray-700 font-[700]">Sales</h1>
         <h1 className="ml-[3%] text-[13px] text-gray-700 mb-4">
           {filteredData?.length || 0} records found
         </h1>
@@ -89,21 +86,11 @@ const Sales = () => {
           <table className="w-full border-collapse rounded-lg overflow-hidden shadow-xl shadow-gray-300">
             <thead>
               <tr className="bg-primary text-white capitalize leading-normal text-xs text-left">
-                <th className="p-4 w-[10%]">
-                  Sale
-                </th>
-                <th className="p-4 w-[25%]">
-                  Customer Name
-                </th>
-                <th className="p-4 w-[15%]">
-                  Amount
-                </th>
-                <th className="p-4 w-[15%]">
-                  Sale Date
-                </th>
-                <th className="p-4 w-[15%] text-center">
-                  Action
-                </th>
+                <th className="p-4 w-[10%]">Sale</th>
+                <th className="p-4 w-[25%]">Customer Name</th>
+                <th className="p-4 w-[15%]">Amount</th>
+                <th className="p-4 w-[15%]">Sale Date</th>
+                <th className="p-4 w-[15%] text-center">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -121,9 +108,7 @@ const Sales = () => {
                   <td className="p-3 w-[15%] text-left">
                     {patient?.quantity_in_stock}
                   </td>
-                  <td className="p-3 w-[15%] text-left">
-                    {patient?.price}
-                  </td>
+                  <td className="p-3 w-[15%] text-left">{patient?.price}</td>
                   <td className="p-3 w-[15%] text-center">
                     <button onClick={()=> setIsOpen(true)}>
                       <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
@@ -134,16 +119,8 @@ const Sales = () => {
             </tbody>
           </table>
         </div>
-{/* 
-        <PaginationComponent
-          filteredData={filteredData}
-          setPaginatedData={setPaginatedData}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        /> */}
 
-<div className="flex justify-center my-4">
+        <div className="flex justify-center my-4">
           <Stack spacing={2}>
             <Pagination
               count={Math.ceil(filteredData.length / itemsPerPage)}
@@ -154,7 +131,6 @@ const Sales = () => {
             />
           </Stack>
         </div>
-
       </div>
       <InvoiceSaleModal
         open={isOpen}

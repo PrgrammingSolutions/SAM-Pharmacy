@@ -104,18 +104,18 @@ const RecordPurchases = () => {
             <table className="w-full border-collapse rounded-lg overflow-hidden shadow-xl shadow-gray-300">
               <thead>
                 <tr className="bg-primary text-white capitalize leading-normal text-left text-xs">
-                <th className="p-2 w-[5%] whitespace-nowrap">Sr No.</th>
-                <th className="p-2 w-[10%] whitespace-nowrap">Item Code</th>
-                <th className="p-2 w-[15%] whitespace-nowrap">Item Name</th>
-                <th className="p-2 w-[12%] whitespace-nowrap">Purchase Date</th>
-                <th className="p-2 w-[10%] whitespace-nowrap">Batch No.</th>
-                <th className="p-2 w-[8%] whitespace-nowrap">Quantity</th>
-                <th className="p-2 w-[8%] whitespace-nowrap">Pack</th>
-                <th className="p-2 w-[8%] whitespace-nowrap">Box</th>
-                <th className="p-2 w-[10%] whitespace-nowrap">Unit Price</th>
-                <th className="p-2 w-[10%] whitespace-nowrap">Pack Price</th>
-                <th className="p-2 w-[10%] whitespace-nowrap">Total Amount</th>
-                <th className="p-2 w-[8%] whitespace-nowrap">Action</th>
+                <th className="p-3 w-[5%] whitespace-nowrap">Sr No.</th>
+                <th className="p-3 w-[10%] whitespace-nowrap">Item Code</th>
+                <th className="p-3 w-[15%] whitespace-nowrap">Item Name</th>
+                <th className="p-3 w-[12%] whitespace-nowrap">Purchase Date</th>
+                <th className="p-3 w-[10%] whitespace-nowrap">Batch No.</th>
+                <th className="p-3 w-[8%] whitespace-nowrap">Quantity</th>
+                <th className="p-3 w-[8%] whitespace-nowrap">Pack</th>
+                <th className="p-3 w-[8%] whitespace-nowrap">Box</th>
+                <th className="p-3 w-[10%] whitespace-nowrap">Unit Price</th>
+                <th className="p-3 w-[10%] whitespace-nowrap">Pack Price</th>
+                <th className="p-3 w-[10%] whitespace-nowrap">Total Amount</th>
+                <th className="p-3 w-[8%] whitespace-nowrap">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -151,13 +151,13 @@ const RecordPurchases = () => {
             </table>
           </div>
 
-          <div className="text-center my-[30px]">
+          <div className="text-center my-[36px]">
             <Button
               type="submit"
               variant="contained"
               sx={{
-                backgroundColor: "#1F2937",
-                "&:hover": { backgroundColor: "#111827" },
+                backgroundColor: "#00A95B",
+                "&:hover": { backgroundColor: "#00A95D" },
               }}
             >
               Generate Purchase Invoice
