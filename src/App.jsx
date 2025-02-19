@@ -24,6 +24,7 @@ import Purchases from "./Pages/Purchases/Purchases";
 import RecordPurchases from "./Pages/Purchases/RecordPurchases";
 import Suppliers from "./Pages/Suppliers/Suppliers";
 import RecordSuppliers from "./Pages/Suppliers/RecordSuppliers";
+import SupplierLedger from "./Pages/Suppliers/SupplierLedger";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -76,6 +77,7 @@ function App() {
           <Route path="/suppliers/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
           <Route path="/suppliers/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
 
+          <Route path="/suppliers/supplierledger" element={isAuthenticated ?  <PortalLayout> <SupplierLedger /> </PortalLayout> : <Navigate to="/login" />} />
           </Routes>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Tooltip } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 import PaginationComponent from "../../Components/PaginationComponent";
 import toast from "react-hot-toast";
 import medicineService from "../../Services/medicineService";
@@ -53,6 +53,8 @@ const Suppliers = () => {
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
   };
+
+  const navigation = useNavigate();
 
   return (
     <div>
@@ -123,7 +125,7 @@ const Suppliers = () => {
                     {patient?.price}
                   </td>
                   <td className="p-3 w-[15%] text-center">
-                    <button>
+                    <button onClick={()=> navigation('/suppliers/supplierledger')}>
                       <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
                     </button>
                   </td>
