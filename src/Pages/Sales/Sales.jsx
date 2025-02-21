@@ -63,12 +63,12 @@ const Sales = () => {
           {filteredData?.length || 0} records found
         </h1>
 
-        <div className="flex mt-8 flex-row-reverse justify-between px-[3%]">
-          <Link to="RecordSales">
+        <div className="flex mt-8 flex-row justify-between px-[3%]">
+          {/* <Link to="RecordSales">
             <button className="bg-white text-primary shadow-[2px_2px_6px_rgba(0,0,0,0.2)] px-8 py-3 rounded-lg font-[600] text-[14px]">
               + Sale Medicine
             </button>
-          </Link>
+          </Link> */}
 
           <div className="w-[40%]">
             <input
