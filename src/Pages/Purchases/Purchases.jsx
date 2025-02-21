@@ -9,6 +9,8 @@ import { Eye } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import InvoicePurchaseModal from "../../Components/InvoicePurchaseModal";
+import purchaseService from "../../Services/purchaseService";
+import moment from "moment";
 
 const Purchases = () => {
   const [searchData, setSearchData] = useState("");
@@ -22,19 +24,19 @@ const Purchases = () => {
   const [selectedPurchase, setSelectedPurchase] = useState(null);
 
   useEffect(() => {
-    const getMedicines = async () => {
+    const getPurchases = async () => {
       try {
         setLoading(true);
-        const response = await medicineService.fetchAll();
+        const response = await purchaseService.fetchAll();
         console.log(response);
-        setRecords(response.medicines);
+        setRecords(response.purchases);
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        toast.error("Error fetching Patients");
+        toast.error("Error fetching Purhases");
       }
     };
-    getMedicines();
+    getPurchases();
   }, []);
 
   useEffect(() => {
@@ -122,10 +124,10 @@ const Purchases = () => {
                     {patient?.medicine_name}
                   </td>
                   <td className="p-3 w-[15%]">
-                    {patient?.quantity_in_stock}
+                    {patient?.amount}
                   </td>
                   <td className="p-3 w-[15%]">
-                    {patient?.price}
+                    {moment(patient?.date).format("ll")}
                   </td>
                   <td className="p-3 w-[15%] text-center">
                     <button onClick={ () => setModalOpen(true)}>

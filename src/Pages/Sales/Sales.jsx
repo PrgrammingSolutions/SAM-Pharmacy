@@ -32,7 +32,7 @@ const Sales = () => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        toast.error("Error fetching Patients");
+        toast.error("Error fetching Sales");
       }
     };
     getSales();
