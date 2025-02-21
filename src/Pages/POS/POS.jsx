@@ -22,6 +22,7 @@ import MedicineInvoiceModal from "../../Components/MedicineInvoiceModal";
 import { Box, Typography } from "@mui/material";
 import { Eye, SearchIcon } from "lucide-react";
 import AddPurchaseModal from "../../Components/AddPurchaseModal";
+import productService from "../../Services/productService";
 
 const POS = () => {
 
@@ -31,6 +32,8 @@ const POS = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [purchases, setPurchases] = useState([]);
+  const [medicines, setMedicines] = useState([])
+  const [search, setSearch] = useState("")
 
   const handleAddPurchase = (newPurchase) => {
     setPurchases([...purchases, newPurchase]);
@@ -38,15 +41,16 @@ const POS = () => {
   };
 
     useEffect(() => {
-    const getPatients = async () => {
+    const getMedicines = async () => {
       try {
-        const response = await patientService.fetchAllPatients();
-        setPatients(response.patients);
+        const response = await productService.fetchAll();
+        console.log(response)
+        setMedicines(response.products);
       } catch (error) {
-        toast.error("Error fetching Patients");
+        toast.error("Error fetching Medicines");
       }
     };
-    getPatients();
+    getMedicines();
   }, []);
 
   const closeModal = () => {
@@ -56,6 +60,12 @@ const POS = () => {
   const handleRemovePurchase = (index) => {
     setPurchases(purchases.filter((_, i) => i !== index));
   };
+
+  const handleAddItem = (item) => {
+    let array = [...purchases]
+    array.push({id:1})
+    setPurchases(array)
+  }
 
   return (
     <>
@@ -83,15 +93,67 @@ const POS = () => {
 
           <hr className="mt-4" />
           <div className="flex justify-between mt-6">
-          <div className="flex flex-row items-center border-b-2 border-gray-300 w-[40%] focus:border-primary">
-            <SearchIcon className="text-gray-400 mr-2" />
+          <div className="flex flex-col items-center border-b-2 border-gray-300 w-[40%] focus:border-primary">
             <input
               type="search"
-              placeholder="Search Purchases Here..."
+              placeholder="Search Medicines Here..."
               className="block w-[90%] focus:outline-none"
+              onChange={(e) => setSearch(e.target.value)}
             />
+            {search && (
+                <div className="w-full relative">
+                  <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-2">
+                    <li className="px-4 py-2 font-bold bg-gray-100">
+                      <table className="w-full">
+                        <thead>
+                        <tr>
+                          <th className="text-sm font-bold">Medicine</th>
+                          <th className="text-sm font-bold">Code</th>
+                          <th className="text-sm font-bold">Weight</th>
+                        </tr>
+                        </thead>
+                      </table>
+                    </li>
+
+                    {medicines
+                        .filter(
+                            (medicine) =>
+                                medicine.medicine_name
+                                    ?.toLowerCase()
+                                    .includes(search.toLowerCase()) ||
+                                medicine.item_code
+                                    ?.toString()
+                                    .toLowerCase()
+                                    .includes(search.toLowerCase())
+                        )
+                        .slice(0, 10)
+                        .map((medicine) => (
+                            <li
+                                key={medicine.id}
+                                className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                                // onClick={() => handlePatientSelect(patient)}
+                            >
+                              <table className="w-full">
+                                <tbody>
+                                <tr>
+                                  <td className="text-sm">{medicine.medicine_name}</td>
+                                  <td className="text-sm text-gray-600 px-10">
+                                    {medicine.item_code}
+                                  </td>
+                                  <td className="text-sm text-gray-600">
+                                    {medicine.weight}
+                                  </td>
+                                </tr>
+                                </tbody>
+                              </table>
+                            </li>
+                        ))}
+                  </ul>
+                </div>
+            )}
           </div>
             <button
+                onClick={() => handleAddItem(null)}
               type="button"
               className="bg-white text-primary shadow-[2px_2px_6px_rgba(0,0,0,0.2)] px-8 py-3 rounded-lg font-[600] text-[14px]"
             >
