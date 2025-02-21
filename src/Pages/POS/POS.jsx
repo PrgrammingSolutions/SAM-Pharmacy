@@ -27,6 +27,7 @@ import distributorServices from "../../Services/distributorServices";
 import moment from "moment/moment";
 import purchaseService from "../../Services/purchaseService";
 import salesService from "../../Services/salesService";
+import InvoiceSaleModal from "../../Components/InvoiceSaleModal"
 
 const POS = () => {
   const [patients, setPatients] = useState([]);
@@ -37,14 +38,23 @@ const POS = () => {
   const [search, setSearch] = useState("");
   const [searchDistributor, setSearchDistributor] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [purchase, setPurchase] = useState({
-    customer_name: 0,
+    customer_name: "",
+    customer_age: "",
+    customer_phone: "",
     amount: 0,
     date: 0,
     note: ""
   })
   const [products, setProducts] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleSelectDistributor = (medicine) => {
+    setPurchase(p => ({...p, supplier_id: medicine.id}))
+    setSearchDistributor(medicine.name); // Set selected value in input
+    setShowDropdown(false); // Hide dropdown
+  };
 
   const handleAddPurchase = (newProduct) => {
     setProducts([...products, newProduct]);
@@ -155,8 +165,7 @@ const POS = () => {
               <input
                 type="name"
                 className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
-                onChange={(e) => {
-                  setSearchDistributor(e.target.value);
+                onChange={(e) => {setPurchase(p => ({ ...p, customer_name: e.target.value }))
                 }}
               />
             </div>
@@ -357,6 +366,11 @@ const POS = () => {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onSave={handleAddPurchase}
+      />
+
+      <InvoiceSaleModal
+        open={open}
+        onClose={()=> setOpen(false)}
       />
     </>
   );
