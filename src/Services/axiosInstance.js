@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'http://119.73.122.118/api',
-    
+    baseURL: 'http://119.73.122.118/test',
+
     headers: {
         'Content-Type': 'application/json',
     },
@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     (config) => {
-      
+
         if (config.data instanceof FormData) {
             config.headers['Content-Type'] = 'multipart/form-data';
         }
@@ -27,7 +27,7 @@ axiosInstance.interceptors.response.use(
     },
     (error) => {
         if (error.response && error.response.status === 401) {
-        
+
         }
         return Promise.reject(error);
     }
