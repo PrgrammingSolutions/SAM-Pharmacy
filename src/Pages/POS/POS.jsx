@@ -26,6 +26,7 @@ import productService from "../../Services/productService";
 import distributorServices from "../../Services/distributorServices";
 import moment from "moment/moment";
 import purchaseService from "../../Services/purchaseService";
+import InvoiceSaleModal from "../../Components/InvoiceSaleModal";
 
 const POS = () => {
   const [patients, setPatients] = useState([]);
@@ -44,6 +45,7 @@ const POS = () => {
   })
   const [products, setProducts] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleSelectDistributor = (medicine) => {
     setPurchase(p => ({...p, supplier_id: medicine.id}))
@@ -345,7 +347,7 @@ const POS = () => {
             <Button
               type="submit"
               variant="contained"
-              onClick={(e) => handleSubmit(e)}
+              onClick={() => setOpen(true)}
               sx={{
                 backgroundColor: "#00A95B",
                 "&:hover": { backgroundColor: "#00A95D" },
@@ -362,6 +364,11 @@ const POS = () => {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onSave={handleAddPurchase}
+      />
+
+      <InvoiceSaleModal
+        open={open}
+        onClose={()=> setOpen(false)}
       />
     </>
   );
