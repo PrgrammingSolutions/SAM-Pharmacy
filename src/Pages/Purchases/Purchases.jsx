@@ -42,7 +42,7 @@ const Purchases = () => {
   useEffect(() => {
     const filteredResult =
       records?.filter((item) =>
-        item?.medicine_name?.toLowerCase().includes(searchData.toLowerCase())
+        item?.name?.toLowerCase().includes(searchData.toLowerCase())
       ) || [];
     setFilteredData(filteredResult);
     setCurrentPage(1);
@@ -94,11 +94,14 @@ const Purchases = () => {
           <table className="w-full border-collapse rounded-lg overflow-hidden shadow-xl shadow-gray-300">
             <thead>
               <tr className="bg-primary text-white capitalize leading-normal text-left text-xs">
-                <th className="p-4 w-[10%]">
+                <th className="p-4 w-[15%]">
                   Purchases Id
                 </th>
                 <th className="p-4 w-[20%]">
                   Supplier Name
+                </th>
+                <th className="p-4 w-[15%]">
+                  Company Name
                 </th>
                 <th className="p-4 w-[15%]">
                   Amount
@@ -117,11 +120,14 @@ const Purchases = () => {
                   key={patient?.patient_id}
                   className="text-xs border-t border-gray-200"
                 >
-                  <td className="p-3 pl-4 w-[10%] font-bold text-primary">
+                  <td className="p-3 pl-4 w-[15%] font-bold text-primary">
                     {index + 1}.
                   </td>
                   <td className="p-3 w-[20%] font-bold">
-                    {patient?.medicine_name}
+                    {patient?.name}
+                  </td>
+                  <td className="p-3 w-[15%]">
+                    {patient?.company}
                   </td>
                   <td className="p-3 w-[15%]">
                     {patient?.amount}
