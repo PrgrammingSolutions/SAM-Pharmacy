@@ -109,9 +109,9 @@ const Purchases = () => {
                 <th className="p-4 w-[15%]">
                   Purchase Date
                 </th>
-                <th className="p-4 w-[15%] text-center">
+                {/* <th className="p-4 w-[15%] text-center">
                   Action
-                </th>
+                </th> */}
               </tr>
             </thead>
             <tbody>
@@ -135,11 +135,11 @@ const Purchases = () => {
                   <td className="p-3 w-[15%]">
                     {moment(patient?.date).format("ll")}
                   </td>
-                  <td className="p-3 w-[15%] text-center">
+                  {/* <td className="p-3 w-[15%] text-center">
                     <button onClick={ () => setModalOpen(true)}>
                       <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
