@@ -4,7 +4,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import PaginationComponent from "../../Components/PaginationComponent";
 import toast from "react-hot-toast";
-import medicineService from "../../Services/medicineService";
 import { Eye } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
@@ -21,6 +20,7 @@ const Sales = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedSale, setSelectedSale] = useState(null);
 
   useEffect(() => {
     const getSales = async () => {
@@ -57,6 +57,20 @@ const Sales = () => {
     setCurrentPage(page);
   };
 
+  const handleViewInvoice = async (saleId) => {
+    try {
+      setLoading(true);
+      const response = await salesService.fetchSingle(saleId);
+      console.log("Selected Sale Details:", response.sale);
+      setSelectedSale(response.sale);
+      setIsOpen(true);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      toast.error("Error fetching sale details");
+    }
+  };
+
   return (
     <div>
       <div className="p-4">
@@ -66,12 +80,6 @@ const Sales = () => {
         </h1>
 
         <div className="flex mt-8 flex-row justify-between px-[3%]">
-          {/* <Link to="RecordSales">
-            <button className="bg-white text-primary shadow-[2px_2px_6px_rgba(0,0,0,0.2)] px-8 py-3 rounded-lg font-[600] text-[14px]">
-              + Sale Medicine
-            </button>
-          </Link> */}
-
           <div className="w-[40%]">
             <input
               type="search"
@@ -96,23 +104,20 @@ const Sales = () => {
               </tr>
             </thead>
             <tbody>
-              {paginatedData?.map((patient, index) => (
-                <tr
-                  key={patient?.patient_id}
-                  className="text-xs border-t border-gray-200"
-                >
+              {paginatedData?.map((sale, index) => (
+                <tr key={sale?.id} className="text-xs border-t border-gray-200">
                   <td className="p-3 w-[10%] text-left font-bold text-primary">
                     {index + 1}.
                   </td>
                   <td className="p-3 w-[25%] text-left font-bold">
-                    {patient?.customer_name}
+                    {sale?.customer_name}
                   </td>
+                  <td className="p-3 w-[15%] text-left">{sale?.amount}</td>
                   <td className="p-3 w-[15%] text-left">
-                    {patient?.amount}
+                    {moment(sale.date).format("ll")}
                   </td>
-                  <td className="p-3 w-[15%] text-left">{moment(patient.date).format("ll")}</td>
                   <td className="p-3 w-[15%] text-center">
-                    <button onClick={()=> setIsOpen(true)}>
+                    <button onClick={() => handleViewInvoice(sale.id)}>
                       <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
                     </button>
                   </td>
@@ -134,10 +139,7 @@ const Sales = () => {
           </Stack>
         </div>
       </div>
-      <InvoiceSaleModal
-        open={isOpen}
-        onClose={()=> setIsOpen(false)}
-      />
+      <InvoiceSaleModal open={isOpen} onClose={() => setIsOpen(false)} sale={selectedSale} />
     </div>
   );
 };
