@@ -108,14 +108,15 @@ const POS = () => {
                 <th className="p-3 w-[8%] whitespace-nowrap">Quantity</th>
                 <th className="p-3 w-[10%] whitespace-nowrap">Discount</th>
                 <th className="p-3 w-[10%] whitespace-nowrap">Net Amount</th>
+                <th className="p-3 w-[5%] whitespace-nowrap">Remove</th>
                 </tr>
               </thead>
               <tbody>
-                {purchases.length > 0 ? (
+                {purchases.length <= 0 ? (
                   purchases.map((purchase, index) => (
                     <tr key={index} className="text-xs border-t border-gray-200">
                       <td className="p-3 w-[5%] font-bold">{purchase.itemCode}</td>
-                      <td className="p-3 w-[10%]"><input type="number" />hel</td>
+                      <td className="p-3 w-[10%]"><input type="number" /></td>
                       <td className="p-3 w-[10%]"><input type="number" /></td>
                       <td className="p-3 w-[10%]">{purchase.totalAmount}</td>
                       <td className="p-3 w-[10%] text-center">
