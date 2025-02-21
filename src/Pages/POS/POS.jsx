@@ -26,6 +26,7 @@ import productService from "../../Services/productService";
 import distributorServices from "../../Services/distributorServices";
 import moment from "moment/moment";
 import purchaseService from "../../Services/purchaseService";
+import salesService from "../../Services/salesService";
 
 const POS = () => {
   const [patients, setPatients] = useState([]);
@@ -45,12 +46,6 @@ const POS = () => {
   const [products, setProducts] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const handleSelectDistributor = (medicine) => {
-    setPurchase(p => ({...p, supplier_id: medicine.id}))
-    setSearchDistributor(medicine.name); // Set selected value in input
-    setShowDropdown(false); // Hide dropdown
-  };
-
   const handleAddPurchase = (newProduct) => {
     setProducts([...products, newProduct]);
     setIsOpen(false);
@@ -67,7 +62,7 @@ const POS = () => {
 
   const getMedicines = async () => {
     try {
-      const response = await productService.fetchAll();
+      const response = await productService.fetchMedicines();
       setMedicines(response.products);
     } catch (error) {
       toast.error("Error fetching Medicines");
@@ -105,8 +100,8 @@ const POS = () => {
       box: 1,
       unit_price: medicine.unit_price || 0,
       packPrice: medicine.pack_price || 0,
-      sale_price: 0,
-      total_price: medicine.unit_price * medicine.quantity || 0,
+      sale_price: medicine.sale_price,
+      total_price: medicine.sale_price * 1 || 0,
     };
 
     setProducts([...products, newProduct]);
@@ -141,7 +136,7 @@ const POS = () => {
     let submit = {...purchase}
     submit.amount = totalAmount
     submit.products = products
-    purchaseService.create(submit).then(res => {
+    salesService.create(submit).then(res => {
       console.log("chala gya")
     })
   }
