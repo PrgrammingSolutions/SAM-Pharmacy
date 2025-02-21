@@ -50,7 +50,7 @@ function App() {
 
   return (
 
-          <Routes>
+          <Routes basename={"/pharmacy"}>
 
           <Route path="/" element={<Navigate to="/pos" replace />} />
           <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/pos" />} />
