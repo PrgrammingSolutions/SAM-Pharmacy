@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import PaginationComponent from "../../Components/PaginationComponent";
 import toast from "react-hot-toast";
 import medicineService from "../../Services/medicineService";
+import productService from "../../Services/productService";
 
 const MedicalStore = () => {
   const [searchData, setSearchData] = useState("");
@@ -19,7 +20,7 @@ const MedicalStore = () => {
     const getMedicines = async () => {
       try {
         setLoading(true);
-        const response = await medicineService.fetchAll();
+        const response = await productService.fetchAll();
         console.log(response); 
         setRecords(response.medicines); 
         setLoading(false);

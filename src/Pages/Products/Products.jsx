@@ -23,9 +23,9 @@ const Products = () => {
         const getMedicines = async () => {
             try {
                 setLoading(true);
-                const response = await medicineService.fetchAll();
+                const response = await productService.fetchAll();
                 console.log(response);
-                setRecords(response.medicines);
+                setRecords(response.products);
                 setLoading(false);
             } catch (error) {
                 setLoading(false);
@@ -66,7 +66,7 @@ const Products = () => {
                     {filteredData?.length || 0} records found
                 </h1>
 
-                <div className="flex mt-8 flex-row justify-between px-[3%]">
+                <div className="flex mt-8 flex-row justify-between items-center px-[3%]">
                     <div className="w-[40%]">
                         <input
                             type="search"
@@ -77,7 +77,7 @@ const Products = () => {
                         />
                         <SearchIcon className="mt-[-4rem] text-gray-400 ml-2" />
                     </div>
-                    <div className="flex justify-end mt-6">
+                    <div className="flex justify-end">
                         <button
                             onClick={() => setIsOpen(true)}
                             type="button"
@@ -100,20 +100,23 @@ const Products = () => {
                                 Medicine Name
                             </th>
                             <th className="p-4 w-[15%]">
+                                Item Code
+                            </th>
+                            <th className="p-4 w-[15%]">
+                                Batch No.
+                            </th>
+                            <th className="p-4 w-[15%]">
                                 Qty
                             </th>
                             <th className="p-4 w-[15%]">
                                 Price
-                            </th>
-                            <th className="p-4 w-[15%]">
-                                Supplier Name
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         {paginatedData?.map((patient, index) => (
                             <tr
-                                key={patient?.patient_id}
+                                key={patient?.id}
                                 className="text-xs border-t border-gray-200"
                             >
                                 <td className="p-4 w-[10%] font-bold text-primary">
@@ -123,13 +126,16 @@ const Products = () => {
                                     {patient?.medicine_name}
                                 </td>
                                 <td className="p-4 w-[15%]">
-                                    {patient?.quantity_in_stock}
+                                    {patient?.item_code}
                                 </td>
                                 <td className="p-4 w-[15%]">
-                                    {patient?.price}
+                                    {patient?.batch_no}
                                 </td>
                                 <td className="p-4 w-[15%]">
-                                    {patient?.supplier_name}
+                                    {patient?.box_quantity}
+                                </td>
+                                <td className="p-4 w-[15%]">
+                                  {patient.unit_price * patient.box_quantity}
                                 </td>
                             </tr>
                         ))}
