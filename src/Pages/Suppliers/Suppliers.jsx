@@ -8,6 +8,7 @@ import medicineService from "../../Services/medicineService";
 import { Eye } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import distributorServices from "../../Services/distributorServices";
 
 const Suppliers = () => {
   const [searchData, setSearchData] = useState("");
@@ -19,19 +20,19 @@ const Suppliers = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const getMedicines = async () => {
+    const getDistributors = async () => {
       try {
         setLoading(true);
-        const response = await medicineService.fetchAll();
+        const response = await distributorServices.fetchAll();
         console.log(response);
-        setRecords(response.medicines);
+        setRecords(response.distributors);
         setLoading(false);
       } catch (error) {
         setLoading(false);
         toast.error("Error fetching Patients");
       }
     };
-    getMedicines();
+    getDistributors();
   }, []);
 
   useEffect(() => {
@@ -90,7 +91,7 @@ const Suppliers = () => {
             <thead>
               <tr className="bg-primary text-white capitalize leading-normal text-xs text-left">
                 <th className="p-4 w-[10%]">
-                  Sale
+                  Id
                 </th>
                 <th className="p-4 w-[25%]">
                   Supplier Name
@@ -109,20 +110,20 @@ const Suppliers = () => {
             <tbody>
               {paginatedData?.map((patient, index) => (
                 <tr
-                  key={patient?.patient_id}
+                  key={patient?.id}
                   className="text-xs border-t border-gray-200"
                 >
                   <td className="p-3 w-[10%] text-left font-bold text-primary">
                     {index + 1}.
                   </td>
                   <td className="p-3 w-[25%] text-left font-bold">
-                    {patient?.medicine_name}
+                    {patient?.name}
                   </td>
                   <td className="p-3 w-[15%] text-left">
-                    {patient?.quantity_in_stock}
+                    {patient?.phone}
                   </td>
                   <td className="p-3 w-[15%] text-left">
-                    {patient?.price}
+                    {patient?.address}
                   </td>
                   <td className="p-3 w-[15%] text-center">
                     <button onClick={()=> navigation('/suppliers/supplierledger')}>

@@ -70,7 +70,7 @@ const RecordPurchases = () => {
       itemCode: medicine.item_code,
       itemName: medicine.medicine_name,
       purchaseDate: new Date().toISOString().split("T")[0],
-      batchNo: "",
+      batchNo: medicine.batch_no,
       quantity: 1,
       pack: 1,
       box: 1,
@@ -170,6 +170,9 @@ const RecordPurchases = () => {
                                   </td>
                                   <td className="text-sm text-gray-600 px-10">
                                     {medicine.item_code}
+                                  </td>
+                                  <td className="text-sm text-gray-600">
+                                    {medicine.batch_no}
                                   </td>
                                   <td className="text-sm text-gray-600">
                                     {medicine.weight}
