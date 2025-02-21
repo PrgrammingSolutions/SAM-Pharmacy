@@ -7,7 +7,8 @@ const AddMedicineModal = ({ isOpen, onClose, onSave }) => {
     batch_no: "",
     weight: "",
     box_quantity: "",
-    unit_price: ""
+    unit_price: 0.00,
+    pack_quantity: "",
   });
 
   const [isPlaceholder, setIsPlaceholder] = useState(true);
@@ -26,7 +27,6 @@ const AddMedicineModal = ({ isOpen, onClose, onSave }) => {
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 ml-[240px]"
-      onClick={onClose}
     >
       <div
         className="bg-white px-8 py-6 rounded-2xl w-[70%] shadow-lg"
@@ -85,10 +85,10 @@ const AddMedicineModal = ({ isOpen, onClose, onSave }) => {
 
           <input
             type="number"
-            name="unit_price"
+            name="pack_quantity"
             onChange={handleChange}
             className="bg-gray-50 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary"
-            placeholder="Unit Price"
+            placeholder="Pack Quantity"
           />
         </div>
 
