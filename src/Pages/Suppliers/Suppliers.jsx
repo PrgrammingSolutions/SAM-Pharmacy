@@ -19,6 +19,8 @@ const Suppliers = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  
+
   useEffect(() => {
     const getDistributors = async () => {
       try {
@@ -29,7 +31,7 @@ const Suppliers = () => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        toast.error("Error fetching Patients");
+        toast.error("Error fetching Suppliers");
       }
     };
     getDistributors();
@@ -38,13 +40,14 @@ const Suppliers = () => {
   useEffect(() => {
     const filteredResult =
       records?.filter((item) =>
-        item?.medicine_name?.toLowerCase().includes(searchData.toLowerCase())
+        item?.name?.toLowerCase().includes(searchData.toLowerCase())
       ) || [];
     setFilteredData(filteredResult);
     setCurrentPage(1);
   }, [searchData, records]);
 
-  
+
+
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -144,7 +147,7 @@ const Suppliers = () => {
           setCurrentPage={setCurrentPage}
         /> */}
 
-<div className="flex justify-center my-4">
+      <div className="flex justify-center my-4">
           <Stack spacing={2}>
             <Pagination
               count={Math.ceil(filteredData.length / itemsPerPage)}
