@@ -53,9 +53,8 @@ function App() {
           <Routes>
 
           <Route path="/" element={<Navigate to="/dispenser" replace />} />
-          <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/dispenser" />} />
+          <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/pos" />} />
           {/* Medicines */}
-          <Route path="/dispenser" element={isAuthenticated ?  <PortalLayout> <MedicinesStock/> </PortalLayout>  : <Navigate to="/login" />} />
           <Route path="/products" element={isAuthenticated ?  <PortalLayout> <Products/> </PortalLayout>  : <Navigate to="/login" />} />
           <Route path="/dispenser/AddEditMedical" element={isAuthenticated ?  <PortalLayout> <AddEditMedicalStore /> </PortalLayout> : <Navigate to="/login" />} />
           <Route path="/dispenser/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
