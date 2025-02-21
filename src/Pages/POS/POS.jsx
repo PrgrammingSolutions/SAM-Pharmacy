@@ -13,6 +13,7 @@ import moment from "moment/moment";
 import purchaseService from "../../Services/purchaseService";
 import salesService from "../../Services/salesService";
 import InvoiceSaleModal from "../../Components/InvoiceSaleModal"
+import { useNavigate } from "react-router-dom";
 
 const POS = () => {
   const [patients, setPatients] = useState([]);
@@ -32,6 +33,8 @@ const POS = () => {
   })
   const [products, setProducts] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSelectDistributor = (medicine) => {
     setPurchase(p => ({...p, supplier_id: medicine.id}))
@@ -126,7 +129,7 @@ const POS = () => {
     submit.amount = totalAmount
     submit.products = products
     salesService.create(submit).then(res => {
-      console.log("chala gya")
+      navigate("/sales")
     })
   }
 
@@ -335,7 +338,7 @@ const POS = () => {
                 "&:hover": { backgroundColor: "#00A95D" },
               }}
             >
-              Generate Purchase Invoice
+              Generate Sale
             </Button>
           </div>
         </div>
