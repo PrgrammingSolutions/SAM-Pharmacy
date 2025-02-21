@@ -1,6 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
-const saleService = {
+const salesService = {
     create: async (payload) => {
         try {
             const response = await axiosInstance.post('/pharmacySale/create', payload);
@@ -44,4 +44,4 @@ const saleService = {
 
 };
 
-export default saleService;
+export default salesService;

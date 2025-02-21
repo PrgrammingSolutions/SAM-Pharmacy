@@ -11,7 +11,8 @@ import productService from "../../Services/productService";
 import distributorServices from "../../Services/distributorServices";
 import moment from "moment/moment";
 import purchaseService from "../../Services/purchaseService";
-import InvoiceSaleModal from "../../Components/InvoiceSaleModal";
+import salesService from "../../Services/salesService";
+import InvoiceSaleModal from "../../Components/InvoiceSaleModal"
 
 const POS = () => {
   const [patients, setPatients] = useState([]);
@@ -20,15 +21,17 @@ const POS = () => {
   const [search, setSearch] = useState("");
   const [searchDistributor, setSearchDistributor] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [purchase, setPurchase] = useState({
-    customer_name: 0,
+    customer_name: "",
+    customer_age: "",
+    customer_phone: "",
     amount: 0,
     date: 0,
     note: ""
   })
   const [products, setProducts] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [open, setOpen] = useState(false);
 
   const handleSelectDistributor = (medicine) => {
     setPurchase(p => ({...p, supplier_id: medicine.id}))
@@ -52,7 +55,7 @@ const POS = () => {
 
   const getMedicines = async () => {
     try {
-      const response = await productService.fetchAll();
+      const response = await productService.fetchMedicines();
       setMedicines(response.products);
     } catch (error) {
       toast.error("Error fetching Medicines");
@@ -86,8 +89,8 @@ const POS = () => {
       box: 1,
       unit_price: medicine.unit_price || 0,
       packPrice: medicine.pack_price || 0,
-      sale_price: 0,
-      total_price: medicine.unit_price * medicine.quantity || 0,
+      sale_price: medicine.sale_price,
+      total_price: medicine.sale_price * 1 || 0,
     };
 
     setProducts([...products, newProduct]);
@@ -122,7 +125,7 @@ const POS = () => {
     let submit = {...purchase}
     submit.amount = totalAmount
     submit.products = products
-    purchaseService.create(submit).then(res => {
+    salesService.create(submit).then(res => {
       console.log("chala gya")
     })
   }
@@ -141,8 +144,7 @@ const POS = () => {
               <input
                 type="name"
                 className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
-                onChange={(e) => {
-                  setSearchDistributor(e.target.value);
+                onChange={(e) => {setPurchase(p => ({ ...p, customer_name: e.target.value }))
                 }}
               />
             </div>

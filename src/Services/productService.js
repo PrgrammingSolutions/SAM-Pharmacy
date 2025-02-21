@@ -25,6 +25,14 @@ const productService = {
             throw error.response.data;
         }
     },
+    fetchMedicines: async () => {
+        try {
+            const response = await axiosInstance.get('/pharmacyProduct/medicines');
+            return response.data;
+        } catch (error) {
+            throw error.response.data;
+        }
+    },
     update: async (id, payload) => {
         try {
             const response = await axiosInstance.put('/pharmacyProduct/update/' + id, payload);
