@@ -9,6 +9,8 @@ import { Eye } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import InvoiceSaleModal from "../../Components/InvoiceSaleModal";
+import salesService from "../../Services/salesService";
+import moment from "moment";
 
 const Sales = () => {
   const [searchData, setSearchData] = useState("");
@@ -21,25 +23,25 @@ const Sales = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const getMedicines = async () => {
+    const getSales = async () => {
       try {
         setLoading(true);
-        const response = await medicineService.fetchAll();
+        const response = await salesService.fetchAll();
         console.log(response);
-        setRecords(response.medicines);
+        setRecords(response.sales);
         setLoading(false);
       } catch (error) {
         setLoading(false);
         toast.error("Error fetching Patients");
       }
     };
-    getMedicines();
+    getSales();
   }, []);
 
   useEffect(() => {
     const filteredResult =
       records?.filter((item) =>
-        item?.medicine_name?.toLowerCase().includes(searchData.toLowerCase())
+        item?.customer_name?.toLowerCase().includes(searchData.toLowerCase())
       ) || [];
     setFilteredData(filteredResult);
     setCurrentPage(1);
@@ -103,12 +105,12 @@ const Sales = () => {
                     {index + 1}.
                   </td>
                   <td className="p-3 w-[25%] text-left font-bold">
-                    {patient?.medicine_name}
+                    {patient?.customer_name}
                   </td>
                   <td className="p-3 w-[15%] text-left">
-                    {patient?.quantity_in_stock}
+                    {patient?.amount}
                   </td>
-                  <td className="p-3 w-[15%] text-left">{patient?.price}</td>
+                  <td className="p-3 w-[15%] text-left">{moment(patient.date).format("ll")}</td>
                   <td className="p-3 w-[15%] text-center">
                     <button onClick={()=> setIsOpen(true)}>
                       <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
