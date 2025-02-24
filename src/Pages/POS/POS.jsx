@@ -94,6 +94,7 @@ const POS = () => {
       packPrice: medicine.pack_price || 0,
       sale_price: medicine.sale_price,
       total_price: medicine.sale_price * 1 || 0,
+      stock_id: medicine.stock_id
     };
 
     setProducts([...products, newProduct]);
@@ -160,7 +161,7 @@ const POS = () => {
                 onChange={(e) => setPurchase(p => ({ ...p, date: moment(e.target.value).format("YYYY-MM-DD")}))}
               />
             </div>
-            
+
           </div>
 
           <hr className="mt-4" />
@@ -231,7 +232,7 @@ const POS = () => {
                   </div>
                 )}
               </div>
-              {/* 
+              {/*
               <button
                 onClick={() => setIsOpen(true)}
                 type="button"
@@ -301,7 +302,7 @@ const POS = () => {
                         name="expiry_date"
                         className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-24"
                         onChange={(e) => handleQuantity(index, "expiry_date", e.target.value)}/>
-                        </td>                   
+                        </td>
                         <td className="p-3 w-[10%] font-bold">
                         {product.sale_price}
                       </td>
