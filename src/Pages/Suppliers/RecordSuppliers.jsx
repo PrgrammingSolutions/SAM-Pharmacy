@@ -32,6 +32,27 @@ const RecordSuppliers = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!data.name) {
+      toast.error("Distributor Name is required");
+      return;
+    }
+    if (!data.company) {
+      toast.error("Company Name is required");
+      return;
+    }
+    if (!data.address) {
+      toast.error("Address is required");
+      return;
+    }
+    if (!data.phone) {
+      toast.error("Phone Number is required");
+      return;
+    }
+    if (!data.email) {
+      toast.error("Email is required");
+      return;
+    }
     try {
       await distributorServices.create(data);
       toast.success("Supplier Added Successfully");
