@@ -15,7 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MedicationIcon from "@mui/icons-material/Medication"
+import MedicationIcon from "@mui/icons-material/Medication";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -25,7 +25,7 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import toast from "react-hot-toast";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 // import {
 //   SESSION_IS_AUTHENTICATED,
@@ -105,6 +105,7 @@ export default function PortalLayout({ children }) {
   //const [auth, setAuth] = useState(sessionStorage.getItem(SESSION_IS_AUTHENTICATED));
   const navigate = useNavigate();
   const location = useLocation();
+  const [showAccounts, setShowAccounts] = useState(false)
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -114,13 +115,12 @@ export default function PortalLayout({ children }) {
     setIsOpen(!isOpen);
   };
 
-
   const handleLogout = () => {
-    localStorage.removeItem('user')
-    Cookies.remove('RVkXIOQUNVU1RPTUVSLUFVVEhFTlRJQ0FUSU9OIMSLQ1JFVC1L=')
-    toast.success("Logout Successfully")
-    navigate('/login', { replace: true });
-  }
+    localStorage.removeItem("user");
+    Cookies.remove("RVkXIOQUNVU1RPTUVSLUFVVEhFTlRJQ0FUSU9OIMSLQ1JFVC1L=");
+    toast.success("Logout Successfully");
+    navigate("/login", { replace: true });
+  };
 
   const [userEmail, setUserEmail] = useState("");
 
@@ -156,7 +156,6 @@ export default function PortalLayout({ children }) {
                   <MenuIcon className="text-gray-600 mt-[4px]" />
                 </IconButton>
                 <div className="ml-auto flex gap-2 items-center">
-
                   <div className="flex items-center gap-2">
                     <AccountCircleIcon
                       className="text-gray-600 "
@@ -222,12 +221,14 @@ export default function PortalLayout({ children }) {
                 <img
                   src={logo}
                   alt=""
-                  className={`${open ? "w-[6rem]" : "w-[5rem]"} ml-auto mr-auto my-4`}
+                  className={`${
+                    open ? "w-[6rem]" : "w-[5rem]"
+                  } ml-auto mr-auto my-4`}
                 />
               </div>
               <div>
                 <ul className="w-[100%]">
-                <li>
+                  <li>
                     <div
                       onClick={() => navigate("/pos")}
                       className={`flex items-center p-2 cursor-pointer text-gray-600 mt-3 h-[2.6rem] ${
@@ -393,6 +394,76 @@ export default function PortalLayout({ children }) {
                       </span>
                     </div>
                   </li>
+                  <li>
+                    <div
+                      onClick={() => setShowAccounts(!showAccounts)}
+                      className={`flex items-center p-2 mr-2 cursor-pointer text-gray-600 mt-3 h-[2.6rem] transition-all duration-300
+      ${
+        location.pathname.startsWith("/accounts")
+          ? "bg-primary text-white font-[600] rounded-md"
+          : ""
+      }
+      ${open ? "ml-6" : "ml-0"}`}
+                    >
+                      <MedicationIcon
+                        className={`!text-5xl ${
+                          open ? "mr-4" : "mr-auto ml-2 hover:!text-[3.5rem]"
+                        } rounded-full p-[12px] ml-[-1.2rem] ${
+                          location.pathname.startsWith("/accounts")
+                            ? "bg-primary text-white"
+                            : ""
+                        }`}
+                        sx={{
+                          boxShadow: location.pathname.startsWith("/accounts")
+                            ? "2px 5px 10px rgba(0, 0, 0, 0.2)"
+                            : "",
+                        }}
+                      />
+                      <span
+                        className={`flex-1 font-[600] text-left ml-[2px] text-[13px] ${
+                          !open ? "hidden" : "block"
+                        }`}
+                      >
+                        Accounts
+                      </span>
+                    </div>
+
+                    {/* Subfolder Items */}
+                    {showAccounts && open && (
+                      <ul className="ml-12 mt-2 space-y-1">
+                        <li
+                          onClick={() => navigate("/accounts")}
+                          className={`cursor-pointer text-gray-600 w-[80%] text-xs font-bold p-2 pl-4 rounded-md ${
+                            location.pathname === "/accounts"
+                              ? "bg-primary text-white"
+                              : "hover:bg-gray-100"
+                          }`}
+                        >
+                          Income
+                        </li>
+                        <li
+                          onClick={() => navigate("/accounts/expense")}
+                          className={`cursor-pointer text-gray-600 text-xs w-[80%] font-bold p-2 pl-4 rounded-md ${
+                            location.pathname === "/accounts/expense"
+                              ? "bg-primary text-white"
+                              : "hover:bg-gray-100"
+                          }`}
+                        >
+                          Expense
+                        </li>
+                        <li
+                          onClick={() => navigate("/accounts/return")}
+                          className={`cursor-pointer text-gray-600 text-xs w-[80%] font-bold p-2 pl-4 rounded-md ${
+                            location.pathname === "/accounts/return"
+                              ? "bg-primary text-white"
+                              : "hover:bg-gray-100"
+                          }`}
+                        >
+                          Return
+                        </li>
+                      </ul>
+                    )}
+                  </li>
                 </ul>
               </div>
             </Drawer>
@@ -414,4 +485,3 @@ export default function PortalLayout({ children }) {
     </>
   );
 }
-

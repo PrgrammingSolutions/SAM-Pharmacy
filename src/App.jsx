@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./index.css";
 import {
   Navigate,
   Route,
   Routes,
-  Redirect,
   useLocation,
   useNavigate,
 } from "react-router-dom";
@@ -16,7 +14,6 @@ import MedicinesStock from "./Pages/Medicines/MedicinesStock";
 import SaleMedicine from "./Pages/Medicines/SaleMedicine";
 import Login from "./Pages/Login/Login";
 import AddEditMedicalStore from "./Pages/Medicines/AddEditMedicalStore";
-import { Toaster } from "react-hot-toast";
 import SaleServices from "./Pages/Medicines/SaleServices";
 import Sales from "./Pages/Sales/Sales";
 import RecordSales from "./Pages/Sales/RecordSales";
@@ -27,6 +24,9 @@ import RecordSuppliers from "./Pages/Suppliers/RecordSuppliers";
 import SupplierLedger from "./Pages/Suppliers/SupplierLedger";
 import POS from "./Pages/POS/POS";
 import Products from "./Pages/Products/Products";
+import Income from "./Pages/Accounts/Income";
+import Expense from "./Pages/Accounts/Expense";
+import Return from "./Pages/Accounts/Return";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -81,6 +81,9 @@ function App() {
 
           <Route path="/suppliers/supplierledger" element={isAuthenticated ?  <PortalLayout> <SupplierLedger /> </PortalLayout> : <Navigate to="/login" />} />
           <Route path="/pos" element={isAuthenticated ?  <PortalLayout> <POS /> </PortalLayout> : <Navigate to="/login" />} />
+          <Route path="/accounts" element={isAuthenticated ?  <PortalLayout> <Income /> </PortalLayout> : <Navigate to="/login" />} />
+          <Route path="/accounts/expense" element={isAuthenticated ?  <PortalLayout> <Expense /> </PortalLayout> : <Navigate to="/login" />} />
+          <Route path="/accounts/return" element={isAuthenticated ?  <PortalLayout> <Return /> </PortalLayout> : <Navigate to="/login" />} />
           </Routes>
   );
 }
