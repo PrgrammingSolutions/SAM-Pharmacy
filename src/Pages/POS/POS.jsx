@@ -114,6 +114,7 @@ const POS = () => {
         if (value <= 0 || isNaN(value)) {
           toast.error("Quantity must be greater than zero");
           return products;
+
         }
         q = value;
       } else if (name === "sale_price") {
@@ -148,6 +149,7 @@ const POS = () => {
     submit.products = products
     salesService.create(submit).then(res => {
       navigate("/sales")
+      toast.success("Sale Created Successfully");
     })
   }
 
