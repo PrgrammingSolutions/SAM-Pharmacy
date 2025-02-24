@@ -129,7 +129,7 @@ const Suppliers = () => {
                     {patient?.address}
                   </td>
                   <td className="p-3 w-[15%] text-center">
-                    <button onClick={()=> navigation('/suppliers/supplierledger')}>
+                    <button onClick={()=> navigation(`/suppliers/supplierledger/${patient.id}`)}>
                       <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
                     </button>
                   </td>
@@ -138,14 +138,6 @@ const Suppliers = () => {
             </tbody>
           </table>
         </div>
-{/* 
-        <PaginationComponent
-          filteredData={filteredData}
-          setPaginatedData={setPaginatedData}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        /> */}
 
       <div className="flex justify-center my-4">
           <Stack spacing={2}>

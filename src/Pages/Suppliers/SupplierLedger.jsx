@@ -1,21 +1,42 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import { useParams } from "react-router-dom";
+import distributorServices from '../../Services/distributorServices'
 
 const SupplierLedger = () => {
+    const { id } = useParams();
+    const [supplier, setSupplier] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchSupplier = async () => {
+          try {
+            const response = await distributorServices.fetchSingle(id);
+            setSupplier(response.distributor);
+          } catch (error) {
+            console.error("Error fetching supplier details:", error);
+          } finally {
+            setLoading(false);
+          }
+        };
+    
+        fetchSupplier();
+      }, [id]);
+
   return (
     <div>
       <div className='flex justify-center items-center'>
         <div className="bg-white shadow-lg p-8 w-[90%] mt-2 border-gray-300 border-2 rounded-3xl">
             <div className="flex flex-col">
                 <div className="text-primary text-2xl font-bold">
-                    Supplier Name
+                 {supplier?.company}
                 </div>
-                <div className="text-base text-gray-500 font-semibold mt-2">Company Name</div>
+                <div className="text-base text-gray-500 font-semibold mt-2">{supplier?.name} </div>
 
-                <div className="text-base font-semibold text-gray-500">Supplier Country </div>
+                <div className="text-base font-semibold text-gray-500">{supplier?.phone}</div>
 
-                <div className="text-base font-semibold text-gray-500">
+                <div className="text-base text-gray-500">
                     {" "}
-                    Supplier Address
+                    {supplier?.address}
                 </div>
             </div>
         </div>

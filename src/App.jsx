@@ -76,7 +76,7 @@ function App() {
           {/* suppliers */}
           <Route path="/suppliers" element={isAuthenticated ?  <PortalLayout> <Suppliers /> </PortalLayout>  : <Navigate to="/login" />} />
           <Route path="/suppliers/RecordSuppliers" element={isAuthenticated ?  <PortalLayout> <RecordSuppliers /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/suppliers/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
+          <Route path="/suppliers/SupplierLedger/:id" element={isAuthenticated ?  <PortalLayout> <SupplierLedger /> </PortalLayout> : <Navigate to="/login" />} />
           <Route path="/suppliers/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
 
           <Route path="/suppliers/supplierledger" element={isAuthenticated ?  <PortalLayout> <SupplierLedger /> </PortalLayout> : <Navigate to="/login" />} />
