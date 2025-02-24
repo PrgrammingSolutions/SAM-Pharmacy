@@ -110,10 +110,19 @@ const POS = () => {
       const array = [...products]
       let q = array[index].quantity
       let p = array[index].sale_price
-      if (name === "quantity"){
-        q = value
-      } else if (name === "sale_price"){
-        p = value
+      // if (name === "quantity"){
+      //   q = value
+      // } else if (name === "sale_price"){
+      //   p = value
+      // }
+      if (name === "quantity") {
+        if (value <= 0 || isNaN(value)) {
+          toast.error("Quantity must be greater than zero");
+          return products; 
+        }
+        q = value;
+      } else if (name === "sale_price") {
+        p = value;
       }
       array[index] = { ...array[index], [name]: value, total_price: p * q }
       return array
@@ -144,6 +153,7 @@ const POS = () => {
     submit.products = products
     salesService.create(submit).then(res => {
       navigate("/sales")
+      toast.success("Sale Created Successfully");
     })
   }
 

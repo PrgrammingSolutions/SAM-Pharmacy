@@ -124,10 +124,14 @@ const RecordPurchases = () => {
       const array = [...products]
       let q = array[index].quantity
       let p = array[index].unit_price
-      if (name === "quantity"){
-        q = value
-      } else if (name === "unit_price"){
-        p = value
+      if (name === "quantity") {
+        if (value <= 0 || isNaN(value)) {
+          toast.error("Quantity must be greater than zero");
+          return products; 
+        }
+        q = value;
+      } else if (name === "unit_price") {
+        p = value;
       }
       array[index] = { ...array[index], [name]: value, total_price: p * q }
       return array
@@ -136,6 +140,19 @@ const RecordPurchases = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!purchase.supplier_id) {
+      toast.error("Distributor Name is required");
+      return;
+    }
+    if (!purchase.date) {
+      toast.error("Invoice Date is required");
+      return;
+    }
+    if (products.length === 0) {
+      toast.error("At least one medicine must be added");
+      return;
+    }
+
     let totalAmount = 0;
     for (let product of products) {
       totalAmount += product.total_price
@@ -145,6 +162,7 @@ const RecordPurchases = () => {
     submit.products = products
     purchaseService.create(submit).then(res => {
       navigate("/purchases")
+      toast.success("Purchase Created Successfully");
     })
   }
 
