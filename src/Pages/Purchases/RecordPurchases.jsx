@@ -45,6 +45,8 @@ const RecordPurchases = () => {
   const [products, setProducts] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleSelectDistributor = (medicine) => {
     setPurchase(p => ({...p, supplier_id: medicine.id}))
     setSearchDistributor(medicine.name); // Set selected value in input
@@ -142,7 +144,7 @@ const RecordPurchases = () => {
     submit.amount = totalAmount
     submit.products = products
     purchaseService.create(submit).then(res => {
-      console.log("chala gya")
+      navigate("/purchases")
     })
   }
 

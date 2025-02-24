@@ -50,9 +50,9 @@ function App() {
 
   return (
 
-          <Routes>
+          <Routes basename={"/pharmacy"}>
 
-          <Route path="/" element={<Navigate to="/dispenser" replace />} />
+          <Route path="/" element={<Navigate to="/pos" replace />} />
           <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/pos" />} />
           {/* Medicines */}
           <Route path="/products" element={isAuthenticated ?  <PortalLayout> <Products/> </PortalLayout>  : <Navigate to="/login" />} />

@@ -45,7 +45,7 @@ const Login = () => {
       // Update authentication state in App component
       setIsAuthenticated(true); // This will trigger the redirect
       // Redirect to /receptionist after successful login
-      navigate("/dispenser");
+      navigate("/pos");
     } catch (error) {
       toast.error(error.message || "Login failed. Please try again.");
     }

@@ -13,6 +13,7 @@ import moment from "moment/moment";
 import purchaseService from "../../Services/purchaseService";
 import salesService from "../../Services/salesService";
 import InvoiceSaleModal from "../../Components/InvoiceSaleModal"
+import { useNavigate } from "react-router-dom";
 
 const POS = () => {
   const [patients, setPatients] = useState([]);
@@ -32,6 +33,8 @@ const POS = () => {
   })
   const [products, setProducts] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSelectDistributor = (medicine) => {
     setPurchase(p => ({...p, supplier_id: medicine.id}))
@@ -91,6 +94,7 @@ const POS = () => {
       packPrice: medicine.pack_price || 0,
       sale_price: medicine.sale_price,
       total_price: medicine.sale_price * 1 || 0,
+      stock_id: medicine.stock_id
     };
 
     setProducts([...products, newProduct]);
@@ -126,7 +130,7 @@ const POS = () => {
     submit.amount = totalAmount
     submit.products = products
     salesService.create(submit).then(res => {
-      console.log("chala gya")
+      navigate("/sales")
     })
   }
 
@@ -157,7 +161,7 @@ const POS = () => {
                 onChange={(e) => setPurchase(p => ({ ...p, date: moment(e.target.value).format("YYYY-MM-DD")}))}
               />
             </div>
-            
+
           </div>
 
           <hr className="mt-4" />
@@ -228,7 +232,7 @@ const POS = () => {
                   </div>
                 )}
               </div>
-              {/* 
+              {/*
               <button
                 onClick={() => setIsOpen(true)}
                 type="button"
@@ -298,7 +302,7 @@ const POS = () => {
                         name="expiry_date"
                         className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-24"
                         onChange={(e) => handleQuantity(index, "expiry_date", e.target.value)}/>
-                        </td>                   
+                        </td>
                         <td className="p-3 w-[10%] font-bold">
                         {product.sale_price}
                       </td>
@@ -335,7 +339,7 @@ const POS = () => {
                 "&:hover": { backgroundColor: "#00A95D" },
               }}
             >
-              Generate Purchase Invoice
+              Generate Sale
             </Button>
           </div>
         </div>
