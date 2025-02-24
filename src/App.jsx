@@ -42,11 +42,11 @@ function App() {
   useEffect(() => {
     const token = Cookies.get("RVkXIOQUNVU1RPTUVSLUFVVEhFTlRJQ0FUSU9OIMSLQ1JFVC1L=");
     if (token) {
-      setIsAuthenticated(true);  // User is authenticated
+      setIsAuthenticated(true);  
     } else {
-      setIsAuthenticated(false); // No token found, set to false
+      setIsAuthenticated(false); 
     }
-  }, [location.pathname]);  // Check authentication on path change
+  }, [location.pathname]);  
 
   return (
 

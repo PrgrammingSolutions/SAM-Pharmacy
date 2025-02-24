@@ -122,6 +122,19 @@ const POS = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!purchase.customer_name) {
+      toast.error("Customer Name is required");
+      return;
+    }
+    if (!purchase.date) {
+      toast.error("Invoice Date is required");
+      return;
+    }
+    if (products.length === 0) {
+      toast.error("At least one medicine must be added");
+      return;
+    }
+
     let totalAmount = 0;
     for (let product of products) {
       totalAmount += product.total_price
