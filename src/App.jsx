@@ -56,9 +56,9 @@ function App() {
           <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/pos" />} />
           {/* Medicines */}
           <Route path="/products" element={isAuthenticated ?  <PortalLayout> <Products/> </PortalLayout>  : <Navigate to="/login" />} />
-          <Route path="/dispenser/AddEditMedical" element={isAuthenticated ?  <PortalLayout> <AddEditMedicalStore /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/dispenser/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/dispenser/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
+          <Route path="/pharmacy/AddEditMedical" element={isAuthenticated ?  <PortalLayout> <AddEditMedicalStore /> </PortalLayout> : <Navigate to="/login" />} />
+          <Route path="/pharmacy/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
+          <Route path="/pharmacy/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
           {/* Sales */}
           <Route path="/sales" element={isAuthenticated ?  <PortalLayout> <Sales /> </PortalLayout>  : <Navigate to="/login" />} />
           <Route path="/sales/RecordSales" element={isAuthenticated ?  <PortalLayout> <RecordSales /> </PortalLayout> : <Navigate to="/login" />} />
