@@ -42,11 +42,11 @@ function App() {
   useEffect(() => {
     const token = Cookies.get("RVkXIOQUNVU1RPTUVSLUFVVEhFTlRJQ0FUSU9OIMSLQ1JFVC1L=");
     if (token) {
-      setIsAuthenticated(true);  // User is authenticated
+      setIsAuthenticated(true);  
     } else {
-      setIsAuthenticated(false); // No token found, set to false
+      setIsAuthenticated(false); 
     }
-  }, [location.pathname]);  // Check authentication on path change
+  }, [location.pathname]);  
 
   return (
 
@@ -56,9 +56,9 @@ function App() {
           <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/pos" />} />
           {/* Medicines */}
           <Route path="/products" element={isAuthenticated ?  <PortalLayout> <Products/> </PortalLayout>  : <Navigate to="/login" />} />
-          <Route path="/dispenser/AddEditMedical" element={isAuthenticated ?  <PortalLayout> <AddEditMedicalStore /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/dispenser/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/dispenser/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
+          <Route path="/pharmacy/AddEditMedical" element={isAuthenticated ?  <PortalLayout> <AddEditMedicalStore /> </PortalLayout> : <Navigate to="/login" />} />
+          <Route path="/pharmacy/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
+          <Route path="/pharmacy/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
           {/* Sales */}
           <Route path="/sales" element={isAuthenticated ?  <PortalLayout> <Sales /> </PortalLayout>  : <Navigate to="/login" />} />
           <Route path="/sales/RecordSales" element={isAuthenticated ?  <PortalLayout> <RecordSales /> </PortalLayout> : <Navigate to="/login" />} />
@@ -76,7 +76,7 @@ function App() {
           {/* suppliers */}
           <Route path="/suppliers" element={isAuthenticated ?  <PortalLayout> <Suppliers /> </PortalLayout>  : <Navigate to="/login" />} />
           <Route path="/suppliers/RecordSuppliers" element={isAuthenticated ?  <PortalLayout> <RecordSuppliers /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/suppliers/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
+          <Route path="/suppliers/SupplierLedger/:id" element={isAuthenticated ?  <PortalLayout> <SupplierLedger /> </PortalLayout> : <Navigate to="/login" />} />
           <Route path="/suppliers/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
 
           <Route path="/suppliers/supplierledger" element={isAuthenticated ?  <PortalLayout> <SupplierLedger /> </PortalLayout> : <Navigate to="/login" />} />
