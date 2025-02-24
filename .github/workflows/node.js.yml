@@ -29,7 +29,7 @@ jobs:
           echo "${{ secrets.ENVIRONMENT }}" > .env
     
     - name: Install binaries
-      run: npm ci
+      run: npm install
       
     - name: Build Packages
       run: npm run build
