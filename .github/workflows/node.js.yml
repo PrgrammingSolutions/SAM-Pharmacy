@@ -45,4 +45,4 @@ jobs:
     - name: Application Logs
       run: |
           sleep 10                       # Wait for 10 seconds
-          nginx -t
+          sudo nginx -t
