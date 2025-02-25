@@ -12,7 +12,7 @@ const loginService = {
 
     fetchById: async (id) => {
         try {
-            const response = await axiosInstance.get(`/dispense/id/${id}`);
+            const response = await axiosInstance.get(`/dispenser/id/${id}`);
             return response.data;
         } catch (error) {
             throw error.response?.data || error.message;
