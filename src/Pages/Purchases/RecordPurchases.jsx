@@ -40,15 +40,15 @@ const RecordPurchases = () => {
     supplier_id: 0,
     amount: 0,
     date: 0,
-    note: ""
-  })
+    note: "",
+  });
   const [products, setProducts] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSelectDistributor = (medicine) => {
-    setPurchase(p => ({...p, supplier_id: medicine.id}))
+    setPurchase((p) => ({ ...p, supplier_id: medicine.id }));
     setSearchDistributor(medicine.name); // Set selected value in input
     setShowDropdown(false); // Hide dropdown
   };
@@ -120,26 +120,26 @@ const RecordPurchases = () => {
   };
 
   const handleQuantity = (index, name, value) => {
-    setProducts(products => {
-      const array = [...products]
-      let q = array[index].quantity
-      let p = array[index].unit_price
+    setProducts((products) => {
+      const array = [...products];
+      let q = array[index].quantity;
+      let p = array[index].unit_price;
       if (name === "quantity") {
         if (value <= 0 || isNaN(value)) {
           toast.error("Quantity must be greater than zero");
-          return products; 
+          return products;
         }
         q = value;
       } else if (name === "unit_price") {
         p = value;
       }
-      array[index] = { ...array[index], [name]: value, total_price: p * q }
-      return array
-    })
-  }
+      array[index] = { ...array[index], [name]: value, total_price: p * q };
+      return array;
+    });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!purchase.supplier_id) {
       toast.error("Distributor Name is required");
       return;
@@ -155,16 +155,16 @@ const RecordPurchases = () => {
 
     let totalAmount = 0;
     for (let product of products) {
-      totalAmount += product.total_price
+      totalAmount += product.total_price;
     }
-    let submit = {...purchase}
-    submit.amount = totalAmount
-    submit.products = products
-    purchaseService.create(submit).then(res => {
-      navigate("/purchases")
+    let submit = { ...purchase };
+    submit.amount = totalAmount;
+    submit.products = products;
+    purchaseService.create(submit).then((res) => {
+      navigate("/purchases");
       toast.success("Purchase Created Successfully");
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -174,80 +174,85 @@ const RecordPurchases = () => {
         </h1>
         <div className="mt-10 pb-4">
           <div className="grid grid-cols-2 gap-3">
-          <div className="flex flex-col">
-    <label className="font-semibold text-sm">Distributor Name</label>
-    <input
-      type="search"
-      placeholder="Search Distributor Here..."
-      className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
-      value={searchDistributor} // Show selected distributor
-      onChange={(e) => {
-        setSearchDistributor(e.target.value);
-        setShowDropdown(true); // Show dropdown when typing
-      }}
-    />
-    {showDropdown && searchDistributor && (
-      <div className="w-full relative">
-        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-2">
-          <li className="px-4 py-2 font-bold bg-gray-100">
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <th className="text-sm font-bold">Medicine</th>
-                  <th className="text-sm font-bold">Code</th>
-                  <th className="text-sm font-bold">Weight</th>
-                </tr>
-              </thead>
-            </table>
-          </li>
+            <div className="flex flex-col">
+              <label className="font-semibold text-sm">Distributor Name</label>
+              <input
+                type="search"
+                placeholder="Search Distributor Here..."
+                className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
+                value={searchDistributor} // Show selected distributor
+                onChange={(e) => {
+                  setSearchDistributor(e.target.value);
+                  setShowDropdown(true); // Show dropdown when typing
+                }}
+              />
+              {showDropdown && searchDistributor && (
+                <div className="w-full relative">
+                  <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-2">
+                    <li className="px-4 py-2 font-bold bg-gray-100">
+                      <table className="w-full">
+                        <thead>
+                          <tr>
+                            <th className="text-sm font-bold">Medicine</th>
+                            <th className="text-sm font-bold">Code</th>
+                            <th className="text-sm font-bold">Weight</th>
+                          </tr>
+                        </thead>
+                      </table>
+                    </li>
 
-          {distributors
-            .filter(
-              (medicine) =>
-                medicine.name
-                  ?.toLowerCase()
-                  .includes(searchDistributor.toLowerCase()) ||
-                medicine.company
-                  ?.toString()
-                  .toLowerCase()
-                  .includes(searchDistributor.toLowerCase())
-            )
-            .slice(0, 10)
-            .map((medicine) => (
-              <li
-                key={medicine.id}
-                className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                onClick={() => handleSelectDistributor(medicine)}
-              >
-                <table className="w-full">
-                  <tbody>
-                    <tr>
-                      <td className="text-sm">{medicine.name}</td>
-                      <td className="text-sm text-gray-600 px-10">
-                        {medicine.company}
-                      </td>
-                      <td className="text-sm text-gray-600">
-                        {medicine.address}
-                      </td>
-                      <td className="text-sm text-gray-600">
-                        {medicine.phone}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </li>
-            ))}
-        </ul>
-      </div>
-    )}
-  </div>
+                    {distributors
+                      .filter(
+                        (medicine) =>
+                          medicine.name
+                            ?.toLowerCase()
+                            .includes(searchDistributor.toLowerCase()) ||
+                          medicine.company
+                            ?.toString()
+                            .toLowerCase()
+                            .includes(searchDistributor.toLowerCase())
+                      )
+                      .slice(0, 10)
+                      .map((medicine) => (
+                        <li
+                          key={medicine.id}
+                          className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                          onClick={() => handleSelectDistributor(medicine)}
+                        >
+                          <table className="w-full">
+                            <tbody>
+                              <tr>
+                                <td className="text-sm">{medicine.name}</td>
+                                <td className="text-sm text-gray-600 px-10">
+                                  {medicine.company}
+                                </td>
+                                <td className="text-sm text-gray-600">
+                                  {medicine.address}
+                                </td>
+                                <td className="text-sm text-gray-600">
+                                  {medicine.phone}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              )}
+            </div>
 
             <div className="flex flex-col">
               <label className="font-semibold text-sm">Invoice Date</label>
               <input
                 type="date"
                 className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
-                onChange={(e) => setPurchase(p => ({ ...p, date: moment(e.target.value).format("YYYY-MM-DD")}))}
+                onChange={(e) =>
+                  setPurchase((p) => ({
+                    ...p,
+                    date: moment(e.target.value).format("YYYY-MM-DD"),
+                  }))
+                }
               />
             </div>
             <div className="flex flex-col">
@@ -327,15 +332,7 @@ const RecordPurchases = () => {
                   </div>
                 )}
               </div>
-              {/* 
-              <button
-                onClick={() => setIsOpen(true)}
-                type="button"
-                className="bg-white text-primary shadow-[2px_2px_6px_rgba(0,0,0,0.2)] px-8 py-3 rounded-lg font-[600] text-[14px]"
-              >
-                + Add Medicines
-              </button> */}
-            </div>
+              </div>
           </div>
 
           <div className="mt-4">
@@ -379,53 +376,81 @@ const RecordPurchases = () => {
                         {product.itemName}
                       </td>
                       <td className="p-3 w-[12%]">
-                      <input value={product.batch_no}
-                        type="text"
-                        name="batch_no"
-                        className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
-                        onChange={(e) => handleQuantity(index, e.target.name, e.target.value)}/>
-                        </td>
-                      <td className="p-3 w-[10%]">
-                      <input value={product.box}
-                        type="number"
-                        name="box"
-                        className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
-                        onChange={(e) => handleQuantity(index, e.target.name, e.target.value)}/>
-                      </td>
-                      <td className="p-3 w-[8%]">
-                      <input value={product.pack}
-                        type="number"
-                        name="pack"
-                        className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
-                        onChange={(e) => handleQuantity(index, e.target.name, e.target.value)}/>
-                      </td>
-                      <td className="p-3 w-[8%]">
-                        <input value={product.quantity}
-                        type="number"
-                        name="quantity"
-                        className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
-                        onChange={(e) => handleQuantity(index, e.target.name, e.target.value)}/>
-                        </td>
-                        <td className="p-3 w-[12%]">
-                      <input value={product.expiry_date}
-                        type="date"
-                        name="expiry_date"
-                        className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-24"
-                        onChange={(e) => handleQuantity(index, "expiry_date", e.target.value)}/>
-                        </td>
-                      <td className="p-3 w-[8%]">
-                      <input value={product.unit_price}
-                        type="text"
-                        name="unit_price"
-                        className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
-                        onChange={(e) => handleQuantity(index, e.target.name, e.target.value)}/>
+                        <input
+                          value={product.batch_no}
+                          type="text"
+                          name="batch_no"
+                          className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
+                          onChange={(e) =>
+                            handleQuantity(index, e.target.name, e.target.value)
+                          }
+                        />
                       </td>
                       <td className="p-3 w-[10%]">
-                      <input value={product.sale_price}
-                        type="text"
-                        name="sale_price"
-                        className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
-                        onChange={(e) => handleQuantity(index, e.target.name, e.target.value)}/>
+                        <input
+                          value={product.box}
+                          type="number"
+                          name="box"
+                          className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
+                          onChange={(e) =>
+                            handleQuantity(index, e.target.name, e.target.value)
+                          }
+                        />
+                      </td>
+                      <td className="p-3 w-[8%]">
+                        <input
+                          value={product.pack}
+                          type="number"
+                          name="pack"
+                          className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
+                          onChange={(e) =>
+                            handleQuantity(index, e.target.name, e.target.value)
+                          }
+                        />
+                      </td>
+                      <td className="p-3 w-[8%]">
+                        <input
+                          value={product.quantity}
+                          type="number"
+                          name="quantity"
+                          className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
+                          onChange={(e) =>
+                            handleQuantity(index, e.target.name, e.target.value)
+                          }
+                        />
+                      </td>
+                      <td className="p-3 w-[12%]">
+                        <input
+                          value={product.expiry_date}
+                          type="date"
+                          name="expiry_date"
+                          className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-24"
+                          onChange={(e) =>
+                            handleQuantity(index, "expiry_date", e.target.value)
+                          }
+                        />
+                      </td>
+                      <td className="p-3 w-[8%]">
+                        <input
+                          value={product.unit_price}
+                          type="text"
+                          name="unit_price"
+                          className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
+                          onChange={(e) =>
+                            handleQuantity(index, e.target.name, e.target.value)
+                          }
+                        />
+                      </td>
+                      <td className="p-3 w-[10%]">
+                        <input
+                          value={product.sale_price}
+                          type="text"
+                          name="sale_price"
+                          className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
+                          onChange={(e) =>
+                            handleQuantity(index, e.target.name, e.target.value)
+                          }
+                        />
                       </td>
                       <td className="p-3 w-[10%]">{product.total_price}</td>
                       <td className="p-3 w-[10%] text-center">
