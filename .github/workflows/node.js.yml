@@ -37,12 +37,12 @@ jobs:
         CI: ""
 
     - name: Copy Packages
-      run: sudo cp -r build/* /var/www/pharmacy
+      run: cp -r build/* /var/www/pharmacy
 
     - name: Restart Services
-      run: sudo systemctl restart nginx
+      run: systemctl restart nginx
     
     - name: Application Logs
       run: |
           sleep 10                       # Wait for 10 seconds
-          sudo nginx -t
+          nginx -t
