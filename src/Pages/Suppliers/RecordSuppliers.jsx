@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Button,
 } from "@mui/material";
-import patientService from "../../Services/patientService";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import medicineService from "../../Services/medicineService";
-import doctorService from "../../Services/doctorService";
-import MedicineInvoiceModal from "../../Components/MedicineInvoiceModal";
 import distributorServices from "../../Services/distributorServices";
 
 const RecordSuppliers = () => {
