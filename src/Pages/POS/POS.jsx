@@ -23,6 +23,7 @@ const POS = () => {
   const [searchDistributor, setSearchDistributor] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const [purchase, setPurchase] = useState({
     customer_name: "",
     customer_age: "",
@@ -125,6 +126,20 @@ const POS = () => {
     })
   }
 
+  const handleKeyDown = (e) => {
+    if (!medicines.length) return;
+  
+    if (e.key === "ArrowDown") {
+      setSelectedIndex((prev) => (prev + 1) % medicines.length);
+    } else if (e.key === "ArrowUp") {
+      setSelectedIndex((prev) => (prev - 1 + medicines.length) % medicines.length);
+    } else if (e.key === "Enter" && selectedIndex !== -1) {
+      handleSelectMedicine(medicines[selectedIndex]);
+      setSearch(""); 
+      setSelectedIndex(-1);
+    }
+  };
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!purchase.customer_name) {
@@ -193,6 +208,7 @@ const POS = () => {
                   placeholder="Search Medicines Here..."
                   className="block w-[90%] focus:outline-none"
                   onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
                 {search && (
                   <div className="w-full relative">
@@ -251,14 +267,7 @@ const POS = () => {
                   </div>
                 )}
               </div>
-              {/*
-              <button
-                onClick={() => setIsOpen(true)}
-                type="button"
-                className="bg-white text-primary shadow-[2px_2px_6px_rgba(0,0,0,0.2)] px-8 py-3 rounded-lg font-[600] text-[14px]"
-              >
-                + Add Medicines
-              </button> */}
+ 
             </div>
           </div>
 
