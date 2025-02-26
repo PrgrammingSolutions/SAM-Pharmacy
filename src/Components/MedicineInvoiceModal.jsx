@@ -44,35 +44,6 @@ const MedicineInvoiceModal = ({
     return `${validAmount.toFixed(2)}`;
   };
 
-  // const handleSubmitSales = async () => {
-  //   try {
-  //     if (!salesRows.length) {
-  //       toast.error("No sales data to submit.");
-  //       return;
-  //     }
-
-  //     const invoiceData = await saleService.createInvoices(invoiceId);
-  //     setInvoiceId(invoiceData.invoiceId); // Update invoice ID
-  //     toast.success(`Invoice created successfully. ID: ${invoiceData.invoiceId}`);
-
-  //     const salesData = salesRows.map((row) => ({
-  //       stock_id: row.stock_id,
-  //       quantity: parseInt(row.quantity, 10),
-  //       unit_price: parseFloat(row.unit_price),
-  //       patient_id: patientId,
-  //       doctor_id: doctorId,
-  //       sale_date: saleDate,
-  //       invoice: invoiceId,
-  //     }));
-
-  //     await Promise.all(salesData.map((row) => saleService.create(row)));
-  //     toast.success("Sales submitted successfully!");
-  //     onClose();
-  //     navigate("/dispenser");
-  //   } catch (error) {
-  //     toast.error("Error submitting sales.");
-  //   }
-  // };
 
   const handleSubmitSales = async () => {
     try {

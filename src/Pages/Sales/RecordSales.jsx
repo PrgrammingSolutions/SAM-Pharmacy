@@ -1,26 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
-  Divider,
-  Grid,
-  TextField,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
   IconButton,
-  Autocomplete,
 } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
 import patientService from "../../Services/patientService";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import medicineService from "../../Services/medicineService";
-import doctorService from "../../Services/doctorService";
-import saleService from "../../Services/saleService";
-import MedicineInvoiceModal from "../../Components/MedicineInvoiceModal";
-import { Box, Typography } from "@mui/material";
-import { Eye } from "lucide-react";
 import AddPurchaseModal from "../../Components/AddPurchaseModal";
 import productService from "../../Services/productService";
 import distributorServices from "../../Services/distributorServices";
@@ -30,7 +15,6 @@ import purchaseService from "../../Services/purchaseService";
 const POS = () => {
   const [patients, setPatients] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [invoiceId, setInvoiceId] = useState(null);
   const [medicines, setMedicines] = useState([]);
   const [distributors, setDistributors] = useState([]);
   const [search, setSearch] = useState("");

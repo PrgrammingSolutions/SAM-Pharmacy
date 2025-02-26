@@ -15,12 +15,6 @@ import { Add, Remove } from "@mui/icons-material";
 import patientService from "../../Services/patientService";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import medicineService from "../../Services/medicineService";
-import doctorService from "../../Services/doctorService";
-import saleService from "../../Services/saleService";
-import MedicineInvoiceModal from "../../Components/MedicineInvoiceModal";
-import { Box, Typography } from "@mui/material";
-import { Eye } from "lucide-react";
 import AddPurchaseModal from "../../Components/AddPurchaseModal";
 import productService from "../../Services/productService";
 import distributorServices from "../../Services/distributorServices";
@@ -190,7 +184,7 @@ const RecordPurchases = () => {
                 <div className="w-full relative">
                   <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-2">
                     <li className="px-4 py-2 font-bold bg-gray-100">
-                      <table className="w-full">
+                      <table className="w-full border-collapse">
                         <thead>
                           <tr>
                             <th className="text-sm font-bold">Medicine</th>
@@ -267,7 +261,7 @@ const RecordPurchases = () => {
           <hr className="mt-4" />
           <div className="flex justify-between items-center mt-6">
             {/* Search Bar (Aligned Left) */}
-            <div className="relative w-[40%]">
+            <div className="relative w-[50%]">
               <div className="flex flex-col items-center border-b-2 border-gray-300 focus:border-primary">
                 <input
                   type="search"
@@ -277,62 +271,81 @@ const RecordPurchases = () => {
                 />
                 {search && (
                   <div className="w-full relative">
-                    <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-2">
-                      <li className="px-4 py-2 font-bold bg-gray-100">
-                        <table className="w-full">
-                          <thead>
-                            <tr>
-                              <th className="text-sm font-bold">Medicine</th>
-                              <th className="text-sm font-bold">Code</th>
-                              <th className="text-sm font-bold">Weight</th>
-                            </tr>
-                          </thead>
-                        </table>
-                      </li>
+                    <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-2">
+                      <table className="w-full border-collapse">
+                        {/* Table Header */}
+                        <thead className="bg-gray-100 sticky top-0">
+                          <tr className="border-b border-gray-300">
+                            <th className="text-sm font-bold px-4 py-2 text-left">
+                              Medicine
+                            </th>
+                            <th className="text-sm font-bold px-4 py-2 text-left">
+                              Code
+                            </th>
+                            <th className="text-sm font-bold px-4 py-2 text-left">
+                              Batch No.
+                            </th>
+                            <th className="text-sm font-bold px-4 py-2 text-left">
+                              Weight
+                            </th>
+                          </tr>
+                        </thead>
 
-                      {medicines
-                        .filter(
-                          (medicine) =>
-                            medicine.medicine_name
-                              ?.toLowerCase()
-                              .includes(search.toLowerCase()) ||
-                            medicine.item_code
-                              ?.toString()
-                              .toLowerCase()
-                              .includes(search.toLowerCase())
-                        )
-                        .slice(0, 10)
-                        .map((medicine) => (
-                          <li
-                            key={medicine.id}
-                            className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                            onClick={() => handleSelectMedicine(medicine)} // Add click event
-                          >
-                            <table className="w-full">
-                              <tbody>
-                                <tr>
-                                  <td className="text-sm">
+                        {/* Table Body */}
+                        <tbody>
+                          {(() => {
+                            const filteredMedicines = medicines
+                              .filter(
+                                (medicine) =>
+                                  medicine.medicine_name
+                                    ?.toLowerCase()
+                                    .includes(search.toLowerCase()) ||
+                                  medicine.item_code
+                                    ?.toString()
+                                    .toLowerCase()
+                                    .includes(search.toLowerCase())
+                              )
+                              .slice(0, 10);
+
+                            return filteredMedicines.length > 0 ? (
+                              filteredMedicines.map((medicine) => (
+                                <tr
+                                  key={medicine.id}
+                                  className="border-b border-gray-200 cursor-pointer hover:bg-gray-100"
+                                  onClick={() => handleSelectMedicine(medicine)}
+                                >
+                                  <td className="text-sm px-4 py-2">
                                     {medicine.medicine_name}
                                   </td>
-                                  <td className="text-sm text-gray-600 px-10">
+                                  <td className="text-sm px-4 py-2 text-gray-600">
                                     {medicine.item_code}
                                   </td>
-                                  <td className="text-sm text-gray-600">
+                                  <td className="text-sm px-4 py-2 text-gray-600">
                                     {medicine.batch_no}
                                   </td>
-                                  <td className="text-sm text-gray-600">
+                                  <td className="text-sm px-4 py-2 text-gray-600">
                                     {medicine.weight}
                                   </td>
                                 </tr>
-                              </tbody>
-                            </table>
-                          </li>
-                        ))}
-                    </ul>
+                              ))
+                            ) : (
+                              <tr>
+                                <td
+                                  colSpan="4"
+                                  className="text-sm text-center text-gray-500 px-4 py-3"
+                                >
+                                  No items found
+                                </td>
+                              </tr>
+                            );
+                          })()}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 )}
               </div>
-              </div>
+            </div>
           </div>
 
           <div className="mt-4">

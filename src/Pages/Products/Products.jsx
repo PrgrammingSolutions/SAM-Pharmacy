@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Tooltip } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
 import PaginationComponent from "../../Components/PaginationComponent";
 import toast from "react-hot-toast";
-import medicineService from "../../Services/medicineService";
-import AddSaleModal from "../../Components/AddSaleModal";
 import AddMedicineModal from "../../Components/AddMedicineModal";
 import productService from "../../Services/productService";
 
