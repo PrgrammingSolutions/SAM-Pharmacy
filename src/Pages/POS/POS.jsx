@@ -193,7 +193,6 @@ const POS = () => {
                   placeholder="Search Medicines Here..."
                   className="block w-[90%] focus:outline-none"
                   onChange={(e) => setSearch(e.target.value)}
-                  onKeyDown={handleKeyDown}
                 />
                 {search && (
                   <div className="w-full relative">
