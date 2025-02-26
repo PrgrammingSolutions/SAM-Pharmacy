@@ -6,9 +6,7 @@ import loginService from "../../Services/loginService";
 import { Button, Grid, TextField, IconButton } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import logo from "../../assets/logo.png";
 import pharmacy from "../../assets/plogo.png";
-import { Text } from "recharts";
 
 const Login = () => {
   const navigate = useNavigate();
