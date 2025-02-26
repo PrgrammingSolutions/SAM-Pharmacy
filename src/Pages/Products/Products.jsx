@@ -17,7 +17,7 @@ const Products = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [records, setRecords] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [isOpen, setIsOpen] = useState()
+    const [isOpen, setIsOpen] = useState();
 
     useEffect(() => {
         const getMedicines = async () => {

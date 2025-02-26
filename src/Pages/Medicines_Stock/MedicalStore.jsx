@@ -71,17 +71,6 @@ const MedicalStore = () => {
             />
             <SearchIcon className="mt-[-4rem] text-gray-400 ml-2" />
           </div>
-          {/* <Link to="SaleMedicine">
-            <button className="bg-[#2D583A] text-white h-[2rem] px-4 rounded-md font-[600] text-[14px]">
-              + Sale Medicine
-            </button>
-          </Link>
-
-          <Link to="SaleServices">
-            <button className="bg-[#f8f8f8] h-[2rem] px-4 rounded-md text-black font-[600] text-[14px] border-2">
-              + Sale Services
-            </button>
-          </Link> */}
         </div>
 
         <div className="mx-[3%]">
