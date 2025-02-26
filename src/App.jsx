@@ -10,11 +10,7 @@ import {
 import PortalLayout from "./Components/PortalLayout";
 import Cookies from "js-cookie";
 
-import MedicinesStock from "./Pages/Medicines/MedicinesStock";
-import SaleMedicine from "./Pages/Medicines/SaleMedicine";
 import Login from "./Pages/Login/Login";
-import AddEditMedicalStore from "./Pages/Medicines/AddEditMedicalStore";
-import SaleServices from "./Pages/Medicines/SaleServices";
 import Sales from "./Pages/Sales/Sales";
 import RecordSales from "./Pages/Sales/RecordSales";
 import Purchases from "./Pages/Purchases/Purchases";
@@ -50,41 +46,33 @@ function App() {
 
   return (
 
-          <Routes basename={"/pharmacy"}>
+    <Routes basename={"/"}>
 
-          <Route path="/" element={<Navigate to="/pos" replace />} />
-          <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/pos" />} />
-          {/* Medicines */}
-          <Route path="/products" element={isAuthenticated ?  <PortalLayout> <Products/> </PortalLayout>  : <Navigate to="/login" />} />
-          <Route path="/pharmacy/AddEditMedical" element={isAuthenticated ?  <PortalLayout> <AddEditMedicalStore /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/pharmacy/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/pharmacy/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
-          {/* Sales */}
-          <Route path="/sales" element={isAuthenticated ?  <PortalLayout> <Sales /> </PortalLayout>  : <Navigate to="/login" />} />
-          <Route path="/sales/RecordSales" element={isAuthenticated ?  <PortalLayout> <RecordSales /> </PortalLayout> : <Navigate to="/login" />} />
+    <Route path="/" element={<Navigate to="/pos" replace />} />
+    <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/pos" />} />
+    
+    {/* Medicines */}
+    <Route path="/products" element={isAuthenticated ?  <PortalLayout> <Products/> </PortalLayout>  : <Navigate to="/login" />} />
+    
+    {/* Sales */}
+    <Route path="/sales" element={isAuthenticated ?  <PortalLayout> <Sales /> </PortalLayout>  : <Navigate to="/login" />} />
+    <Route path="/sales/RecordSales" element={isAuthenticated ?  <PortalLayout> <RecordSales /> </PortalLayout> : <Navigate to="/login" />} />
 
-            {/* Purchases */}
-          <Route path="/purchases" element={isAuthenticated ?  <PortalLayout> <Purchases /> </PortalLayout>  : <Navigate to="/login" />} />
-          <Route path="/purchases/RecordPurchases" element={isAuthenticated ?  <PortalLayout> <RecordPurchases /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/purchases/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/purchases/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
-          {/* customers */}
-          <Route path="/customers" element={isAuthenticated ?  <PortalLayout> <MedicinesStock /> </PortalLayout>  : <Navigate to="/login" />} />
-          <Route path="/customers/AddEditMedical" element={isAuthenticated ?  <PortalLayout> <AddEditMedicalStore /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/customers/SaleMedicine" element={isAuthenticated ?  <PortalLayout> <SaleMedicine /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/customers/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
-          {/* suppliers */}
-          <Route path="/suppliers" element={isAuthenticated ?  <PortalLayout> <Suppliers /> </PortalLayout>  : <Navigate to="/login" />} />
-          <Route path="/suppliers/RecordSuppliers" element={isAuthenticated ?  <PortalLayout> <RecordSuppliers /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/suppliers/SupplierLedger/:id" element={isAuthenticated ?  <PortalLayout> <SupplierLedger /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/suppliers/SaleServices" element={isAuthenticated ?  <PortalLayout> <SaleServices /> </PortalLayout> : <Navigate to="/login" />} />
+    {/* Purchases */}
+    <Route path="/purchases" element={isAuthenticated ?  <PortalLayout> <Purchases /> </PortalLayout>  : <Navigate to="/login" />} />
+    <Route path="/purchases/RecordPurchases" element={isAuthenticated ?  <PortalLayout> <RecordPurchases /> </PortalLayout> : <Navigate to="/login" />} />
+   
+    {/* Suppliers */}
+    <Route path="/suppliers" element={isAuthenticated ?  <PortalLayout> <Suppliers /> </PortalLayout>  : <Navigate to="/login" />} />
+    <Route path="/suppliers/RecordSuppliers" element={isAuthenticated ?  <PortalLayout> <RecordSuppliers /> </PortalLayout> : <Navigate to="/login" />} />
+    <Route path="/suppliers/SupplierLedger/:id" element={isAuthenticated ?  <PortalLayout> <SupplierLedger /> </PortalLayout> : <Navigate to="/login" />} />
 
-          <Route path="/suppliers/supplierledger" element={isAuthenticated ?  <PortalLayout> <SupplierLedger /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/pos" element={isAuthenticated ?  <PortalLayout> <POS /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/accounts" element={isAuthenticated ?  <PortalLayout> <Income /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/accounts/expense" element={isAuthenticated ?  <PortalLayout> <Expense /> </PortalLayout> : <Navigate to="/login" />} />
-          <Route path="/accounts/return" element={isAuthenticated ?  <PortalLayout> <Return /> </PortalLayout> : <Navigate to="/login" />} />
-          </Routes>
+     {/* Accounts */}
+    <Route path="/pos" element={isAuthenticated ?  <PortalLayout> <POS /> </PortalLayout> : <Navigate to="/login" />} />
+    <Route path="/accounts" element={isAuthenticated ?  <PortalLayout> <Income /> </PortalLayout> : <Navigate to="/login" />} />
+    <Route path="/accounts/expense" element={isAuthenticated ?  <PortalLayout> <Expense /> </PortalLayout> : <Navigate to="/login" />} />
+    <Route path="/accounts/return" element={isAuthenticated ?  <PortalLayout> <Return /> </PortalLayout> : <Navigate to="/login" />} />
+    </Routes>
   );
 }
 
