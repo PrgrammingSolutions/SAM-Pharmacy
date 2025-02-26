@@ -175,6 +175,8 @@ const RecordPurchases = () => {
     });
   };
 
+  const totalPurchasePrice = products.reduce((sum, product) => sum + Number(product.total_price || 0), 0);
+
   return (
     <>
       <form className="w-[90%] m-auto">
@@ -189,10 +191,10 @@ const RecordPurchases = () => {
                 type="search"
                 placeholder="Search Distributor Here..."
                 className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
-                value={searchDistributor} // Show selected distributor
+                value={searchDistributor} 
                 onChange={(e) => {
                   setSearchDistributor(e.target.value);
-                  setShowDropdown(true); // Show dropdown when typing
+                  setShowDropdown(true); 
                 }}
               />
               {showDropdown && searchDistributor && (
@@ -413,12 +415,17 @@ const RecordPurchases = () => {
                     </tr>
                   ))
                 ) : (
+                  
                   <tr>
                     <td colSpan="12" className="text-center p-4 text-gray-500">
                       No purchases added yet.
                     </td>
-                  </tr>
+                  </tr> 
                 )}
+                  <tr className="bg-gray-100 font-bold">
+                    <td colSpan="10" className="p-3 text-right text-sm">Total:</td>
+                    <td colSpan="11" className="p-3 text-sm">{totalPurchasePrice.toFixed(2)}</td>
+                  </tr>
               </tbody>
             </table>
           </div>
