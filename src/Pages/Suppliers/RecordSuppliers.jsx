@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Button,
 } from "@mui/material";
-import patientService from "../../Services/patientService";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import medicineService from "../../Services/medicineService";
-import doctorService from "../../Services/doctorService";
-import MedicineInvoiceModal from "../../Components/MedicineInvoiceModal";
 import distributorServices from "../../Services/distributorServices";
 
 const RecordSuppliers = () => {
@@ -32,6 +28,27 @@ const RecordSuppliers = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!data.name) {
+      toast.error("Distributor Name is required");
+      return;
+    }
+    if (!data.company) {
+      toast.error("Company Name is required");
+      return;
+    }
+    if (!data.address) {
+      toast.error("Address is required");
+      return;
+    }
+    if (!data.phone) {
+      toast.error("Phone Number is required");
+      return;
+    }
+    if (!data.email) {
+      toast.error("Email is required");
+      return;
+    }
     try {
       await distributorServices.create(data);
       toast.success("Supplier Added Successfully");

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const AddMedicineModal = ({ isOpen, onClose, onSave }) => {
   const [data, setData] = useState({
@@ -11,8 +12,6 @@ const AddMedicineModal = ({ isOpen, onClose, onSave }) => {
     pack_quantity: "",
   });
 
-  const [isPlaceholder, setIsPlaceholder] = useState(true);
-
   if (!isOpen) return null;
 
   const handleChange = (e) => {
@@ -20,8 +19,36 @@ const AddMedicineModal = ({ isOpen, onClose, onSave }) => {
   };
 
   const handleSave = () => {
+    if (!data.medicine_name) {
+      toast.error("Medicine Name is required");
+      return;
+    }
+    if (!data.item_code) {
+      toast.error("Item Code is required");
+      return;
+    }
+    if (!data.batch_no) {
+      toast.error("Batch No. is required");
+      return;
+    }
+    if (!data.weight) {
+      toast.error("Weight Code is required");
+      return;
+    }
+    if (!data.box_quantity) {
+      toast.error("Box Quantity is required");
+      return;
+    }
+    if (!data.pack_quantity) {
+      toast.error("Pack Quantity is required");
+      return;
+    }
     onSave(data);
     onClose();
+    toast.success("Medicine Added Successfully");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   return (
@@ -62,14 +89,14 @@ const AddMedicineModal = ({ isOpen, onClose, onSave }) => {
           />
 
           <input
-            type="number"
+            type="text"
             name="batch_no"
             onChange={handleChange}
             className="bg-gray-50 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary"
             placeholder="Batch No"
           />
           <input
-            type="number"
+            type="text"
             name="weight"
             onChange={handleChange}
             className="bg-gray-50 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary"
