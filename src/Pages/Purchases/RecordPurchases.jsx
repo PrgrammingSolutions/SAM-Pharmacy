@@ -174,10 +174,10 @@ const RecordPurchases = () => {
                 type="search"
                 placeholder="Search Distributor Here..."
                 className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
-                value={searchDistributor}
+                value={searchDistributor} // Show selected distributor
                 onChange={(e) => {
                   setSearchDistributor(e.target.value);
-                  setShowDropdown(true);
+                  setShowDropdown(true); // Show dropdown when typing
                 }}
               />
               {showDropdown && searchDistributor && (

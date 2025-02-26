@@ -89,14 +89,14 @@ const AddMedicineModal = ({ isOpen, onClose, onSave }) => {
           />
 
           <input
-            type="number"
+            type="text"
             name="batch_no"
             onChange={handleChange}
             className="bg-gray-50 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary"
             placeholder="Batch No"
           />
           <input
-            type="number"
+            type="text"
             name="weight"
             onChange={handleChange}
             className="bg-gray-50 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary"
