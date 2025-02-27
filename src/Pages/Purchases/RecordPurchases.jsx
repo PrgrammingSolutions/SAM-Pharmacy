@@ -184,7 +184,7 @@ const RecordPurchases = () => {
           Record Medicine Purchases
         </h1>
         <div className="mt-10 pb-4">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             <div className="flex flex-col">
               <label className="font-semibold text-sm">Distributor Name</label>
               <input
@@ -204,9 +204,10 @@ const RecordPurchases = () => {
                       <table className="w-full border-collapse">
                         <thead>
                           <tr>
-                            <th className="text-sm font-bold">Medicine</th>
-                            <th className="text-sm font-bold">Code</th>
-                            <th className="text-sm font-bold">Weight</th>
+                            <th className="text-sm font-bold">Name</th>
+                            <th className="text-sm font-bold">Company</th>
+                            <th className="text-sm font-bold">Address</th>
+                            <th className="text-sm font-bold">Phone</th>
                           </tr>
                         </thead>
                       </table>
@@ -276,7 +277,7 @@ const RecordPurchases = () => {
           </div>
 
           <hr className="mt-4" />
-          <div className={`flex w-[50%]`}>
+          <div className="flex w-[50%] , mt-4 ">
             <AutoComplete
                 ref={medicineRef}
                 className={`w-full`}

@@ -38,8 +38,8 @@ const POS = () => {
 
   const handleSelectDistributor = (medicine) => {
     setPurchase((p) => ({ ...p, supplier_id: medicine.id }));
-    setSearchDistributor(medicine.name); // Set selected value in input
-    setShowDropdown(false); // Hide dropdown
+    setSearchDistributor(medicine.name);
+    setShowDropdown(false); 
   };
 
   const handleAddPurchase = (newProduct) => {
@@ -80,7 +80,7 @@ const POS = () => {
       for (const medicine of medicines) {
         array.push({
           value: medicine.id,
-          label: `${medicine.medicine_name} (${medicine.item_code})`,
+          label: `${medicine.medicine_name} (${medicine.item_code} - ${medicine.batch_no} - ${medicine.weight} - Rs ${medicine.unit_price} )`,
         });
       }
       setMedicinesOptions(array);
