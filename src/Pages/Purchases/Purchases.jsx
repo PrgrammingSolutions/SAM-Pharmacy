@@ -135,7 +135,11 @@ const Purchases = () => {
                     {moment(patient?.date).format("ll")}
                   </td>
                   <td className="p-3 w-[15%] text-center">
-                  <button onClick={() => navigate(`purchaseView/${patient.id}`)}>
+                  <button
+                    onClick={() => navigate(`purchaseView/${patient.id}`, {
+                      state: { company: patient.company, name: patient.name },
+                    })}
+                  >
                   <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
                     </button>
                   </td>
