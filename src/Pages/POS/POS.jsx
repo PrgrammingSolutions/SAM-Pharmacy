@@ -80,7 +80,15 @@ const POS = () => {
       for (const medicine of medicines) {
         array.push({
           value: medicine.id,
-          label: `${medicine.medicine_name} (${medicine.item_code} - ${medicine.batch_no} - ${medicine.weight} - Rs ${medicine.unit_price} )`,
+          label: (
+            <span>
+              <span style={{ color: "gray" }}>{medicine.medicine_name}</span> (
+              <span style={{ color: "green" }}>{medicine.item_code}</span> -  
+              <span style={{ color: "blue" }}>{medicine.batch_no}</span> -  
+              <span style={{ color: "orange" }}>{medicine.weight}</span> - Rs  
+              <span style={{ color: "red", fontWeight: "bold" }}>{medicine.unit_price}</span> )
+            </span>
+          ),
         });
       }
       setMedicinesOptions(array);
