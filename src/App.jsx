@@ -23,6 +23,7 @@ import Products from "./Pages/Products/Products";
 import Income from "./Pages/Accounts/Income";
 import Expense from "./Pages/Accounts/Expense";
 import Return from "./Pages/Accounts/Return";
+import PurchaseView from "./Pages/Purchases/PurchaseView";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -60,6 +61,7 @@ function App() {
 
     {/* Purchases */}
     <Route path="/purchases" element={isAuthenticated ?  <PortalLayout> <Purchases /> </PortalLayout>  : <Navigate to="/login" />} />
+    <Route path="/purchases/purchaseView/:id" element={isAuthenticated ?  <PortalLayout> <PurchaseView /> </PortalLayout>  : <Navigate to="/login" />} />
     <Route path="/purchases/RecordPurchases" element={isAuthenticated ?  <PortalLayout> <RecordPurchases /> </PortalLayout> : <Navigate to="/login" />} />
    
     {/* Suppliers */}
