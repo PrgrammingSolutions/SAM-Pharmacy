@@ -66,7 +66,7 @@ const Login = () => {
         className="min-h-screen bg-white py-6 flex flex-col justify-center sm:py-12"
       >
         <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-          <div className="relative px-4 py-10 bg-gray-100 shadow-lg sm:rounded-md sm:p-20 border-[1px] border-gray-950">
+          <div className="relative px-4 py-10 bg-gray-100 shadow-lg sm:rounded-md sm:p-20">
             <div className="max-w-md mx-auto">
 
               <div>
@@ -85,7 +85,7 @@ const Login = () => {
                   value={data.email}
                   onChange={(e) => handleChange(e.target.value, "email")}
                   onKeyDown={handleKeyDown}
-                  className="border-b-2 rounded-md border-gray-200 p-2 w-[90%] mt-10 focus:outline-none font-normal focus:border-[#C38E3E]"
+                  className="border-b-2 rounded-md border-gray-200 p-2 w-[90%] mt-10 focus:outline-none font-normal focus:border-primary"
                 />
 
                 <input
@@ -94,7 +94,7 @@ const Login = () => {
                   value={data.password}
                   onChange={(e) => handleChange(e.target.value, "password")}
                   onKeyDown={handleKeyDown}
-                  className="border-b-2 rounded-md border-gray-200 p-2 w-[90%] mt-5 focus:outline-none focus:border-[#C38E3E]"
+                  className="border-b-2 rounded-md border-gray-200 p-2 w-[90%] mt-5 focus:outline-none focus:border-primary"
                 />
 
                 <IconButton
@@ -109,7 +109,7 @@ const Login = () => {
 
                 <div className="flex justify-center">
                   <button
-                    className={`bg-[#C38E3E] hover:border-none text-black hover:text-gray-800 p-2 px-10 rounded-md mt-10 font-semibold shadow-md hover:shadow-slate-700 duration-300 ${
+                    className={`bg-white hover:border-none text-primary hover:text-white hover:bg-primary p-2 px-10 rounded-md mt-10 font-semibold shadow-md hover:shadow-lg duration-300 ${
                       loading ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                     onClick={handleSubmit}
