@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {
   Button,
   Divider,
@@ -15,17 +15,12 @@ import { Add, Remove } from "@mui/icons-material";
 import patientService from "../../Services/patientService";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import medicineService from "../../Services/medicineService";
-import doctorService from "../../Services/doctorService";
-import saleService from "../../Services/saleService";
-import MedicineInvoiceModal from "../../Components/MedicineInvoiceModal";
-import { Box, Typography } from "@mui/material";
-import { Eye } from "lucide-react";
 import AddPurchaseModal from "../../Components/AddPurchaseModal";
 import productService from "../../Services/productService";
 import distributorServices from "../../Services/distributorServices";
 import moment from "moment/moment";
 import purchaseService from "../../Services/purchaseService";
+import AutoComplete from 'react-select'
 
 const RecordPurchases = () => {
   const [patients, setPatients] = useState([]);
@@ -44,8 +39,10 @@ const RecordPurchases = () => {
   });
   const [products, setProducts] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [medicinesOptions, setMedicinesOptions] = useState([])
 
   const navigate = useNavigate();
+  const medicineRef = useRef()
 
   const handleSelectDistributor = (medicine) => {
     setPurchase((p) => ({ ...p, supplier_id: medicine.id }));
@@ -86,16 +83,28 @@ const RecordPurchases = () => {
   };
 
   useEffect(() => {
+    if (medicines.length > 0){
+      let array = []
+      for (const medicine of medicines) {
+        array.push({ value: medicine.id, label: `${medicine.medicine_name} (${medicine.batch_no})` })
+      }
+      setMedicinesOptions(array)
+    }
+  }, [medicines]);
+
+  useEffect(() => {
     getPatients();
     getMedicines();
     getDistributors();
+    medicineRef.current.focus();
   }, []);
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  const handleSelectMedicine = (medicine) => {
+  const handleSelectMedicine = (id) => {
+    let medicine = medicines.filter(m => m.id === id)[0]
     const newProduct = {
       medicine_id: medicine.id,
       itemCode: medicine.item_code,
@@ -166,6 +175,8 @@ const RecordPurchases = () => {
     });
   };
 
+  const totalPurchasePrice = products.reduce((sum, product) => sum + Number(product.total_price || 0), 0);
+
   return (
     <>
       <form className="w-[90%] m-auto">
@@ -173,29 +184,30 @@ const RecordPurchases = () => {
           Record Medicine Purchases
         </h1>
         <div className="mt-10 pb-4">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             <div className="flex flex-col">
               <label className="font-semibold text-sm">Distributor Name</label>
               <input
                 type="search"
                 placeholder="Search Distributor Here..."
                 className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
-                value={searchDistributor} // Show selected distributor
+                value={searchDistributor} 
                 onChange={(e) => {
                   setSearchDistributor(e.target.value);
-                  setShowDropdown(true); // Show dropdown when typing
+                  setShowDropdown(true); 
                 }}
               />
               {showDropdown && searchDistributor && (
                 <div className="w-full relative">
                   <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-2">
                     <li className="px-4 py-2 font-bold bg-gray-100">
-                      <table className="w-full">
+                      <table className="w-full border-collapse">
                         <thead>
                           <tr>
-                            <th className="text-sm font-bold">Medicine</th>
-                            <th className="text-sm font-bold">Code</th>
-                            <th className="text-sm font-bold">Weight</th>
+                            <th className="text-sm font-bold">Name</th>
+                            <th className="text-sm font-bold">Company</th>
+                            <th className="text-sm font-bold">Address</th>
+                            <th className="text-sm font-bold">Phone</th>
                           </tr>
                         </thead>
                       </table>
@@ -265,76 +277,16 @@ const RecordPurchases = () => {
           </div>
 
           <hr className="mt-4" />
-          <div className="flex justify-between items-center mt-6">
-            {/* Search Bar (Aligned Left) */}
-            <div className="relative w-[40%]">
-              <div className="flex flex-col items-center border-b-2 border-gray-300 focus:border-primary">
-                <input
-                  type="search"
-                  placeholder="Search Medicines Here..."
-                  className="block w-[90%] focus:outline-none"
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-                {search && (
-                  <div className="w-full relative">
-                    <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-2">
-                      <li className="px-4 py-2 font-bold bg-gray-100">
-                        <table className="w-full">
-                          <thead>
-                            <tr>
-                              <th className="text-sm font-bold">Medicine</th>
-                              <th className="text-sm font-bold">Code</th>
-                              <th className="text-sm font-bold">Weight</th>
-                            </tr>
-                          </thead>
-                        </table>
-                      </li>
-
-                      {medicines
-                        .filter(
-                          (medicine) =>
-                            medicine.medicine_name
-                              ?.toLowerCase()
-                              .includes(search.toLowerCase()) ||
-                            medicine.item_code
-                              ?.toString()
-                              .toLowerCase()
-                              .includes(search.toLowerCase())
-                        )
-                        .slice(0, 10)
-                        .map((medicine) => (
-                          <li
-                            key={medicine.id}
-                            className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                            onClick={() => handleSelectMedicine(medicine)} // Add click event
-                          >
-                            <table className="w-full">
-                              <tbody>
-                                <tr>
-                                  <td className="text-sm">
-                                    {medicine.medicine_name}
-                                  </td>
-                                  <td className="text-sm text-gray-600 px-10">
-                                    {medicine.item_code}
-                                  </td>
-                                  <td className="text-sm text-gray-600">
-                                    {medicine.batch_no}
-                                  </td>
-                                  <td className="text-sm text-gray-600">
-                                    {medicine.weight}
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </li>
-                        ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-              </div>
+          <div className="flex w-[50%] , mt-4 ">
+            <AutoComplete
+                ref={medicineRef}
+                className={`w-full`}
+                options={medicinesOptions}
+                // value={selectedProduct}
+                onChange={(v) => handleSelectMedicine(v.value)}
+                placeholder="Search Medicine"
+            />
           </div>
-
           <div className="mt-4">
             <table className="w-full border-collapse rounded-lg overflow-hidden shadow-xl shadow-gray-300">
               <thead>
@@ -464,12 +416,17 @@ const RecordPurchases = () => {
                     </tr>
                   ))
                 ) : (
+                  
                   <tr>
                     <td colSpan="12" className="text-center p-4 text-gray-500">
                       No purchases added yet.
                     </td>
-                  </tr>
+                  </tr> 
                 )}
+                  <tr className="bg-gray-100 font-bold">
+                    <td colSpan="10" className="p-3 text-right text-sm">Total:</td>
+                    <td colSpan="11" className="p-3 text-sm">{totalPurchasePrice.toFixed(2)}</td>
+                  </tr>
               </tbody>
             </table>
           </div>

@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Tooltip } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
-import PaginationComponent from "../../Components/PaginationComponent";
 import toast from "react-hot-toast";
-import medicineService from "../../Services/medicineService";
-import { Eye } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import InvoicePurchaseModal from "../../Components/InvoicePurchaseModal";
 import purchaseService from "../../Services/purchaseService";
 import moment from "moment";
+import { Eye } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Purchases = () => {
   const [searchData, setSearchData] = useState("");
@@ -22,6 +20,7 @@ const Purchases = () => {
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPurchase, setSelectedPurchase] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getPurchases = async () => {
@@ -109,9 +108,9 @@ const Purchases = () => {
                 <th className="p-4 w-[15%]">
                   Purchase Date
                 </th>
-                {/* <th className="p-4 w-[15%] text-center">
+                <th className="p-4 w-[15%] text-center">
                   Action
-                </th> */}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -135,25 +134,20 @@ const Purchases = () => {
                   <td className="p-3 w-[15%]">
                     {moment(patient?.date).format("ll")}
                   </td>
-                  {/* <td className="p-3 w-[15%] text-center">
-                    <button onClick={ () => setModalOpen(true)}>
-                      <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
+                  <td className="p-3 w-[15%] text-center">
+                  <button
+                    onClick={() => navigate(`purchaseView/${patient.id}`, {
+                      state: { company: patient.company, name: patient.name },
+                    })}
+                  >
+                  <Eye className="w-5 h-5 text-gray-500 hover:text-primary cursor-pointer" />
                     </button>
-                  </td> */}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        {/* 
-        <PaginationComponent
-          filteredData={filteredData}
-          setPaginatedData={setPaginatedData}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        /> */}
-
         <div className="flex justify-center my-4">
           <Stack spacing={2}>
             <Pagination

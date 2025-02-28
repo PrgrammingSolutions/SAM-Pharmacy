@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
-import {
-  Button,
-  IconButton
-} from "@mui/material";
+import React, { useState, useEffect, useRef } from "react";
+import { Button, IconButton } from "@mui/material";
 import { Remove } from "@mui/icons-material";
 import patientService from "../../Services/patientService";
-import toast from "react-hot-toast"
+import toast from "react-hot-toast";
 import AddPurchaseModal from "../../Components/AddPurchaseModal";
 import productService from "../../Services/productService";
 import distributorServices from "../../Services/distributorServices";
 import moment from "moment/moment";
-import purchaseService from "../../Services/purchaseService";
 import salesService from "../../Services/salesService";
-import InvoiceSaleModal from "../../Components/InvoiceSaleModal"
+import InvoiceSaleModal from "../../Components/InvoiceSaleModal";
 import { useNavigate } from "react-router-dom";
+import AutoComplete from "react-select";
 
 const POS = () => {
   const [patients, setPatients] = useState([]);
@@ -30,17 +27,19 @@ const POS = () => {
     customer_phone: "",
     amount: 0,
     date: 0,
-    note: ""
-  })
+    note: "",
+  });
   const [products, setProducts] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-
+  const [medicinesOptions, setMedicinesOptions] = useState([]);
   const navigate = useNavigate();
 
+  const medicineRef = useRef();
+
   const handleSelectDistributor = (medicine) => {
-    setPurchase(p => ({...p, supplier_id: medicine.id}))
-    setSearchDistributor(medicine.name); // Set selected value in input
-    setShowDropdown(false); // Hide dropdown
+    setPurchase((p) => ({ ...p, supplier_id: medicine.id }));
+    setSearchDistributor(medicine.name);
+    setShowDropdown(false); 
   };
 
   const handleAddPurchase = (newProduct) => {
@@ -76,12 +75,36 @@ const POS = () => {
   };
 
   useEffect(() => {
+    if (medicines.length > 0) {
+      let array = [];
+      for (const medicine of medicines) {
+        array.push({
+          value: medicine.id,
+          label: (
+            <span>
+              <span style={{ color: "gray" }}>{medicine.medicine_name}</span> (
+              <span style={{ color: "green" }}>{medicine.item_code}</span> -  
+              <span style={{ color: "blue" }}>{medicine.batch_no}</span> -  
+              <span style={{ color: "orange" }}>{medicine.weight}</span> - Rs  
+              <span style={{ color: "red", fontWeight: "bold" }}>{medicine.unit_price}</span> )
+            </span>
+          ),
+        });
+      }
+      setMedicinesOptions(array);
+    }
+  }, [medicines]);
+
+  useEffect(() => {
     getPatients();
     getMedicines();
     getDistributors();
+    medicineRef.current.focus();
   }, []);
 
-  const handleSelectMedicine = (medicine) => {
+  const handleSelectMedicine = (id) => {
+    let medicine = medicines.filter((m) => m.id === id)[0];
+
     const newProduct = {
       medicine_id: medicine.id,
       itemCode: medicine.item_code,
@@ -95,7 +118,7 @@ const POS = () => {
       packPrice: medicine.pack_price || 0,
       sale_price: medicine.sale_price,
       total_price: medicine.sale_price * 1 || 0,
-      stock_id: medicine.stock_id
+      stock_id: medicine.stock_id,
     };
 
     setProducts([...products, newProduct]);
@@ -107,41 +130,26 @@ const POS = () => {
   };
 
   const handleQuantity = (index, name, value) => {
-    setProducts(products => {
-      const array = [...products]
-      let q = array[index].quantity
-      let p = array[index].sale_price
+    setProducts((products) => {
+      const array = [...products];
+      let q = array[index].quantity;
+      let p = array[index].sale_price;
       if (name === "quantity") {
         if (value <= 0 || isNaN(value)) {
           toast.error("Quantity must be greater than zero");
           return products;
-
         }
         q = value;
       } else if (name === "sale_price") {
         p = value;
       }
-      array[index] = { ...array[index], [name]: value, total_price: p * q }
-      return array
-    })
-  }
-
-  const handleKeyDown = (e) => {
-    if (!medicines.length) return;
-  
-    if (e.key === "ArrowDown") {
-      setSelectedIndex((prev) => (prev + 1) % medicines.length);
-    } else if (e.key === "ArrowUp") {
-      setSelectedIndex((prev) => (prev - 1 + medicines.length) % medicines.length);
-    } else if (e.key === "Enter" && selectedIndex !== -1) {
-      handleSelectMedicine(medicines[selectedIndex]);
-      setSearch(""); 
-      setSelectedIndex(-1);
-    }
+      array[index] = { ...array[index], [name]: value, total_price: p * q };
+      return array;
+    });
   };
-  
+
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!purchase.customer_name) {
       toast.error("Customer Name is required");
       return;
@@ -157,16 +165,16 @@ const POS = () => {
 
     let totalAmount = 0;
     for (let product of products) {
-      totalAmount += product.total_price
+      totalAmount += product.total_price;
     }
-    let submit = {...purchase}
-    submit.amount = totalAmount
-    submit.products = products
-    salesService.create(submit).then(res => {
-      navigate("/sales")
+    let submit = { ...purchase };
+    submit.amount = totalAmount;
+    submit.products = products;
+    salesService.create(submit).then((res) => {
+      navigate("/sales");
       toast.success("Sale Created Successfully");
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -176,13 +184,13 @@ const POS = () => {
         </h1>
         <div className="mt-10 pb-4">
           <div className="grid grid-cols-2 gap-3">
-
-          <div className="flex flex-col">
+            <div className="flex flex-col">
               <label className="font-semibold text-sm">Customer Name</label>
               <input
                 type="name"
                 className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
-                onChange={(e) => {setPurchase(p => ({ ...p, customer_name: e.target.value }))
+                onChange={(e) => {
+                  setPurchase((p) => ({ ...p, customer_name: e.target.value }));
                 }}
               />
             </div>
@@ -192,82 +200,27 @@ const POS = () => {
               <input
                 type="date"
                 className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1"
-                onChange={(e) => setPurchase(p => ({ ...p, date: moment(e.target.value).format("YYYY-MM-DD")}))}
+                onChange={(e) =>
+                  setPurchase((p) => ({
+                    ...p,
+                    date: moment(e.target.value).format("YYYY-MM-DD"),
+                  }))
+                }
               />
             </div>
-
           </div>
 
           <hr className="mt-4" />
           <div className="flex justify-between items-center mt-6">
             {/* Search Bar (Aligned Left) */}
-            <div className="relative w-[40%]">
-              <div className="flex flex-col items-center border-b-2 border-gray-300 focus:border-primary">
-                <input
-                  type="search"
-                  placeholder="Search Medicines Here..."
-                  className="block w-[90%] focus:outline-none"
-                  onChange={(e) => setSearch(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                />
-                {search && (
-                  <div className="w-full relative">
-                    <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-2">
-                      <li className="px-4 py-2 font-bold bg-gray-100">
-                        <table className="w-full">
-                          <thead>
-                            <tr>
-                              <th className="text-sm font-bold">Medicine</th>
-                              <th className="text-sm font-bold">Code</th>
-                              <th className="text-sm font-bold">Weight</th>
-                            </tr>
-                          </thead>
-                        </table>
-                      </li>
-
-                      {medicines
-                        .filter(
-                          (medicine) =>
-                            medicine.medicine_name
-                              ?.toLowerCase()
-                              .includes(search.toLowerCase()) ||
-                            medicine.item_code
-                              ?.toString()
-                              .toLowerCase()
-                              .includes(search.toLowerCase())
-                        )
-                        .slice(0, 10)
-                        .map((medicine) => (
-                          <li
-                            key={medicine.id}
-                            className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                            onClick={() => handleSelectMedicine(medicine)} // Add click event
-                          >
-                            <table className="w-full">
-                              <tbody>
-                                <tr>
-                                  <td className="text-sm">
-                                    {medicine.medicine_name}
-                                  </td>
-                                  <td className="text-sm text-gray-600 px-10">
-                                    {medicine.item_code}
-                                  </td>
-                                  <td className="text-sm text-gray-600">
-                                    {medicine.batch_no}
-                                  </td>
-                                  <td className="text-sm text-gray-600">
-                                    {medicine.weight}
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </li>
-                        ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
- 
+            <div className="relative w-[50%]">
+              <AutoComplete
+                ref={medicineRef}
+                className="w-full"
+                options={medicinesOptions}
+                onChange={(v) => handleSelectMedicine(v.value)}
+                placeholder="Search Medicines Here..."
+              />
             </div>
           </div>
 
@@ -311,27 +264,31 @@ const POS = () => {
                       <td className="p-3 w-[10%] font-bold">
                         {product.batch_no}
                       </td>
-                      <td className="p-3 w-[10%] font-bold">
-                        {product.box}
-                      </td>
-                      <td className="p-3 w-[10%] font-bold">
-                        {product.pack}
-                      </td>
+                      <td className="p-3 w-[10%] font-bold">{product.box}</td>
+                      <td className="p-3 w-[10%] font-bold">{product.pack}</td>
                       <td className="p-3 w-[8%]">
-                        <input value={product.quantity}
-                        type="number"
-                        name="quantity"
-                        className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
-                        onChange={(e) => handleQuantity(index, e.target.name, e.target.value)}/>
-                        </td>
-                        <td className="p-3 w-[12%]">
-                      <input value={product.expiry_date}
-                        type="date"
-                        name="expiry_date"
-                        className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-24"
-                        onChange={(e) => handleQuantity(index, "expiry_date", e.target.value)}/>
-                        </td>
-                        <td className="p-3 w-[10%] font-bold">
+                        <input
+                          value={product.quantity}
+                          type="number"
+                          name="quantity"
+                          className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-20"
+                          onChange={(e) =>
+                            handleQuantity(index, e.target.name, e.target.value)
+                          }
+                        />
+                      </td>
+                      <td className="p-3 w-[12%]">
+                        <input
+                          value={product.expiry_date}
+                          type="date"
+                          name="expiry_date"
+                          className="bg-gray-100 px-3 py-2 text-sm border-b-2 rounded-lg focus:outline-none focus:border-primary mt-1 w-24"
+                          onChange={(e) =>
+                            handleQuantity(index, "expiry_date", e.target.value)
+                          }
+                        />
+                      </td>
+                      <td className="p-3 w-[10%] font-bold">
                         {product.sale_price}
                       </td>
                       <td className="p-3 w-[10%]">{product.total_price}</td>
@@ -348,7 +305,7 @@ const POS = () => {
                 ) : (
                   <tr>
                     <td colSpan="12" className="text-center p-4 text-gray-500">
-                      No purchases added yet.
+                      No Sales added yet
                     </td>
                   </tr>
                 )}
@@ -357,7 +314,6 @@ const POS = () => {
           </div>
 
           <div className="text-center my-[36px]">
-
             <Button
               type="submit"
               variant="contained"
@@ -380,10 +336,7 @@ const POS = () => {
         onSave={handleAddPurchase}
       />
 
-      <InvoiceSaleModal
-        open={open}
-        onClose={()=> setOpen(false)}
-      />
+      <InvoiceSaleModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 };
