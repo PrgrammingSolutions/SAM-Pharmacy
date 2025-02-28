@@ -19,7 +19,7 @@ const Products = () => {
         const getMedicines = async () => {
             try {
                 setLoading(true);
-                const response = await productService.fetchAll();
+                const response = await productService.fetchMedicines();
                 console.log(response);
                 setRecords(response.products);
                 setLoading(false);
@@ -99,13 +99,13 @@ const Products = () => {
                                 Item Code
                             </th>
                             <th className="p-4 w-[15%]">
-                                Batch No.
-                            </th>
-                            <th className="p-4 w-[15%]">
                                 Qty
                             </th>
                             <th className="p-4 w-[15%]">
-                                Price
+                                Sale Price
+                            </th>
+                            <th className="p-4 w-[15%]">
+                                Discount Price
                             </th>
                         </tr>
                         </thead>
@@ -125,13 +125,13 @@ const Products = () => {
                                     {patient?.item_code}
                                 </td>
                                 <td className="p-4 w-[15%]">
-                                    {patient?.batch_no}
-                                </td>
-                                <td className="p-4 w-[15%]">
                                     {patient?.box_quantity}
                                 </td>
-                                <td className="p-4 w-[15%]">
-                                  {patient.unit_price * patient.box_quantity}
+                                <td className="p-4 w-[15%] font-semibold">
+                                  {patient.sale_price}
+                                </td>
+                                <td className="p-4 w-[15%] font-semibold">
+                                  {patient.sale_price - patient.discount_price}
                                 </td>
                             </tr>
                         ))}

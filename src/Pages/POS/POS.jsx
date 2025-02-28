@@ -39,7 +39,7 @@ const POS = () => {
   const handleSelectDistributor = (medicine) => {
     setPurchase((p) => ({ ...p, supplier_id: medicine.id }));
     setSearchDistributor(medicine.name);
-    setShowDropdown(false); 
+    setShowDropdown(false);
   };
 
   const handleAddPurchase = (newProduct) => {
@@ -47,14 +47,7 @@ const POS = () => {
     setIsOpen(false);
   };
 
-  const getPatients = async () => {
-    try {
-      const response = await patientService.fetchAllPatients();
-      setPatients(response.patients);
-    } catch (error) {
-      toast.error("Error fetching Patients");
-    }
-  };
+
 
   const getMedicines = async () => {
     try {
@@ -74,6 +67,12 @@ const POS = () => {
     }
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return ""; // Handle null or undefined
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    return new Date(dateString).toLocaleDateString("en-US", options);
+  };
+
   useEffect(() => {
     if (medicines.length > 0) {
       let array = [];
@@ -83,10 +82,13 @@ const POS = () => {
           label: (
             <span>
               <span style={{ color: "gray" }}>{medicine.medicine_name}</span> (
-              <span style={{ color: "green" }}>{medicine.item_code}</span> -  
-              <span style={{ color: "blue" }}>{medicine.batch_no}</span> -  
-              <span style={{ color: "orange" }}>{medicine.weight}</span> - Rs  
-              <span style={{ color: "red", fontWeight: "bold" }}>{medicine.unit_price}</span> )
+              <span style={{ color: "green" }}>{medicine.item_code}</span> -
+              <span style={{ color: "blue" }}>{medicine.batch_no}</span> - Rs:
+              <span style={{ color: "Gray", fontWeight: "bold" }}>
+                {medicine.sale_price}
+              </span> - 
+              <span style={{ color: "Gray" }}>{formatDate(medicine.expiry_date)}</span>{" "}
+              )
             </span>
           ),
         });
@@ -96,7 +98,6 @@ const POS = () => {
   }, [medicines]);
 
   useEffect(() => {
-    getPatients();
     getMedicines();
     getDistributors();
     medicineRef.current.focus();
@@ -116,7 +117,9 @@ const POS = () => {
       box: 1,
       unit_price: medicine.unit_price || 0,
       packPrice: medicine.pack_price || 0,
+      discount: parseFloat(medicine.discount_price),
       sale_price: medicine.sale_price,
+      discount_price: (medicine.sale_price - medicine.discount_price ) * 1 || 0,
       total_price: medicine.sale_price * 1 || 0,
       stock_id: medicine.stock_id,
     };
@@ -134,6 +137,7 @@ const POS = () => {
       const array = [...products];
       let q = array[index].quantity;
       let p = array[index].sale_price;
+      let dp = array[index].discount;
       if (name === "quantity") {
         if (value <= 0 || isNaN(value)) {
           toast.error("Quantity must be greater than zero");
@@ -142,8 +146,10 @@ const POS = () => {
         q = value;
       } else if (name === "sale_price") {
         p = value;
+      } else if (name === "discount") {
+        dp = value;
       }
-      array[index] = { ...array[index], [name]: value, total_price: p * q };
+      array[index] = { ...array[index], [name]: value, discount_price: q * ( p - dp), total_price: p * q };
       return array;
     });
   };
@@ -165,7 +171,7 @@ const POS = () => {
 
     let totalAmount = 0;
     for (let product of products) {
-      totalAmount += product.total_price;
+      totalAmount += product.discount_price;
     }
     let submit = { ...purchase };
     submit.amount = totalAmount;
@@ -176,6 +182,10 @@ const POS = () => {
     });
   };
 
+  const totalPurchasePrice = products.reduce(
+    (sum, product) => sum + Number(product.discount_price || 0),
+    0
+  );
   return (
     <>
       <form className="w-[90%] m-auto">
@@ -212,7 +222,6 @@ const POS = () => {
 
           <hr className="mt-4" />
           <div className="flex justify-between items-center mt-6">
-            {/* Search Bar (Aligned Left) */}
             <div className="relative w-[50%]">
               <AutoComplete
                 ref={medicineRef}
@@ -225,7 +234,7 @@ const POS = () => {
           </div>
 
           <div className="mt-4">
-            <table className="w-full border-collapse rounded-lg overflow-hidden shadow-xl shadow-gray-300">
+            <table className="w-full border-collapse rounded-lg overflow-hidden shadow-md shadow-gray-300">
               <thead>
                 <tr className="bg-primary text-white capitalize leading-normal text-left text-xs">
                   <th className="p-3 w-[5%] whitespace-nowrap">Sr No.</th>
@@ -238,6 +247,12 @@ const POS = () => {
                   <th className="p-3 w-[8%] whitespace-nowrap">Expiry Date</th>
                   <th className="p-3 w-[10%] whitespace-nowrap">
                     Sale Price/Unit
+                  </th>
+                  <th className="p-3 w-[10%] whitespace-nowrap">
+                    Discount
+                  </th>
+                  <th className="p-3 w-[10%] whitespace-nowrap">
+                    Discounted Amount
                   </th>
                   <th className="p-3 w-[10%] whitespace-nowrap">
                     Total Amount
@@ -291,6 +306,10 @@ const POS = () => {
                       <td className="p-3 w-[10%] font-bold">
                         {product.sale_price}
                       </td>
+                      <td className="p-3 w-[10%] font-bold">
+                      {(product.sale_price) - (product.discount)}
+                      </td>
+                      <td className="p-3 w-[10%]">{(product.discount_price).toFixed(2)}</td>
                       <td className="p-3 w-[10%]">{product.total_price}</td>
                       <td className="p-3 w-[10%] text-center">
                         <IconButton
@@ -313,23 +332,54 @@ const POS = () => {
             </table>
           </div>
 
-          <div className="text-center my-[36px]">
-            <Button
-              type="submit"
-              variant="contained"
-              onClick={(e) => handleSubmit(e)}
-              sx={{
-                backgroundColor: "#00A95B",
-                "&:hover": { backgroundColor: "#00A95D" },
-              }}
-            >
-              Generate Sale
-            </Button>
+          <div className="space-y-6 mt-10 pb-5 shadow-md rounded-md border">
+            <div className="grid grid-cols-4 gap-4 p-4 rounded-lg">
+
+            <div className="flex flex-col justify-between border-r pb-2">
+                <span className="font-medium text-gray-600">Total Medicines</span>
+                <span className="text-gray-800 font-semibold">{products.length}</span>
+              </div>
+
+              <div className="flex flex-col justify-between border-r pb-2">
+                <span className="font-medium text-gray-600">
+                 Total:
+                </span>
+                <span className="text-gray-800 font-semibold">RS: {products.reduce((sum, product) => sum + product.total_price, 0)}</span>
+              </div>
+
+              <div className="flex flex-col justify-between border-r pb-2">
+                <span className="font-medium text-gray-600">
+                 Discount
+                </span>
+                <span className="text-gray-800">PKR {products.reduce((sum, product) => sum + (product.discount * product.quantity || 0), 0).toFixed(2)}</span>
+              </div>
+
+              <div className="flex flex-col justify-between border-r pb-2">
+                <span className="font-medium text-gray-600">
+                 Discounted Amount
+                </span>
+                <span className="text-gray-800">RS: {products.reduce((sum, product) => sum + product.discount_price, 0).toFixed(2)}</span>
+              </div>
+
+            </div>
+
+            <div className="text-center my-[36px]">
+              <Button
+                type="submit"
+                variant="contained"
+                onClick={(e) => handleSubmit(e)}
+                sx={{
+                  backgroundColor: "#00A95B",
+                  "&:hover": { backgroundColor: "#00A95D" },
+                }}
+              >
+                Generate Sale
+              </Button>
+            </div>
           </div>
         </div>
       </form>
 
-      {/* Medicine Purchase Modal */}
       <AddPurchaseModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
