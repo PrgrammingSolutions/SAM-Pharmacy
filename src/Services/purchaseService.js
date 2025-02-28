@@ -17,6 +17,14 @@ const purchaseService = {
             throw error.response.data;
         }
     },
+    fetchById: async (id) => {
+        try {
+            const response = await axiosInstance.get('/pharmacyPurchase/get/' + id);
+            return response.data;
+        } catch (error) {
+            throw error.response.data;
+        }
+    },
     fetchAll: async () => {
         try {
             const response = await axiosInstance.get('/pharmacyPurchase/all');
