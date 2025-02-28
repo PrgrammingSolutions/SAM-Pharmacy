@@ -11,7 +11,7 @@ const PurchaseView = () => {
     const [order, setOrder] = useState(null);
     const [totalPurchase, setTotalPurchase] = useState(0);
     const [totalSale, setTotalSale] = useState(0);
-    const [medicines, setMedicines] = useState([]); 
+    const [medicines, setMedicines] = useState([]);
     const { id } = useParams();
     const location = useLocation();
     const { company, name } = location.state || {};
@@ -22,7 +22,7 @@ const PurchaseView = () => {
                 setLoading(true);
                 const response = await productService.fetchAll();
                 console.log("Fetched Medicines:", response);
-                setMedicines(response.products); 
+                setMedicines(response.products);
             } catch (error) {
                 toast.error("Error fetching Medicines");
             } finally {
@@ -50,14 +50,14 @@ const PurchaseView = () => {
                     // Enrich details with medicine names
                     const updatedDetails = response.purchase.details.map(detail => {
                         const medicine = medicines.find(med => med.id === detail.medicine_id);
-                        return { 
-                            ...detail, 
-                            medicine_name: medicine ? medicine.name : "Unknown" 
+                        return {
+                            ...detail,
+                            medicine_name: medicine ? medicine.medicine_name : "Unknown"
                         };
                     });
 
                     updatedDetails.forEach(detail => {
-                        tp += detail.total_price;
+                        tp += parseFloat(detail.total_price);
                         ts += detail.sale_price * detail.quantity;
                     });
 
@@ -81,13 +81,8 @@ const PurchaseView = () => {
         <div className="p-4 px-16">
             <div className="flex flex-row">
                 <h1 className="font-bold text-2xl text-primary animate__animated animate__fadeInLeft">
-                    DBS
+                    SAM Pharmacy
                 </h1>
-                <p className="ml-5">
-                    <span className="bg-blue-600 px-4 py-[1px] rounded-md text-white text-[10px]">
-                        B2B
-                    </span>
-                </p>
             </div>
             <hr className="border border-gray-200"/>
 
@@ -95,13 +90,13 @@ const PurchaseView = () => {
                 <p className="flex flex-col font-semibold text-sm text-green-600">
                     Order Created At:
                     <span className="text-gray-500 font-medium">
-                        {moment(order.created_at).format("LL")}
+                        {moment(order?.date).format("LL")}
                     </span>
                 </p>
                 <p className="flex flex-col font-semibold text-sm text-green-600">
                     Order Date:
                     <span className="text-gray-500 font-medium">
-                        {moment(order.purchase_date).format("LL")}
+                        {moment(order?.purchase_date).format("LL")}
                     </span>
                 </p>
             </div>
@@ -122,7 +117,7 @@ const PurchaseView = () => {
 
               <h1 className="mt-10 font-bold text-xl text-center mb-4">Purchase Order Details</h1>
               <div className="flex justify-center items-center">
-                <table className="w-full border-collapse rounded-lg overflow-hidden shadow-xl shadow-gray-300">
+                <table className="w-full border-collapse rounded-lg overflow-hidden shadow-sm shadow-gray-300">
                         <thead>
                             <tr className="uppercase w-full text-sm text-white bg-primary">
                                 <th className="py-4 border-b text-left pl-4">Id</th>
@@ -132,10 +127,11 @@ const PurchaseView = () => {
                                 <th className="py-4 border-b text-left pl-4">Batch No.</th>
                                 <th className="py-4 border-b text-left pl-4">Sale Price</th>
                                 <th className="py-4 border-b text-left pl-4">Expiry Date</th>
+                                <th className="py-4 border-b text-left pl-4">Total Price</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {order.details?.map((detail, index) => (
+                            {order?.details?.map((detail, index) => (
                                 <tr key={index} className="bg-white text-left text-sm">
                                     <td className="pl-4 border-b border-gray-100 py-2">{detail.id}</td>
                                     <td className="pl-4 border-b border-gray-100 py-2 font-semibold">{detail.medicine_name}</td>
@@ -144,21 +140,17 @@ const PurchaseView = () => {
                                     <td className="pl-4 border-b border-gray-100 py-2">{detail.batch_no}</td>
                                     <td className="pl-4 border-b border-gray-100 py-2">RS {detail.sale_price}</td>
                                     <td className="pl-4 border-b border-gray-100 py-2">{moment(detail.expiry_date).format("ll")}</td>
+                                    <td className="pl-4 border-b border-gray-100 py-2">{parseFloat(detail.unit_price * detail.quantity).toFixed(2)}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
               </div>
 
-              <div className="flex flex-col mt-4 text-lg font-semibold">
-                    <p>Total Purchase Price: 
-                    <span className="text-green-600 break-words w-[50%]">
-                        . AED
-                    </span>
-                    </p>
-                    <p>Total Sale Price: 
-                    <span className="text-blue-600 break-words w-[50%]">
-                        {totalSale} AED
+              <div className="flex flex-col mt-10 mb-10 text-lg font-semibold justify-end text-right">
+                    <p>Total Purchase Price:
+                    <span className="text-green-600 break-words w-[50%] ml-2">
+                        {totalPurchase} PKR
                     </span>
                     </p>
                 </div>
