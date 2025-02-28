@@ -398,12 +398,12 @@ export default function PortalLayout({ children }) {
                     <div
                       onClick={() => setShowAccounts(!showAccounts)}
                       className={`flex items-center p-2 mr-2 cursor-pointer text-gray-600 mt-3 h-[2.6rem] transition-all duration-300
-      ${
-        location.pathname.startsWith("/accounts")
-          ? "bg-primary text-white font-[600] rounded-md"
-          : ""
-      }
-      ${open ? "ml-6" : "ml-0"}`}
+                        ${
+                          location.pathname.startsWith("/accounts")
+                            ? "bg-primary text-white font-[600] rounded-md"
+                            : ""
+                        }
+                        ${open ? "ml-6" : "ml-0"}`}
                     >
                       <MedicationIcon
                         className={`!text-5xl ${
