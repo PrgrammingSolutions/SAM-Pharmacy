@@ -290,7 +290,7 @@ export default function PortalLayout({ children }) {
                           !open ? "hidden" : "block"
                         }`}
                       >
-                        Medicines
+                        Stock
                       </span>
                     </div>
                   </li>
